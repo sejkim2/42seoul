@@ -74,10 +74,3 @@ char **ft_split(char const *s, char c)
     table = 0;
     return (first);
 }
-
-int main()
-{
-    char **s = ft_split(",,he,,,efe,,d,,dfaerg", ',');
-    for(int i = 0; i<4; i++)
-        printf("%s\n", s[i]);
-}
