@@ -1,23 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/21 17:57:34 by sejkim2           #+#    #+#             */
+/*   Updated: 2023/03/21 17:57:34 by sejkim2          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 void    ft_putstr_fd(char *s, int fd)
 {
-    while (*s)
-        write(1, s++, fd);
-    // size_t i;
-    // i = 0;
-    // while (s[i])
-    // {
-    //     ft_putchar_fd(s[i], fd);
-    //     i++;
-    // }
+    write(fd, s, ft_strlen(s));
 }
-
-// #include <fcntl.h>
-
-// int main()
-// {
-//     int fd = open("./test.txt", O_WRONLY | O_CREAT, 0644);
-//     ft_putstr_fd("hello", fd);
-//     close(fd);
-// }
