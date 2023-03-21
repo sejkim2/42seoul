@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:58:03 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/03/21 17:58:04 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:04:27 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ char *ft_strtrim(char const *s1, char const *set)
         ft_strlcpy(dest, s1, ft_strlen(s1) + 1);
         return (dest);
     }
-    if (s1 == 0)
+    if (*s1 == 0)
     {
         dest = malloc(sizeof(char) * 1);
         *dest = '\0';
         return (dest);
     }
-    if (set == 0)
+    if (*set == 0)
     {
         dest = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
         ft_strlcpy(dest, s1, ft_strlen(s1) + 1);

@@ -6,14 +6,14 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:58:08 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/03/21 17:58:08 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:58:53 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_tolower(int c)
+int	ft_tolower(int c)
 {
-    if (c >= 'A' && c <= 'Z')
-        return ('a' + c - 'A');
-    else
-        return (c);
+	if (c >= 'A' && c <= 'Z')
+		return ('a' + c - 'A');
+	else
+		return (c);
 }

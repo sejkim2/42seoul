@@ -6,23 +6,23 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:56:07 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/03/21 17:56:09 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:20:30 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    *ft_bzero(void *b, size_t len)
+void	*ft_bzero(void *b, size_t len)
 {
-    size_t i;
-    void *p;
+	void	*p;
+	size_t	i;
 
-    p = b;
-    i = 0;
-    while (i < len)
-    {
-        *((unsigned char *)p + i) = 0;
-        i++;
-    }
-    return (b);
+	p = b;
+	i = 0;
+	while (i < len)
+	{
+		*((unsigned char *)p + i) = 0;
+		i++;
+	}
+	return (b);
 }
