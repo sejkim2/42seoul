@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:58:14 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/03/21 17:58:14 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/03/22 13:05:55 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-//# include <stdio.h>
 
 typedef struct s_list
 {

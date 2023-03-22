@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:57:53 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/03/21 18:54:46 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/03/22 13:29:29 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 		dest[i] = f(i, s[i]);
 		i++;
 	}
+	dest[i] = 0;
 	return (dest);
 }

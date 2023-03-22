@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:55:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/03/21 18:35:24 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:24:21 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 int	len_num(const int n)
 {
 	long long	num;
-	int			is_munus;
+	int			is_minus;
 	int			len;
 
 	is_minus = 0;
 	num = n;
-	if (n < 0)
+	len = 0;
+	if (n <= 0)
 	{
 		is_minus = 1;
 		num = (long long)-1 * (n);
 	}
-	len = 0;
 	while (num > 0)
 	{
 		num = num / 10;
