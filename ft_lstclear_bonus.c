@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:56:56 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/03/22 17:22:00 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/03/23 17:40:06 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 	{
 		del_node = p;
 		p = p->next;
-		ft_lstdelone(del_node, del);
+		del(del_node->content);
+		free(del_node);
 	}
 }

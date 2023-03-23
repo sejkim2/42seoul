@@ -1,16 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:57:06 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/03/22 17:25:45 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/03/23 18:30:32 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+t_list	*ft_lstclear_func(t_list **lst, void (*del)(void *), void *cont)
+{
+	t_list	*p;
+	t_list	*del_node;
+
+	p = *lst;
+	*lst = 0;
+	while (p)
+	{
+		del_node = p;
+		p = p->next;
+		del(del_node->content);
+		free(del_node);
+	}
+	free(cont);
+	return (0);
+}
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
@@ -18,18 +36,19 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	t_list	*new;
 	t_list	*head;
 	t_list	*tail;
+	void	*cont;
 
 	p = lst;
 	head = 0;
 	tail = head;
 	while (p)
 	{
-		new = ft_lstnew(f(p->content));
+		cont = f(p->content);
+		if (cont == 0)
+			return (ft_lstclear_func(&head, del, cont));
+		new = ft_lstnew(cont);
 		if (new == 0)
-		{
-			ft_lstclear(&head, del);
-			return (0);
-		}
+			return (ft_lstclear_func(&head, del, cont));
 		if (tail == 0)
 			head = new;
 		else
