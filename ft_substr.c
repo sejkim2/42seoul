@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:58:06 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/03/23 14:15:32 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:39:47 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		*dest = 0;
 		return (dest);
 	}
-	if (s_len < len)
-		size = s_len;
+	if (s_len - start < len)
+		size = s_len - start;
 	else
 		size = len;
 	dest = (char *)malloc(sizeof(char) * (size + 1));

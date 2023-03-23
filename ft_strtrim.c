@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:58:03 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/03/22 14:32:11 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:30:21 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (*s1 == 0 || *set == 0)
 	{
 		dest = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
+		if (dest == 0)
+			return (0);
 		ft_strlcpy(dest, s1, ft_strlen(s1) + 1);
 		return (dest);
 	}
