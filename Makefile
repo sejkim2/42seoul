@@ -18,27 +18,28 @@ NAME = libft.a
 INC = libft.h
 
 ifdef PLUS_BONIUS
-    OBJ = $(OBJS) $(OBJS_BONUS)
+	OBJ = $(OBJS) $(OBJS_BONUS)
 else
-    OBJ = $(OBJS)
+	OBJ = $(OBJS)
 endif
 
 all: $(NAME)
+	sleep 1
 
 $(NAME) : $(OBJ)
-    ar -rcs $(NAME) $(OBJ)
+	ar rcs $(NAME) $(OBJ)
 
 %.o : %.c
-    $(CC) $(CFLAGS) -c $< -o $@ -I$(INC)
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(INC)
 
 bonus:
-    make PLUS_BONIUS=1
+	make PLUS_BONIUS=1
 
 clean:
-    rm -rf $(OBJS) $(OBJS_BONUS)
+	rm -rf $(OBJS) $(OBJS_BONUS)
 
 fclean: clean
-    rm -rf $(NAME)
+	rm -rf $(NAME)
 
 re: fclean all
 
