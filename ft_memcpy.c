@@ -12,12 +12,13 @@
 
 #include "libft.h"
 
+//dest에 src를 n바이트만큼 복사
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t	i;
 
 	i = 0;
-	if (dest == 0 && src == 0)
+	if (dest == src)	//두 문자열이 널포인터 (초기 주소, 아무것도 안들어있음) 이거나 같으면 복사할 필요가 없음
 		return (dest);
 	while (i < n)
 	{
