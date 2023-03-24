@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+//특정 문자로 메모리 공간을 초기화
 void	*ft_memset(void *b, int c, size_t len)
 {
 	size_t	i;
