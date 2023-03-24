@@ -12,28 +12,27 @@ ft_putendl_fd.c ft_putnbr_fd.c
 SRCS_BONUS = ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
 ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
 ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
-OBJS = $(SRCS:%.c=%.o)
-OBJS_BONUS = $(SRCS_BONUS:%.c=%.o)
+OBJS = $(SRCS:.c=.o)
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 NAME = libft.a
 INC = libft.h
 
-ifdef PLUS_BONIUS
+ifdef BONUS
 	OBJ = $(OBJS) $(OBJS_BONUS)
 else
 	OBJ = $(OBJS)
 endif
 
 all: $(NAME)
-	sleep 1
 
 $(NAME) : $(OBJ)
 	ar rcs $(NAME) $(OBJ)
 
-%.o : %.c
+.c.o:
 	$(CC) $(CFLAGS) -c $< -o $@ -I$(INC)
 
 bonus:
-	make PLUS_BONIUS=1
+	make BONUS=1
 
 clean:
 	rm -rf $(OBJS) $(OBJS_BONUS)
@@ -41,6 +40,8 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 
-re: fclean all
+re: 
+	make fclean
+	make all
 
 .PHONY: all bonus clean fclean re
