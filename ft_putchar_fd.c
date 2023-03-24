@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+//write 함수의 인자 (파일 기술자, 버퍼, 버퍼크기)를 이용해서 쓰고자 하는 파일을 가리키는 파일에 문자 하나를 쓰기
 void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
