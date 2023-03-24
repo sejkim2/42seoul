@@ -13,6 +13,10 @@
 #include "libft.h"
 
 //dest에 src를 n바이트만큼 복사
+//메모리가 겹치는 상황을 고려하지 않음 (overlap x)
+//		[dst][][][][]
+//	[src][][][][]
+//위의 경우 src의 마지막이 dst의 첫번째와 겹치기 때문에 주소 이동을 증가시킬 경우 src의 값이 변경될 수 있다.
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t	i;
