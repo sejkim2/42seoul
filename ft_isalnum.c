@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+//알파벳 혹은 0~9사이 값인지 확인하는 함수
 int	ft_isalnum(int c)
 {
 	return (ft_isalpha(c) || ft_isdigit(c));
