@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+//n바이트 만큼 조사하면서 찾는 문자가 나오면 해당 주소를 반환
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	unsigned char	*p;
@@ -28,5 +29,5 @@ void	*ft_memchr(const void *s, int c, size_t n)
 		else
 			i++;
 	}
-	return (0);
+	return (0);	//문자열을 전부 조사했는데 찾는 문자가 나오지 않으면 널포인터 반환
 }
