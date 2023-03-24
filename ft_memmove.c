@@ -12,6 +12,8 @@
 
 #include "libft.h"
 
+//memcpy 함수에서 overlap 문제를 해결하기 위해 보완된 함수
+
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t	i;
