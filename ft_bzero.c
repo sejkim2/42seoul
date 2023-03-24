@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+//void형 포인터를 len만큼 '\0'으로 초기화하는 함수
 void	*ft_bzero(void *b, size_t len)
 {
 	void	*p;
@@ -21,6 +22,7 @@ void	*ft_bzero(void *b, size_t len)
 	i = 0;
 	while (i < len)
 	{
+		//c99 표준에 의거하여 void형 포인터를 unsigned char형 포인터로 형변환
 		*((unsigned char *)p + i) = 0;
 		i++;
 	}
