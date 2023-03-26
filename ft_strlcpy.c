@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+//널을 고려한 크기만큼 복사
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
@@ -24,7 +25,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		dst[i] = src[i];
 		i++;
 	}
-	if (dstsize > 0)
+	if (dstsize > 0)	//길이를 1이라도 생성할 수 있을 경우
 		dst[i] = '\0';
-	return (len);
+	return (len);	//생성하고자 했던 문자열 길이 반환
 }
