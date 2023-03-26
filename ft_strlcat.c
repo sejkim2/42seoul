@@ -14,7 +14,7 @@
 
 //널 문자를 고려한 길이가 인자로 사용되는 strcat류 함수
 //dstsize가 dest_size + src_size + 1 일 경우 정상적으로 cat 수행 가능
-//반환값은 src의 길이 + min(dst의 길이, 인자로 들어온 dstsize)이며
+//반환값은 src의 길이 + min(dst의 길이, 인자로 들어온 dstsize)이며 (생성하고자 했던 길이)
 //src의 길이 + dst의 길이가 반환되었을 경우 올바르게 저장된 경우
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
