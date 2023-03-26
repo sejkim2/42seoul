@@ -12,12 +12,13 @@
 
 #include "libft.h"
 
+//strchr과 비슷하지만 이 함수는 마지막으로 일치하는 문자의 위치를 반환
 char	*ft_strrchr(const char *s, int c)
 {
 	size_t	i;
 	size_t	len;
 	char	*p;
-	char	*result;
+	char	*result;	//일치하는 문자의 위치 기록
 
 	p = (char *)s;
 	result = 0;
@@ -26,7 +27,7 @@ char	*ft_strrchr(const char *s, int c)
 	while (i <= len)
 	{
 		if (*(p + i) == (char)c)
-			result = p + i;
+			result = p + i;	//일치 문자 위치 
 		i++;
 	}
 	return (result);
