@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+//함수 포인터 f를 각 문자에 적용
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	size_t			len;
