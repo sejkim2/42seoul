@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+//문자열에서 특정 문자를 검색해 가장 먼저 나온 위치(주소) 반환
 char	*ft_strchr(const char *s, int c)
 {
 	char	*p;
@@ -23,7 +24,7 @@ char	*ft_strchr(const char *s, int c)
 	len = ft_strlen(s);
 	while (i <= len)
 	{
-		if (*(p + i) == (char)c)
+		if (*(p + i) == (char)c)	//converted to a char : man page
 			return (p + i);
 		else
 			i++;
