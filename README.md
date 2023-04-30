@@ -49,6 +49,6 @@
 * chage -l 계정명 : 패스워드 만기 정보일 출력  
 * https://tragramming.tistory.com/87 : 패스워드 만기일 관련 명령어 출처  
 * https://nostressdev.tistory.com/9 : 패스워드 설정 관련 명령어 출처  
-* sudo groupadd <groupname> : <groupname> 이라는 그룹 생성  
-* sudo usermod -aG <groupname> <username> : <username> 을 <groupname>에 추가. 
-* groups <username> : <username>이 속해있는 그룹 
+* sudo groupadd \<groupname> : \<groupname> 이라는 그룹 생성  
+* sudo usermod -aG \<groupname> \<username> : \<username> 을 \<groupname>에 추가. 
+* groups \<username> : \<username>이 속해있는 그룹 
