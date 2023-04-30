@@ -51,4 +51,4 @@
 * https://nostressdev.tistory.com/9 : 패스워드 설정 관련 명령어 출처  
 * sudo groupadd \<groupname> : \<groupname> 이라는 그룹 생성  
 * sudo usermod -aG \<groupname> \<username> : \<username> 을 \<groupname>에 추가. 
-* groups \<username> : \<username>이 속해있는 그룹 
+* groups \<username> : \<username>이 속해있는 그룹
