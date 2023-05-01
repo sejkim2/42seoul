@@ -41,8 +41,10 @@
 > https://baked-corn.tistory.com/52 (출처)  
 > secure shell protocol의 약자로 외부 연결망과 안전하게 통신하기 위해 사용되는 프로토콜이다. 통신에 사용되는 일반적인 프로토콜에 비해 보안적으로 우수하다. ssh로 통신을 할 경우 public key(공개키)와 private key(개인키) 두 종류의 key가 주어지며, public key로 정보를 암호화 하고 private key로 암호화 되어 있는 정보를 복호화 할 수 있다. 복호화 한다는 것은 곧 통신으로 받은 정보를 열람하겠다는 의미이므로 이것에 사용되는 private key는 함부로 노출되어서는 안된다. 따라서 private key는 로컬 장소에 안전하게 내장되어 있다. 클라이언트에서 보낸 public key는 서버의 pricate key와 한 쌍을 이루어 암호화 된 채널을 생성하고 이 채널을 통해 안전한 통신이 가능하다.  
 # LVM이란?  
->  ![download](https://user-images.githubusercontent.com/128696540/235417904-d202b6bd-2e2b-4337-ac65-98908db0baaf.png)
-
+> https://eunbin00.tistory.com/105 (출처)  
+>  ![download](https://user-images.githubusercontent.com/128696540/235417904-d202b6bd-2e2b-4337-ac65-98908db0baaf.png)  
+>  기존 운영체제의 파일 읽기 쓰기 방식은 물리적 디스크에 직접 접근하여 기록하는 방식이었다. 유연성을 위해서 채택된 lvm 방식에서는 파일 시스템이 lvm 위의 가상 블록 장치에서 읽기 및 쓰기를 수행한다. 물리적 디스크에서는 여러 파티션으로 분할하여 시스템 성능 향상 및 유지 보수를 얻을 수 있다. 이러한 방식은 디스크 용량이 부족할 경우 새 디스크를 추가해야 하며 정보 저장에 대한 유연성이 떨어진다. lvm을 사용한다면 디스크를 추가할 때 특정 저장 공간에 대한 볼륨 사이즈만 키워주면 독립적인 파티션이 연결되어 유연하게 정보를 저장할 수 있다. 효율적인 파티션 공간 활용이 가능해진 것이다.  
+* pv : 
 ## 명령어 정리  
 * sudo ufw status : 방화벽 활성화 여부 확인  
 * sudo ufw status numbered : 연결된 목록 숫자로 확인  
