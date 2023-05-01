@@ -42,6 +42,8 @@
 > secure shell protocol의 약자로 외부 연결망과 안전하게 통신하기 위해 사용되는 프로토콜이다. 통신에 사용되는 일반적인 프로토콜에 비해 보안적으로 우수하다. ssh로 통신을 할 경우 public key(공개키)와 private key(개인키) 두 종류의 key가 주어지며, public key로 정보를 암호화 하고 private key로 암호화 되어 있는 정보를 복호화 할 수 있다. 복호화 한다는 것은 곧 통신으로 받은 정보를 열람하겠다는 의미이므로 이것에 사용되는 private key는 함부로 노출되어서는 안된다. 따라서 private key는 로컬 장소에 안전하게 내장되어 있다. 클라이언트에서 보낸 public key는 서버의 pricate key와 한 쌍을 이루어 암호화 된 채널을 생성하고 이 채널을 통해 안전한 통신이 가능하다.
 ## 명령어 정리  
 * sudo ufw status : 방화벽 활성화 여부 확인  
+* sudo ufw status numbered : 연결된 목록 숫자로 확인  
+* sudo ufw delete n : 연결 포트 삭제  
 * sudo ufw allow OpenSSH : 방화벽 사용 이전에 수신 SSH 연결 허용  
 * sudo ufw allow 4242/tcp : 4242포트 연결 허용  
 * sudo ufw enable / disalbe : 방화벽 활성화 / 비활성화  
