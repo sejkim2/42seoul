@@ -28,7 +28,7 @@
 ## 하이퍼바이저  
 > VMM(Virtual Machine Monitor)라고 불리며, 가상 머신을 생성 및 구동하는데 사용되는 소프트웨어이다.  
 ## apt 와 aptitude의 차이  
-> ??  
+> apt는 .deb 패키지 용으로 설계된 소프트웨어 설치 및 제거 프로그램으로 현재는 RPM(레드헷) 패키지와도 호환 가능하다. apt는 cli 기반이며 명령을 호출할 때마다 
 ## SElinux  
 > ??  
 ## AppArmor  
