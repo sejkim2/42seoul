@@ -34,9 +34,9 @@
 > aptitude는 gui가 추가된 대화형 패키지 관리 도구로 역시 RPM 패키지와도 호환 가능하다. apt는 패키지를 삭제할 때 해당 패키지만 삭제하지만 aptitude는 해당 패키지를 위해서 설치되었던 부속 패키지를 자동으로 삭제해준다. (apt는 수동 삭제 필요) 또한 설치 및 제거 중 종속 충돌이 일어날 때 해결 방법을 제시할 수 있는 똑똑한 관리 프로그램이라 볼 수 있다. 
 ## SElinux / appArmor  
 > https://80000coding.oopy.io/475d966a-4188-4db3-80ad-cb3755a995b6#475d966a-4188-4db3-80ad-cb3755a995b6 (출처 1)  
-> https://velog.io/@kdkeiie8/Linux-AppArmor-%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%BB%A4%EB%84%90-%EB%B3%B4%EC%95%88-%EB%AA%A8%EB%93%88 (출처 2)  
-> 리눅스의 응용 프로그램 보안 시스템이다. 핵심 작동 원리는 프로그램에서 실행할 수 있는 권한을 제한해주는 것으로 MAC을 이용하여 DAC보다 강력한 보안 시스템을 제공한다.  
-  
+> https://velog.io/@kdkeiie8/Linux-AppArmor-%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%BB%A4%EB%84%90-%EB%B3%B4%EC%95%88-%EB%AA%A8%EB%93%88 (출처 2)
+
+> 리눅스의 응용 프로그램 보안 시스템이다. 핵심 작동 원리는 프로그램에서 실행할 수 있는 권한을 제한해주는 것으로 MAC을 이용하여 DAC보다 강력한 보안 시스템을 제공한다. appArmor는 설치 후 root user일 때 /etc/apparmor.d/ 파일을 수정하여 보안 규칙을 부여할 수 있다. 파일 수정 후에는 sudo apparmor_parser -r /etc/apparmor.d/profile_name 명령을 통해 appArmor에게 변경 사항을 알린다. 
  
 > DAC (임의적 접근 통제)  
 * 해당 프로그램이 user 혹은 group의 소유이면 권한을 준다.  
