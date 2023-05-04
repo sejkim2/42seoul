@@ -74,8 +74,14 @@
 * badpass_message : 패스워드 오류 시 메시지 출력  
 * logfile=path : sudo 명령 사용 기록을 해당 경로의 파일에 저장  
 * requiretty : tty 적용 (tty를 적용하여 현재 로그인 사용자의 세션과 터미널이 연결되어 있을 때만 sudo 명령을 사용 가능하게 함)  
-* secure_path : 해당 경로에 저장되어 있는 명령어들만 sudo로 명령 가능하게 
-
+* secure_path : 해당 경로에 저장되어 있는 명령어들만 sudo로 명령 가능하게 제한  
+* alias specification : 복잡한 이름에 대해 별칭 지정  
+* user privilege specification : 사용자나 그룹에 대한 권한 수정.  
+ user    host=(runas) command  
+ 위의 형식에서 user는 권한을 부여할 사용자의 이름이고, host는 해당 사용자가 권한을 사용할 수 있는 호스트 머신의 이름이다. runas는 해  당 사용자가 명령을 실행할 때 사용할 수 있는 다른 사용자의 이름(예를 들어 root라면 root의 권한을 빌릴 수 있음)이다. command는 해당 사용자가 실행할 수 있는 명령어이다.  
+ user     ALL=(ALL:ALL) ALL  
+ 위 형식은 모든 호스트에서 어떤 사용자든지 어떤 명령어든지 실행할 수 있는 권한을 부여한다. 이 권한은 시스템 관리자가 시스템을 관리하거나 유지보수할 때 유용하다.  
+* Allow members of group sudo to execute any command : sudo 그룹에서의 privilege specification 형식  
 ## 명령어 정리  
 * sudo ufw status : 방화벽 활성화 여부 확인  
 * sudo ufw status numbered : 연결된 목록 숫자로 확인  
