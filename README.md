@@ -66,6 +66,8 @@
 1. apt-get install sudo : sudo 설치  
 2. visudo : sudo 정보 수정  
 <img width="1242" alt="Screen Shot 2023-05-04 at 12 35 27 PM" src="https://user-images.githubusercontent.com/128696540/236107382-1418f3c4-76e3-42cf-8ea3-0f8999750ea8.png">  
+  
+  
 * env_reset : 특정 환경변수를 제외한 모든 환경변수 초기화(보안상의 이유)  
 * mail_badpass : 패스워드 오류 시 지정된 이메일로 오류 보고  
 * passwd_tries=n : 패스워드 오류 회수 제한  
