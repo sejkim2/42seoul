@@ -62,6 +62,10 @@
 * le : 논리 볼륨이 가진 일정 블록  
 ## sudo 와 root 
 > root로 로그인 하는 것은 보안상 좋지 않기 때문에 sudo 명령을 통해 임시로 root 권한을 빌릴 수 있음. sudo 사용자는 log에 기록이 남는다.  
+## sudo 설정하기  
+1. apt-get install sudo : sudo 설치  
+2. visudo : sudo 정보 수정  
+3. 
 ## 명령어 정리  
 * sudo ufw status : 방화벽 활성화 여부 확인  
 * sudo ufw status numbered : 연결된 목록 숫자로 확인  
