@@ -90,6 +90,7 @@
 * sudo ufw allow 4242/tcp : 4242포트 연결 허용  
 * sudo ufw enable / disalbe : 방화벽 활성화 / 비활성화  
 * su : sudo로 사용자 전환  
+* hostnamectl set-hostname [hostname] : hostname 변경
 * chage -l 계정명 : 패스워드 만기 정보일 출력  
 * https://tragramming.tistory.com/87 : 패스워드 만기일 관련 명령어 출처  
 * https://nostressdev.tistory.com/9 : 패스워드 설정 관련 명령어 출처  
