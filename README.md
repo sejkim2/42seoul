@@ -65,7 +65,15 @@
 ## sudo 설정하기  
 1. apt-get install sudo : sudo 설치  
 2. visudo : sudo 정보 수정  
-3. 
+<img width="1242" alt="Screen Shot 2023-05-04 at 12 35 27 PM" src="https://user-images.githubusercontent.com/128696540/236107382-1418f3c4-76e3-42cf-8ea3-0f8999750ea8.png">  
+* env_reset : 특정 환경변수를 제외한 모든 환경변수 초기화(보안상의 이유)  
+* mail_badpass : 패스워드 오류 시 지정된 이메일로 오류 보고  
+* passwd_tries=n : 패스워드 오류 회수 제한  
+* badpass_message : 패스워드 오류 시 메시지 출력  
+* logfile=path : sudo 명령 사용 기록을 해당 경로의 파일에 저장  
+* requiretty : tty 적용 (tty를 적용하여 현재 로그인 사용자의 세션과 터미널이 연결되어 있을 때만 sudo 명령을 사용 가능하게 함)  
+* secure_path : 해당 경로에 저장되어 있는 명령어들만 sudo로 명령 가능하게 
+
 ## 명령어 정리  
 * sudo ufw status : 방화벽 활성화 여부 확인  
 * sudo ufw status numbered : 연결된 목록 숫자로 확인  
