@@ -97,3 +97,18 @@
 * sudo groupadd \<groupname> : \<groupname> 이라는 그룹 생성  
 * sudo usermod -aG \<groupname> \<username> : \<username> 을 \<groupname>에 추가. 
 * groups \<username> : \<username>이 속해있는 그룹
+
+#주요 설치  
+* appArmor  
+  * app install apparmor : apparmor 설치  
+  * aa-status : apparmor 설치 유무 확인
+* sudo 설치 및 설정  
+  * sudo 설치
+  * 비밀 번호 3회 시도  
+  * 메시지 출력  
+  * 로그 기록  
+  * tty  
+  * 경로 설정  
+* 패스워드 설정  
+  * sudo vi /etc/login.defs 확인  
+  * PASS_MAX_DAYS
