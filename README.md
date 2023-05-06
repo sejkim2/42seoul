@@ -111,4 +111,42 @@
   * 경로 설정  
 * 패스워드 설정  
   * sudo vi /etc/login.defs 확인  
-  * PASS_MAX_DAYS
+  * PASS_MAX_DAYS. 
+  * PASS_MIN_DAYS. 
+  * PASS_WARN_AGE. 
+  * sudo apt install libpam-pwquality 
+  * sudo vi /etc/pam.d/common-passwd
+  * 이후 패스워드 추가 설정  
+  * 패스워드 설정 이전에 생성된 계정인 root와 기존 user에 대한 적용 필요  
+  * passwd -e <username> : 강제 만료 명령  
+  * chage -m 2 -M 30 -W 7 <username>. 
+  * sudo vi /etc/shadow로 확인 가능  
+* ufw 설정  
+  * sudo apt-get update
+  * sudo apt-get upgrade  
+  * sudo apt-get install ufw
+  * ufw 설치
+  * sudo ufw enable/disalbe : 활성화/비활성화  
+  * sudo ufw status : ufw 활성화 확인  
+  * sudo ufw allow/deny <portnumber> : 포트 접속/차단  
+  * sudo ufw delete deny <portname> : ufw 룰 삭제
+  * 22 : ssh 포트
+* ssh 설정
+  * sudo apt-get install openssh-server : openssh 설치  
+  * ssh-keygen rsa : key 생성  
+  * id_rsa 경로로 확인  
+* 스크립트 작성  
+printf "#Disk Usage: "
+df -a -BM | grep /dev/map | awk '{sum+=$3}END{print sum}' | tr -d '\n'
+printf "/"
+df -a -BM | grep /dev/map | awk '{sum+=$4}END{print sum}' | tr -d '\n'
+printf "MB ("
+df -a -BM | grep /dev/map | awk '{sum1+=$3 ; sum2+=$4 }END{printf "%d", sum1 / sum2 * 100}' | tr -d '\n'
+printf "%%)\n"
+
+printf "#CPU load: "
+mpstat | grep all | awk '{printf "%.2f%%\n", 100-$13}'
+  
+  * chmod +x <script name.sh>. 
+  * crontab -e. 
+  * */10 * * * * /root/filename.sh | wall
