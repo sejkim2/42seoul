@@ -65,14 +65,15 @@
 ## sudo 설정하기  
 1. apt-get install sudo : sudo 설치  
 2. visudo : sudo 정보 수정  
-<img width="1242" alt="Screen Shot 2023-05-04 at 12 35 27 PM" src="https://user-images.githubusercontent.com/128696540/236107382-1418f3c4-76e3-42cf-8ea3-0f8999750ea8.png">  
-  
+<img width="1296" alt="Screen Shot 2023-05-07 at 1 19 42 PM" src="https://user-images.githubusercontent.com/128696540/236657413-338bce3d-bc4a-4b15-9a5f-e0d3c3c009be.png">
+
   
 * env_reset : 특정 환경변수를 제외한 모든 환경변수 초기화(보안상의 이유)  
 * mail_badpass : 패스워드 오류 시 지정된 이메일로 오류 보고  
 * passwd_tries=n : 패스워드 오류 회수 제한  
-* badpass_message : 패스워드 오류 시 메시지 출력  
-* logfile=path : sudo 명령 사용 기록을 해당 경로의 파일에 저장  
+* badpass_message : 패스워드 오류 시 메시지 출력. 
+* log_input, log_output : sudo를 통한 입출력 기록    
+* iolog_dir=path : sudo 명령 사용 기록을 해당 경로의 파일에 저장  
 * requiretty : tty 적용 (tty를 적용하여 현재 로그인 사용자의 세션과 터미널이 연결되어 있을 때만 sudo 명령을 사용 가능하게 함)  
 * secure_path : 해당 경로에 저장되어 있는 명령어들만 sudo로 명령 가능하게 제한  
 * alias specification : 복잡한 이름에 대해 별칭 지정  
@@ -110,13 +111,13 @@
   * tty  
   * 경로 설정  
 * 패스워드 설정  
-  * sudo vi /etc/login.defs 확인  
-  * PASS_MAX_DAYS. 
-  * PASS_MIN_DAYS. 
-  * PASS_WARN_AGE. 
-  * sudo apt install libpam-pwquality 
+  * sudo vi /etc/login.defs : 전체적인 패스워드 정책 관리
+  * PASS_MAX_DAYS : 패스워드를 사용 가능한 최대 날짜
+  * PASS_MIN_DAYS : 패스워드 수정 가능하기까지 최소 날짜
+  * PASS_WARN_AGE : 패스워드를 수정하라는 경고 메시지를 보내주는 기한
+  * sudo apt install libpam-pwquality : 더 엄격한 정책을 위해 추가 패키지 설치
   * sudo vi /etc/pam.d/common-passwd
-  * 이후 패스워드 추가 설정  
+  * 이후 패스워드 추가 설정   : https://nostressdev.tistory.com/9 참고
   * 패스워드 설정 이전에 생성된 계정인 root와 기존 user에 대한 적용 필요  
   * passwd -e <username> : 강제 만료 명령  
   * chage -m 2 -M 30 -W 7 <username>. 
