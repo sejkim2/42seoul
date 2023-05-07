@@ -98,7 +98,7 @@
 * sudo usermod -aG \<groupname> \<username> : \<username> 을 \<groupname>에 추가. 
 * groups \<username> : \<username>이 속해있는 그룹
 
-#주요 설치  
+##주요 설치  
 * appArmor  
   * app install apparmor : apparmor 설치  
   * aa-status : apparmor 설치 유무 확인
