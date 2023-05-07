@@ -60,6 +60,11 @@
 * lv : 논리 볼륭, 볼륨 그룹을 파티션을 나눌 때 각각의 파티션
 * pe : 물리 볼륨이 가진 일정 블록
 * le : 논리 볼륨이 가진 일정 블록  
+## group  
+* 권한을 특정 집단 기준으로 나눠서 부여하기 위해 생성한 집합  
+* sudo groupadd <groupname> : 새 그룹 추가  
+* sudo adduer <username> <groupname> : <username>을 <groupname>에 추가  
+* groups <username> : <username>이 속해있는 모든 그룹을 확인
 ## sudo 와 root 
 > root로 로그인 하는 것은 보안상 좋지 않기 때문에 sudo 명령을 통해 임시로 root 권한을 빌릴 수 있음. sudo 사용자는 log에 기록이 남는다.  
 ## sudo 설정하기  
