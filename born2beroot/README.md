@@ -47,17 +47,16 @@
 > https://80000coding.oopy.io/475d966a-4188-4db3-80ad-cb3755a995b6#475d966a-4188-4db3-80ad-cb3755a995b6 (출처 1)  
 > https://velog.io/@kdkeiie8/Linux-AppArmor-%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%BB%A4%EB%84%90-%EB%B3%B4%EC%95%88-%EB%AA%A8%EB%93%88 (출처 2)
 
-> 리눅스의 응용 프로그램 보안 시스템이다. 핵심 작동 원리는 프로그램에서 실행할 수 있는 권한을 제한해주는 것으로 MAC을 이용하여 DAC보다 강력한 보안 시스템을 제공한다. appArmor는 설치 후 root user일 때 /etc/apparmor.d/ 파일을 수정하여 보안 규칙을 부여할 수 있다. 파일 수정 후에는 sudo apparmor_parser -r /etc/apparmor.d/profile_name 명령을 통해 appArmor에게 변경 사항을 알린다. 
+> 리눅스의 응용 프로그램 보안 시스템이다. 핵심 작동 원리는 프로그램에서 실행할 수 있는 권한을 제한해주는 것으로 MAC을 이용하여 DAC보다 강력한 보안 시스템을 제공한다. appArmor는 설치 후 root user일 때 /etc/apparmor.d/ 파일을 수정하여 보안 규칙을 부여할 수 있다. 파일 수정 후에는 sudo apparmor_parser -r /etc/apparmor.d/profile_name 명령을 통해 appArmor에게 변경 사항을 알린다.  
+* app install apparmor : apparmor 설치  
+* aa-status : apparmor 설치 유무 확인
  
 > DAC (임의적 접근 통제)  
 * 해당 프로그램이 user 혹은 group의 소유이면 권한을 준다.  
 * ls -l 에서 나오는 9bit의 접근 권한(각각 user, group, other)에 따라 권한이 다름.  
 * root 권한에 접근이 가능하다면 (sudo 등)임의로 접근이 가능하므로 더 엄격한 보안 체계가 필요함. --> 강제적 접근 통제가 탄생한 배경 
 > MAC (강제적 접근 통제)  
-* 관리자가 설정한 보안 정책에 따라 권한을 부여하며 appArmor가 해당 보안 정책을 관리하기 때문에 root 권한을 얻는 것만으로는 접근이 불가능하다.(DAC보다 엄격한 통제)  
-* appArmor  
-  * app install apparmor : apparmor 설치  
-  * aa-status : apparmor 설치 유무 확인
+* 관리자가 설정한 보안 정책에 따라 권한을 부여하며 appArmor가 해당 보안 정책을 관리하기 때문에 root 권한을 얻는 것만으로는 접근이 불가능하다.(DAC보다 엄격한 통제) 
 ## 도메인 네임  
 > 컴퓨터가 식별하는 ip주소를 인간 친화적인 이름으로 바꾼 것.(www.naver.com에서 naver나 com 같은 것들) DNS를 통해 다시 컴퓨터에게 전달된다. 
 ## ufw 방화벽  
