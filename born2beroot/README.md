@@ -119,7 +119,10 @@
  위 형식은 모든 호스트에서 어떤 사용자든지 어떤 명령어든지 실행할 수 있는 권한을 부여한다. 이 권한은 시스템 관리자가 시스템을 관리하거나 유지보수할 때 유용하다.  
 * Allow members of group sudo to execute any command : sudo 그룹에서의 privilege specification 형식  
 * su : sudo로 사용자 전환  
-* sudo apt-get install openssh-server : openssh 설치. 
+* sudo apt-get install openssh-server : openssh 설치
+ 
+## 파티션  
+> 주 파티션 :   
  
 ## monitoring.sh 작성
  <img width="1022" alt="Screen Shot 2023-05-09 at 4 04 34 PM" src="https://user-images.githubusercontent.com/128696540/237019926-54a7bd16-7a54-4797-afe7-fee98e96e757.png">
