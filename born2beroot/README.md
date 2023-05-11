@@ -142,9 +142,11 @@
   * chage -m 2 -M 30 -W 7 <username>. 
   * sudo vi /etc/shadow로 확인 가능 
 * cron 설정  
-  * chmod +x <script name.sh>. 
-  * crontab -e. 
+  * crontab : 스크립트 자동 얘약 프로그램
+  * chmod +x <script name.sh> 
+  * crontab -e 
   * */10 * * * * /root/filename.sh | wall  
+  * service cron start/stop : crontab을 편집하지 않고 활성화/비활성화
   
 ## lighttpd(라이피티디)  
 * 웹서버의 일종으로 적은 자원으로 높은 효율을 낸다. 사람들이 많이 사용하는 아파치는 여러 환경에서 실행되기 위해 멀티 프로세스를 지원하지만 자원을 많이 잡아먹기 때문에 느리다. 라이티피디는 아파치에 비해 상대적으로 적은 메모리에서 관리되므로 속도가 더 빠르며 프록시를 지원하기 때문에 캐시를 활용한 효율적인 네트워킹이 가능하다. (같은 요청에 대해 반복된 응답을 보낼 필요가 없음) 프록시에서 제공되는 보안 기능은 덤이다.  
