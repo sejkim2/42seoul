@@ -122,14 +122,10 @@
 * sudo apt-get install openssh-server : openssh 설치  
 ## 명령어 정리  
 * hostnamectl set-hostname [hostname] : hostname 변경
-* chage -l 계정명 : 패스워드 만기 정보일 출력  
-* https://tragramming.tistory.com/87 : 패스워드 만기일 관련 명령어 출처  
-* https://nostressdev.tistory.com/9 : 패스워드 설정 관련 명령어 출처  
-* sudo groupadd \<groupname> : \<groupname> 이라는 그룹 생성  
-* sudo usermod -aG \<groupname> \<username> : \<username> 을 \<groupname>에 추가. 
-* groups \<username> : \<username>이 속해있는 그룹
-
 * 패스워드 설정  
+  * chage -l 계정명 : 패스워드 만기 정보일 출력 
+  * https://tragramming.tistory.com/87 : 패스워드 만기일 관련 명령어 출처
+  * https://nostressdev.tistory.com/9 : 패스워드 설정 관련 명령어 출처 
   * sudo vi /etc/login.defs : 전체적인 패스워드 정책 관리
   * PASS_MAX_DAYS : 패스워드를 사용 가능한 최대 날짜
   * PASS_MIN_DAYS : 패스워드 수정 가능하기까지 최소 날짜
