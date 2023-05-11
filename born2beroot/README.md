@@ -52,16 +52,34 @@
 * ls -l 에서 나오는 9bit의 접근 권한(각각 user, group, other)에 따라 권한이 다름.  
 * root 권한에 접근이 가능하다면 (sudo 등)임의로 접근이 가능하므로 더 엄격한 보안 체계가 필요함. --> 강제적 접근 통제가 탄생한 배경 
 > MAC (강제적 접근 통제)  
-* 관리자가 설정한 보안 정책에 따라 권한을 부여하며 appArmor가 해당 보안 정책을 관리하기 때문에 root 권한을 얻는 것만으로는 접근이 불가능하다.(DAC보다 엄격한 통제)
+* 관리자가 설정한 보안 정책에 따라 권한을 부여하며 appArmor가 해당 보안 정책을 관리하기 때문에 root 권한을 얻는 것만으로는 접근이 불가능하다.(DAC보다 엄격한 통제)  
+* appArmor  
+  * app install apparmor : apparmor 설치  
+  * aa-status : apparmor 설치 유무 확인
 ## 도메인 네임  
 > 컴퓨터가 식별하는 ip주소를 인간 친화적인 이름으로 바꾼 것.(www.naver.com에서 naver나 com 같은 것들) DNS를 통해 다시 컴퓨터에게 전달된다. 
 ## ufw 방화벽  
 > 우선 방화벽이란 네트워크 보안 시스템을 말한다. iptables라는 프로그램이 있지만 복잡해서 상대적으로 간단한 ufw 방화벽이 나오게 되었다. ufw 방화벽은 서버 잠금 방지를 위해 비활성화 되어 있으며 활성화 여부는 sudo ufw status 명령을 통해 확인할 수 있다. 기본적으로 ufw 방화벽은 외부에서 들어오는 모든 연결을 차단하고, 서버에서 외부로의 연결만 허용한다. (방화벽의 아웃바인딩 연결 허용) 즉, 사용자가 포트를 연결해주지 않는 이상 외부의 연결이 불가능하다.  
+
+> ufw 설정  
+  * sudo apt-get update
+  * sudo apt-get upgrade  
+  * sudo apt-get install ufw : ufw 설치
+  * sudo ufw enable/disalbe : 활성화/비활성화  
+  * sudo ufw status : ufw 활성화 확인  
+  * sudo ufw allow/deny <portnumber> : 포트 접속/차단  
+  * sudo ufw delete deny <portname> : ufw 룰 삭제
+  * 22 : ssh 포트
+  * sudo ufw status numbered : 연결된 목록 숫자로 확인  
+  * sudo ufw delete n : 연결 포트 삭제  
+  * sudo ufw allow OpenSSH : 방화벽 사용 이전에 수신 SSH 연결 허용  
+  * sudo ufw allow 4242/tcp : 4242포트 연결 허용  
 ## ssh 연결  
 > https://baked-corn.tistory.com/52 (출처)  
 > secure shell protocol의 약자로 외부 연결망과 안전하게 통신하기 위해 사용되는 프로토콜이다. 통신에 사용되는 일반적인 프로토콜에 비해 보안적으로 우수하다. ssh로 통신을 할 경우 public key(공개키)와 private key(개인키) 두 종류의 key가 주어지며, public key로 정보를 암호화 하고 private key로 암호화 되어 있는 정보를 복호화 할 수 있다. 복호화 한다는 것은 곧 통신으로 받은 정보를 열람하겠다는 의미이므로 이것에 사용되는 private key는 함부로 노출되어서는 안된다. 따라서 private key는 로컬 장소에 안전하게 내장되어 있다. 클라이언트에서 보낸 public key는 서버의 pricate key와 한 쌍을 이루어  암호화 된 채널을 생성하고 이 채널을 통해 안전한 통신이 가능하다.  
+> sudo apt-get install openssh-server : openssh 설치
 > systemctl status ssh : ssh 연결 여부 확인  
-> vim /etc/ssh/sshd_config : port4242로만 통신하도록 수정
+> vim /etc/ssh/sshd_config : port4242로만 통신하도록 수정  
 ## LVM  
 > https://eunbin00.tistory.com/105 (출처)  
 >  ![download](https://user-images.githubusercontent.com/128696540/235417904-d202b6bd-2e2b-4337-ac65-98908db0baaf.png)  
@@ -81,8 +99,7 @@
 ## sudo 설정하기  
 1. apt-get install sudo : sudo 설치  
 2. visudo : sudo 정보 수정  
-<img width="1296" alt="Screen Shot 2023-05-07 at 1 19 42 PM" src="https://user-images.githubusercontent.com/128696540/236657413-338bce3d-bc4a-4b15-9a5f-e0d3c3c009be.png">
-
+<img width="1296" alt="Screen Shot 2023-05-07 at 1 19 42 PM" src="https://user-images.githubusercontent.com/128696540/236657413-338bce3d-bc4a-4b15-9a5f-e0d3c3c009be.png">  
   
 * env_reset : 특정 환경변수를 제외한 모든 환경변수 초기화(보안상의 이유)  
 * mail_badpass : 패스워드 오류 시 지정된 이메일로 오류 보고  
@@ -99,14 +116,15 @@
  user     ALL=(ALL:ALL) ALL  
  위 형식은 모든 호스트에서 어떤 사용자든지 어떤 명령어든지 실행할 수 있는 권한을 부여한다. 이 권한은 시스템 관리자가 시스템을 관리하거나 유지보수할 때 유용하다.  
 * Allow members of group sudo to execute any command : sudo 그룹에서의 privilege specification 형식  
-## 명령어 정리  
-* sudo ufw status : 방화벽 활성화 여부 확인  
-* sudo ufw status numbered : 연결된 목록 숫자로 확인  
-* sudo ufw delete n : 연결 포트 삭제  
-* sudo ufw allow OpenSSH : 방화벽 사용 이전에 수신 SSH 연결 허용  
-* sudo ufw allow 4242/tcp : 4242포트 연결 허용  
-* sudo ufw enable / disalbe : 방화벽 활성화 / 비활성화  
 * su : sudo로 사용자 전환  
+* sudo apt-get install openssh-server : openssh 설치  
+ * sudo 설치
+ * 비밀 번호 3회 시도  
+ * 메시지 출력  
+ * 로그 기록  
+ * tty  
+ * 경로 설정  
+## 명령어 정리  
 * hostnamectl set-hostname [hostname] : hostname 변경
 * chage -l 계정명 : 패스워드 만기 정보일 출력  
 * https://tragramming.tistory.com/87 : 패스워드 만기일 관련 명령어 출처  
@@ -116,9 +134,6 @@
 * groups \<username> : \<username>이 속해있는 그룹
 
 ##주요 설치  
-* appArmor  
-  * app install apparmor : apparmor 설치  
-  * aa-status : apparmor 설치 유무 확인
 * sudo 설치 및 설정  
   * sudo 설치
   * 비밀 번호 3회 시도  
@@ -137,33 +152,8 @@
   * 패스워드 설정 이전에 생성된 계정인 root와 기존 user에 대한 적용 필요  
   * passwd -e <username> : 강제 만료 명령  
   * chage -m 2 -M 30 -W 7 <username>. 
-  * sudo vi /etc/shadow로 확인 가능  
-* ufw 설정  
-  * sudo apt-get update
-  * sudo apt-get upgrade  
-  * sudo apt-get install ufw
-  * ufw 설치
-  * sudo ufw enable/disalbe : 활성화/비활성화  
-  * sudo ufw status : ufw 활성화 확인  
-  * sudo ufw allow/deny <portnumber> : 포트 접속/차단  
-  * sudo ufw delete deny <portname> : ufw 룰 삭제
-  * 22 : ssh 포트
-* ssh 설정
-  * sudo apt-get install openssh-server : openssh 설치  
-  * ssh-keygen rsa : key 생성  
-  * id_rsa 경로로 확인  
-* 스크립트 작성  
-printf "#Disk Usage: "
-df -a -BM | grep /dev/map | awk '{sum+=$3}END{print sum}' | tr -d '\n'
-printf "/"
-df -a -BM | grep /dev/map | awk '{sum+=$4}END{print sum}' | tr -d '\n'
-printf "MB ("
-df -a -BM | grep /dev/map | awk '{sum1+=$3 ; sum2+=$4 }END{printf "%d", sum1 / sum2 * 100}' | tr -d '\n'
-printf "%%)\n"
-
-printf "#CPU load: "
-mpstat | grep all | awk '{printf "%.2f%%\n", 100-$13}'
-  
+  * sudo vi /etc/shadow로 확인 가능 
+ 
   * chmod +x <script name.sh>. 
   * crontab -e. 
   * */10 * * * * /root/filename.sh | wall  
@@ -178,54 +168,7 @@ mpstat | grep all | awk '{printf "%.2f%%\n", 100-$13}'
 * 웹 페이지를 만들 때 프론트 부분을 꾸미기 위해 동적으로 웹 페이지를 생성할 때 사용하는 스크립트 언어다. 높은 이식성과 빠른 속도가 장점이다. 또한 다양한 DB와 연동이 가능하다.  
 
 <img width="926" alt="Screen Shot 2023-05-08 at 1 58 57 PM" src="https://user-images.githubusercontent.com/128696540/236737733-6dac15a9-5cd9-4c5c-892a-65ca3ef0b065.png">
-데이버ㅍ
 
- 
  
  <img width="1022" alt="Screen Shot 2023-05-09 at 4 04 34 PM" src="https://user-images.githubusercontent.com/128696540/237019926-54a7bd16-7a54-4797-afe7-fee98e96e757.png">
 
- printf "#Architecture: "
-uname -a
-
-printf "#CPU physical : "
-nproc --all
-
-printf "#vCPU : "
-cat /proc/cpuinfo | grep processor | wc -l
-
-printf "#Memory Usage: "
-free -m | grep Mem | awk '{printf"%d/%dMB (%.2f%%)\n", $3, $2, $3/$2 * 100}'
-
-printf "#Disk Usage: "
-df -a -BM | grep /dev/map | awk '{sum+=$3}END{print sum}' | tr -d '\n'
-printf "/"
-df -a -BM | grep /dev/map | awk '{sum+=$4}END{print sum}' | tr -d '\n'
-printf "MB ("
-df -a -BM | grep /dev/map | awk '{sum1+=$3 ; sum2+=$4 }END{printf "%d", sum1 / sum2 * 100}' | tr -d '\n'
-printf "%%)\n"
-
-printf "#CPU load: "
-mpstat | grep all | awk '{printf "%.2f%%\n", 100-$13}'
-
-printf "#Last boot: "
-who -b | awk '{printf $3" "$4"\n"}'
-
-printf "#LVM use: "
-if [ "$(lsblk | grep lvm | wc -l)" -gt 0 ] ; then printf "yes\n" ; else printf "no\n" ; fi
-
-printf "#Connections TCP : "
-ss | grep -i tcp | wc -l | tr -d '\n'
-printf " ESTABLISHED\n"
-
-printf "#User log: "
-who | wc -l
-
-printf "#Network: IP "
-hostname -I | tr -d '\n'
-printf "("
-ip link show | awk '$1 == "link/ether" {print $2}' | sed '2, $d' | tr -d '\n'
-printf ")\n"
-
-printf "#Sudo : "
-journalctl _COMM=sudo | wc -l | tr -d '\n'
-printf " cmd\n"
