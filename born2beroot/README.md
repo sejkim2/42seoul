@@ -26,6 +26,7 @@
 > 로키는 리눅스 -> 레드햇 -> CentOS -> 로키 순으로 파생되었으며 데비안은 로키에 비해 비교적 접근이 쉽게 때문에 개발 속도가 빠르다. 로키는 큰 회사 혹은 기관에서 규모가 큰 서버를 구축할 때 사용된다.  
 ## 가상머신  
 > https://www.vmware.com/kr/topics/glossary/content/virtual-machine.html (출처)  
+![VirtualMachines](https://github.com/sejkim2/42cursus/assets/128696540/66e76297-2a94-4e83-985a-6c12e4569f76)
 > VM(Virtual Machine)이라고 불리며, 컴퓨터 환경이 하나의 호스트라면, 그 안에 있는 여러 게스트 중 하나이며, 호스트가 가지는 물리적 컴퓨터의 성격과 동일한 기능을 제공하는 소프트웨어 컴퓨터이다. 에뮬레이터와 비슷하다고 볼 수 있는데, 호스트가 에뮬레이터를 물리적으로 다른 장치라고 (실제로는 소프트웨어 장치지만) 믿는 것처럼 가상 머신 또한 호스트가 게스트를 물리적 컴퓨터라고 믿게 된다. 가상 머신은 시스템 가상 머신과 프로세스 가상 머신으로 나눌 수 있는데, 각각은 완전한 운영체제 혹은 단일 프로그램(프로세스)를 제공한다.  
 > 가상머신을 사용하는 이유  
 * 굳이 하드웨어를 하나 더 구매하지 않아도 os를 구축할 수 있다.  
@@ -92,8 +93,9 @@
 ## group  
 * 권한을 특정 집단 기준으로 나눠서 부여하기 위해 생성한 집합  
 * sudo groupadd \<groupname> : 새 그룹 추가  
-* sudo adduer \<username> \<groupname> : \<username>을 \<groupname>에 추가  
-* groups \<username> : \<username>이 속해있는 모든 그룹을 확인
+* sudo adduser \<username> \<groupname> : \<username>을 \<groupname>에 추가  
+* sudo usermod -aG \<groupname> \<username> : \<username> 을 \<groupname>에 추가 
+* groups \<username> : \<username>이 속해있는 모든 그룹을 확인 
 ## sudo 와 root 
 > root로 로그인 하는 것은 보안상 좋지 않기 때문에 sudo 명령을 통해 임시로 root 권한을 빌릴 수 있음. sudo 사용자는 log에 기록이 남는다.  
 ## sudo 설정하기  
@@ -118,12 +120,6 @@
 * Allow members of group sudo to execute any command : sudo 그룹에서의 privilege specification 형식  
 * su : sudo로 사용자 전환  
 * sudo apt-get install openssh-server : openssh 설치  
- * sudo 설치
- * 비밀 번호 3회 시도  
- * 메시지 출력  
- * 로그 기록  
- * tty  
- * 경로 설정  
 ## 명령어 정리  
 * hostnamectl set-hostname [hostname] : hostname 변경
 * chage -l 계정명 : 패스워드 만기 정보일 출력  
@@ -133,14 +129,6 @@
 * sudo usermod -aG \<groupname> \<username> : \<username> 을 \<groupname>에 추가. 
 * groups \<username> : \<username>이 속해있는 그룹
 
-##주요 설치  
-* sudo 설치 및 설정  
-  * sudo 설치
-  * 비밀 번호 3회 시도  
-  * 메시지 출력  
-  * 로그 기록  
-  * tty  
-  * 경로 설정  
 * 패스워드 설정  
   * sudo vi /etc/login.defs : 전체적인 패스워드 정책 관리
   * PASS_MAX_DAYS : 패스워드를 사용 가능한 최대 날짜
@@ -153,12 +141,10 @@
   * passwd -e <username> : 강제 만료 명령  
   * chage -m 2 -M 30 -W 7 <username>. 
   * sudo vi /etc/shadow로 확인 가능 
- 
+* cron 설정  
   * chmod +x <script name.sh>. 
   * crontab -e. 
   * */10 * * * * /root/filename.sh | wall  
-  
-  
   
 ## lighttpd(라이피티디)  
 * 웹서버의 일종으로 적은 자원으로 높은 효율을 낸다. 사람들이 많이 사용하는 아파치는 여러 환경에서 실행되기 위해 멀티 프로세스를 지원하지만 자원을 많이 잡아먹기 때문에 느리다. 라이티피디는 아파치에 비해 상대적으로 적은 메모리에서 관리되므로 속도가 더 빠르며 프록시를 지원하기 때문에 캐시를 활용한 효율적인 네트워킹이 가능하다. (같은 요청에 대해 반복된 응답을 보낼 필요가 없음) 프록시에서 제공되는 보안 기능은 덤이다.  
