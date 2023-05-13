@@ -152,7 +152,10 @@
   * service cron start/stop : crontab을 편집하지 않고 활성화/비활성화
 
 ##bonus part 
-> https://velog.io/@octo__/Born2beRoot-WordPress-%EA%B5%AC%EC%B6%95 (출처)  
+> https://velog.io/@octo__/Born2beRoot-WordPress-%EA%B5%AC%EC%B6%95 (출처)
+
+> <img width="926" alt="Screen Shot 2023-05-08 at 1 58 57 PM" src="https://user-images.githubusercontent.com/128696540/236737733-6dac15a9-5cd9-4c5c-892a-65ca3ef0b065.png">
+
 ## lighttpd(라이피티디)  
 * 웹서버의 일종으로 적은 자원으로 높은 효율을 낸다. 사람들이 많이 사용하는 아파치는 여러 환경에서 실행되기 위해 멀티 프로세스를 지원하지만 자원을 많이 잡아먹기 때문에 느리다. 라이티피디는 아파치에 비해 상대적으로 적은 메모리에서 관리되므로 속도가 더 빠르며 프록시를 지원하기 때문에 캐시를 활용한 효율적인 네트워킹이 가능하다. (같은 요청에 대해 반복된 응답을 보낼 필요가 없음) 프록시에서 제공되는 보안 기능은 덤이다.  
 > sudo apt-get install lighttpd : lighttpd 설치  
@@ -170,5 +173,10 @@
 > vim /etc/lighttpd/lighttpd.conf : server.document-root 의 경로와 server.port가 설정되어 있다.  
 > ufw allow 80 으로 server.port를 허용해준다
 
-<img width="926" alt="Screen Shot 2023-05-08 at 1 58 57 PM" src="https://user-images.githubusercontent.com/128696540/236737733-6dac15a9-5cd9-4c5c-892a-65ca3ef0b065.png">
-
+## 추가 서비스 지원  
+> phpMyAdmin 설치 : db를 gui로 쉽게 다루기  
+> sudo wget -O /tmp/phpmyadmin.tar.gz "https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz"
+> sudo mkdir /var/www/html/phpmyadmin
+> sudo tar -xvzf /tmp/phpmyadmin.tar.gz -C /var/www/html/phpmyadmin
+> sudo apt install -y php*
+> localhost:8080/phpmyadmin 으로 접속
