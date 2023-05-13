@@ -81,6 +81,7 @@
 > sudo apt-get install openssh-server : openssh 설치
 > systemctl status ssh : ssh 연결 여부 확인  
 > vim /etc/ssh/sshd_config : port4242로만 통신하도록 수정  
+> ssh <계정 이름>@<서버 주소> -p 포트번호 : 원격 연결
 ## LVM  
 > https://eunbin00.tistory.com/105 (출처)  
 >  ![download](https://user-images.githubusercontent.com/128696540/235417904-d202b6bd-2e2b-4337-ac65-98908db0baaf.png)  
