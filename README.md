@@ -51,6 +51,9 @@
   * 터미널로 직접 접속한 상태
 * 쉘 스크립트와 cron
   * service crontab start/stop : 크론 탭 활성화 / 비활성화
+  * systemctl enable cron
+  * systemctl disable cron
+  * systemctl is-enabled cron
 * bonus 파트 : lighttpd, Mariadb, php, phpmyadmin 
   * lighttpd : 경량 서버용 프로그램, 여러 환경에서 돌아가는 아피치에 비해 운용에 부담이 적으며 프록시를 지원하므로 캐싱을 활용한 효율적인 네트워킹 가능
   * sudo systemctl stop/start/enable lighttpd.service :  중지/시작/활성화
