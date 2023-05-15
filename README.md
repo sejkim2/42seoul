@@ -47,4 +47,5 @@
   * cat /etc/group : 존재하는 그룹 목록 보기
 * tty
 * 쉘 스크립트와 cron
+  * service crontab start/stop : 크론 탭 활성화 / 비활성화
 * bonus 파트 : lighttpd, Mariadb, php, phpmyadmin 
