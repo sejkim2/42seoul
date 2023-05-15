@@ -19,7 +19,8 @@
   * aa-status : 활성화 여부 확인
 * lvm과 파티션  
   * lvm은 물리적 공간을 논리적으로 다시 분할하는 역할을 한다. 이를 통해 파티션 관리가 유연해진다.  
-  * 파티션 : 1~4까지는 주 파티션으로 할당 가능하며 그 이후부터는 확장 파티션이 된다. 주 파티션은 실제 하드 공간에 직접 할당되며 확장 파티션은 여러개의 논리 파티션으로 다시 분할 가능하며 공간의 가변에 따라 유연하게 바뀔 수 있다.
+  * 파티션 : 1~4까지는 주 파티션으로 할당 가능하며 그 이후부터는 확장 파티션이 된다. 주 파티션은 실제 하드 공간에 직접 할당되며 확장 파티션은 여러개의 논리 파티션으로 다시 분할 가능하며 공간의 가변에 따라 유연하게 바뀔 수 있다.  
+  * lsblk : 파티션 영역 확인
 * apt와 aptitiue
   * 둘 다 패키지 관리 소프트웨어 
 * ssh 프로토콜
@@ -47,6 +48,19 @@
   * usermod -aG [groupname] [username] : 그룹에 유저 추가
   * cat /etc/group : 존재하는 그룹 목록 보기
 * tty
+  * 터미널로 직접 접속한 상태
 * 쉘 스크립트와 cron
   * service crontab start/stop : 크론 탭 활성화 / 비활성화
 * bonus 파트 : lighttpd, Mariadb, php, phpmyadmin 
+  * lighttpd : 경량 서버용 프로그램, 여러 환경에서 돌아가는 아피치에 비해 운용에 부담이 적으며 프록시를 지원하므로 캐싱을 활용한 효율적인 네트워킹 가능
+  * sudo systemctl stop/start/enable lighttpd.service :  중지/시작/활성화
+  * mariadb : mysql 기반의 데이터 베이스이며 성능, 보안, 접근성 면에서 개선되었다.
+  * sudo mysql -u root -p : db 관리
+  * php : 서버 개발 용 스크립트 언어로, 웹 페이지를 동적으로 만들 때 역시 사용된다. 높은 이식성과 빠른 속도가 장점이며 db와의 연동도 자유롭다.
+  * sudo lighttpd-enable-mod fastcgi/fastcgi-php
+  * service lighttpd force-reload
+  * sudo systemctl stop/start/enable mysql.service : 중지/시작/활성화
+  * sudo systemctl restart mysql.service
+  * wordpress : 웹 페이지 제작 홈페이지
+  * 추가 서비스는 phpMyAdmin을 설치하였고 db를 gui로 쉽게 관리해준다. 
+  * 10.12.9.7://8080/phpmyadmin으로 접속
