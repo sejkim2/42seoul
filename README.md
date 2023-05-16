@@ -67,3 +67,7 @@
   * wordpress : 웹 페이지 제작 홈페이지
   * 추가 서비스는 phpMyAdmin을 설치하였고 db를 gui로 쉽게 관리해준다. 
   * 10.12.9.7://8080/phpmyadmin으로 접속
+
+  * select *(all) from wp_users where ID = [number];  //ID레코드
+  * 
+  * selinux && apparmor
