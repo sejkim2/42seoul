@@ -12,7 +12,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(CLIB) $(SRCS) -o $@
-#install_name_tool -change libmlx.dylib mlx/libmlx.dylib $@
+	install_name_tool -change libmlx.dylib mlx/libmlx.dylib $@
 
 clean : 
 	rm -rf $(OBJS)
