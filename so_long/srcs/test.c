@@ -18,7 +18,7 @@ int main()
 	mlx_ptr = mlx_init();	//초기화
 	win_ptr = mlx_new_window(mlx_ptr, 500, 500, "Hello world!");	//창 생성
 
-	img.img = mlx_xpm_file_to_image(mlx_ptr, "testxpm2.xpm", &width, &height);
+	img.img = mlx_xpm_file_to_image(mlx_ptr, "image_xpm_dir/tree.xpm", &width, &height);
 	
 	mlx_put_image_to_window(mlx_ptr, win_ptr, img.img, 64, 0);	//위치 지정
 
