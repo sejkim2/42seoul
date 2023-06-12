@@ -6,11 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:57:06 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:44:27 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/05/24 11:08:23 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "../../includes/libft.h"
 
 t_list	*ft_lstclear_func(t_list **lst, void (*del)(void *), void *cont)
 {

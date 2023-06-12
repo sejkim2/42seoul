@@ -6,11 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:09:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:40:12 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/05/25 17:04:01 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/ft_printf.h"
+#include "../../includes/ft_printf.h"
 
 int	ft_printf(const char *format, ...)
 {
@@ -23,7 +23,7 @@ int	ft_printf(const char *format, ...)
 	va_start(ap, format);
 	i = 0;
 	count = 0;
-	len = ft_strlen(format);
+	len = ft_strlen_printf(format);
 	while (i < len)
 	{
 		if (format[i] == '%')

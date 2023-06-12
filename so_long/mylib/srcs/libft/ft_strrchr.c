@@ -6,19 +6,18 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:57:59 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:45:31 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/06/08 11:49:17 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "../../includes/libft.h"
 
-//strchr과 비슷하지만 이 함수는 마지막으로 일치하는 문자의 위치를 반환
 char	*ft_strrchr(const char *s, int c)
 {
 	size_t	i;
 	size_t	len;
 	char	*p;
-	char	*result;	//일치하는 문자의 위치 기록
+	char	*result;
 
 	p = (char *)s;
 	result = 0;
@@ -27,7 +26,7 @@ char	*ft_strrchr(const char *s, int c)
 	while (i <= len)
 	{
 		if (*(p + i) == (char)c)
-			result = p + i;	//일치 문자 위치 
+			result = p + i;
 		i++;
 	}
 	return (result);

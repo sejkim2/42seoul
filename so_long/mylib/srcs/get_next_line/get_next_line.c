@@ -6,13 +6,13 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:36:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:46:58 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/05/25 17:07:54 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/get_next_line.h"
+#include "../../includes/get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen_gnl(const char *s)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr_gnl(const char *s, int c)
 {
 	char	*p;
 	size_t	i;
@@ -30,7 +30,7 @@ char	*ft_strchr(const char *s, int c)
 
 	p = (char *)s;
 	i = 0;
-	len = ft_strlen(s);
+	len = ft_strlen_gnl(s);
 	while (i <= len)
 	{
 		if (*(p + i) == (char)c)
@@ -41,7 +41,7 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin_gnl(char const *s1, char const *s2)
 {
 	size_t	s1_len;
 	size_t	s2_len;
@@ -49,8 +49,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	j;
 	char	*dest;
 
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
+	s1_len = ft_strlen_gnl(s1);
+	s2_len = ft_strlen_gnl(s2);
 	i = 0;
 	j = 0;
 	dest = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
@@ -67,7 +67,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (dest);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr_gnl(char const *s, unsigned int start, size_t len)
 {
 	char	*dest;
 	size_t	s_len;
@@ -75,7 +75,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 
 	i = 0;
-	s_len = ft_strlen(s);
+	s_len = ft_strlen_gnl(s);
 	if (start >= s_len)
 		size = 1;
 	else if (s_len - start < len)
@@ -102,17 +102,17 @@ char	*split_two_str(char **buf)
 	int		newline_index;
 
 	tmp = *buf;
-	cur_newline = ft_strchr(*buf, '\n');
+	cur_newline = ft_strchr_gnl(*buf, '\n');
 	if (cur_newline == 0)
 	{
 		*buf = 0;
 		return (tmp);
 	}
 	newline_index = cur_newline - *buf + 1;
-	line = ft_substr(*buf, 0, newline_index + 1);
+	line = ft_substr_gnl(*buf, 0, newline_index + 1);
 	if (line == 0)
 		return (0);
-	*buf = ft_substr(*buf, newline_index, ft_strlen(*buf));
+	*buf = ft_substr_gnl(*buf, newline_index, ft_strlen_gnl(*buf));
 	if (*buf == 0)
 	{
 		free(line);

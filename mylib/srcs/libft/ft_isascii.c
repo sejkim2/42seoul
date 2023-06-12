@@ -6,13 +6,12 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:56:36 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:43:43 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/06/08 11:43:45 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "../../includes/libft.h"
 
-//man page에 의거하여 char만 고려 (0~127)
 int	ft_isascii(int c)
 {
 	return (c >= 0 && c <= 127);

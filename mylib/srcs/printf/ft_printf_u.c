@@ -6,11 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:09:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:40:06 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/05/24 11:10:16 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/ft_printf.h"
+#include "../../includes/ft_printf.h"
 
 int	ft_printf_u(int n)
 {

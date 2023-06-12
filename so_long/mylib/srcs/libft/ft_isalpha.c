@@ -6,11 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:49:58 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:43:39 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/05/24 11:07:34 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "../../includes/libft.h"
 
 int	ft_isalpha(int c)
 {

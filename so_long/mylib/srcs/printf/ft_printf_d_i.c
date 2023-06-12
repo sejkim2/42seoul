@@ -6,11 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:09:09 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:39:53 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/05/24 11:10:09 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/ft_printf.h"
+#include "../../includes/ft_printf.h"
 
 static int	print(char *ar, int max_index, int fd)
 {
@@ -75,10 +75,8 @@ static int	ft_putnbr_fd(int n, int fd)
 int	ft_printf_d_i(int num)
 {
 	long long	n;
-	int			count;
 	int			len;
 
-	count = 0;
 	n = num;
 	len = 0;
 	if (n == 0)

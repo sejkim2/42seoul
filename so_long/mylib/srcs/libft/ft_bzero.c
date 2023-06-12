@@ -6,13 +6,12 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:56:07 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:43:07 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/06/08 11:43:27 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "../../includes/libft.h"
 
-//void형 포인터를 len만큼 '\0'으로 초기화하는 함수
 void	*ft_bzero(void *b, size_t len)
 {
 	void	*p;
@@ -22,7 +21,6 @@ void	*ft_bzero(void *b, size_t len)
 	i = 0;
 	while (i < len)
 	{
-		//c99 표준에 의거하여 void형 포인터를 unsigned char형 포인터로 형변환
 		*((unsigned char *)p + i) = 0;
 		i++;
 	}

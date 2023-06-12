@@ -6,11 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:09:37 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:40:17 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/05/25 17:03:55 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/ft_printf.h"
+#include "../../includes/ft_printf.h"
 
 static	int	print_num(size_t num, char *base, size_t order)
 {
@@ -46,7 +46,7 @@ static	size_t	is_valid(char *base)
 	size_t	j;
 	size_t	base_len;
 
-	base_len = ft_strlen(base);
+	base_len = ft_strlen_printf(base);
 	if (base_len <= 1)
 		return (0);
 	i = 0;

@@ -6,11 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:36:45 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:47:01 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/05/25 17:08:18 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/get_next_line.h"
+#include "../../includes/get_next_line.h"
 
 static t_nd	*init_node(int fd)
 {
@@ -83,14 +83,14 @@ static int	read_line(t_nd **nd)
 			return (read_size);
 		buf[read_size] = '\0';
 		tmp = (*nd)->buf;
-		(*nd)->buf = ft_strjoin((*nd)->buf, buf);
+		(*nd)->buf = ft_strjoin_gnl((*nd)->buf, buf);
 		if ((*nd)->buf == 0)
 		{
 			free(tmp);
 			return (-1);
 		}
 		free(tmp);
-		if (ft_strchr(buf, '\n') != 0)
+		if (ft_strchr_gnl(buf, '\n') != 0)
 			return (read_size);
 	}
 }
@@ -108,7 +108,7 @@ char	*get_next_line(int fd)
 		return (0);
 	if (nd->buf == 0)
 		return (del_node(&head, nd));
-	if (ft_strchr(nd->buf, '\n') == 0)
+	if (ft_strchr_gnl(nd->buf, '\n') == 0)
 	{
 		if (read_line(&nd) == -1)
 			return (del_node(&head, nd));

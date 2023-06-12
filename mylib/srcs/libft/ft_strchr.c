@@ -6,13 +6,12 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 17:57:38 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/05/20 20:45:04 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/06/08 11:47:53 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "../../includes/libft.h"
 
-//문자열에서 특정 문자를 검색해 가장 먼저 나온 위치(주소) 반환
 char	*ft_strchr(const char *s, int c)
 {
 	char	*p;
@@ -24,7 +23,7 @@ char	*ft_strchr(const char *s, int c)
 	len = ft_strlen(s);
 	while (i <= len)
 	{
-		if (*(p + i) == (char)c)	//converted to a char : man page
+		if (*(p + i) == (char)c)
 			return (p + i);
 		else
 			i++;
