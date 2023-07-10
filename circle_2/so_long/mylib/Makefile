@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/06/21 18:44:01 by sejkim2           #+#    #+#              #
+#    Updated: 2023/06/21 18:44:02 by sejkim2          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC = cc
 C_FLAGS = -Wall -Werror -Wextra
 HEADER = includes
@@ -27,7 +39,10 @@ NAME = mylib.a
 
 all : $(NAME)
 
-$(NAME) : libft printf gnl
+$(NAME) : 
+	make libft
+	make printf
+	make gnl
 
 libft : $(addprefix $(LIBFT_DIRS)/, $(LIBFT_SRCS:.c=.o))
 printf : $(addprefix $(PRINTF_DIRS)/, $(PRINTF_SRCS:.c=.o))

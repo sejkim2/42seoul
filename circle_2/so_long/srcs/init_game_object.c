@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:26:33 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/06/12 14:08:37 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/06/20 17:42:16 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	init_map(t_game_info *game, char	*filename)
 	game->map.buf = ft_strdup("");
 	game->map.map_table = 0;
 	game->map.visited = 0;
-	game->map.filename = ft_strdup(filename);
 	game->map.num_of_players = 0;
 	game->map.num_of_exit = 0;
 	game->map.num_of_chest = 0;
@@ -56,12 +55,8 @@ void	init_mlx_controller(t_game_info *game)
 	SCALE * game->map.width, SCALE * game->map.height, "so_long");
 }
 
-t_game_info	*init_game_object(char *filename)
+void	init_game_object(t_game_info *game, char *filename)
 {
-	t_game_info	*game;
-
-	game = (t_game_info *)malloc(sizeof(t_game_info));
 	init_map(game, filename);
 	init_player(game);
-	return (game);
 }

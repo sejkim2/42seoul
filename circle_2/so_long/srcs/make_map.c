@@ -6,28 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:26:38 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/06/12 15:30:08 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/07/07 13:00:24 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-static void	init_visited(t_game_info *game)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	game->map.visited = (int **)malloc(sizeof(int *) * game->map.height);
-	while (i < game->map.height)
-	{
-		game->map.visited[i] = (int *)malloc(sizeof(int) * game->map.width);
-		j = 0;
-		while (j < game->map.width)
-			game->map.visited[i][j++] = 0;
-		i++;
-	}
-}
 
 static void	run_gnl(t_game_info *game)
 {
@@ -45,7 +28,24 @@ static void	run_gnl(t_game_info *game)
 		free(tmp);
 		game->map.height++;
 	}
-	close(game->map.fd);
+}
+
+static	int	check_map_height(t_game_info *game)
+{
+	char	**p;
+	int		i;
+
+	p = game->map.map_table;
+	i = 0;
+	while (p[i])
+		i++;
+	if (game->map.height != i)
+	{
+		game->map.height = i;
+		return (0);
+	}
+	else
+		return (1);
 }
 
 static int	init_map_width(t_game_info	*game)
@@ -67,18 +67,22 @@ static int	init_map_width(t_game_info	*game)
 	return ((int)len_width);
 }
 
-t_game_info	*make_map(char	*filename)
+void	make_map(t_game_info *game, char	*filename)
 {
-	t_game_info	*game;
-
-	game = init_game_object(filename);
+	init_game_object(game, filename);
 	run_gnl(game);
 	if (game->map.buf[0] == '\0')
 		print_map_error_message(6, game);
 	game->map.map_table = ft_split(game->map.buf, '\n');
+	if (!check_map_height(game))
+		print_map_error_message(5, game);
+	if (game->map.buf[ft_strlen(game->map.buf) - 1] == '\n')
+		print_map_error_message(5, game);
 	game->map.width = init_map_width(game);
-	init_visited(game);
 	if (game->map.height < 3 || game->map.width == 0)
 		print_map_error_message(5, game);
-	return (game);
+	if (game->map.height > MAX_HEIGHT_SIZE || game->map.width > MAX_WIDTH_SIZE)
+		print_map_error_message(10, game);
+	if (close(game->map.fd) < 0)
+		print_map_error_message(8, game);
 }

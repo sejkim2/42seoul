@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:26:48 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/06/09 12:28:26 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:03:02 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	put_image(t_game_info *game, char ch, int *row, int *col)
 	{
 		mlx_put_image_to_window(game->mlx_controller.mlx, \
 game->mlx_controller.win, game->img.chest, (*col) * SCALE, (*row) * SCALE);
-		game->map.num_of_chest++;
 	}
 	else if (ch == 'E')
 		mlx_put_image_to_window(game->mlx_controller.mlx, \

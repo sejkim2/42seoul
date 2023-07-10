@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/06/12 14:11:06 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/06/27 15:21:22 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,9 +30,6 @@ NAME = so_long
 
 all : $(NAME)
 
-%.o : %.c 
-	$(CC) $(C_FLAGS) -c $< -o $@
-
 $(NAME) : $(OBJS)
 	make -C ./mylib
 	make -C ./mlx
@@ -51,3 +48,5 @@ fclean : clean
 re :
 	make fclean
 	make all
+
+.PHONY : all clean fclean re 

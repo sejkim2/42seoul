@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:26:55 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/06/12 14:23:38 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/07/05 12:39:47 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define KEY_D				2
 
 # define SCALE				64
+# define MAX_HEIGHT_SIZE	20
+# define MAX_WIDTH_SIZE		40
 
 # include "../mylib/includes/libft.h"
 # include "../mylib/includes/ft_printf.h"
@@ -30,7 +32,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include <string.h>
 
 typedef struct s_map_info
 {
@@ -40,7 +41,6 @@ typedef struct s_map_info
 	char	*buf;
 	char	**map_table;
 	int		**visited;
-	char	*filename;
 	int		num_of_players;
 	int		num_of_exit;
 	int		num_of_chest;
@@ -78,18 +78,20 @@ typedef struct s_game_info
 }	t_game_info;
 
 int			main(int argc, char *argv[]);
-void		check_argument_error(int argc, char *filename);
-void		init_game(t_game_info **game, char *filename);
-void		run_game(t_game_info **game);
-t_game_info	*make_map(char	*filename);
+void		check_argument_error(int filename_len, char *filename);
+void		init_game(t_game_info *game, char *filename);
+void		run_game(t_game_info *game);
+void		make_map(t_game_info *game, char *filename);
 void		run_window(t_game_info *game);
 void		move_map(t_game_info *game);
-int			check_map_error(t_game_info *game);
+void		check_map_error(t_game_info *game);
 void		print_filename_error_message(int error_num);
 void		print_map_error_message(int error_num, t_game_info *game);
 char		*free_memory(t_game_info *game);
-t_game_info	*init_game_object(char *filename);
+char		*free_visited(t_game_info *game);
+void		init_game_object(t_game_info *game, char *filename);
 void		dfs(t_game_info *game, int row, int col);
+void		init_visited(t_game_info *game);
 void		move_cordi(t_game_info *game, int next_step, int x_dir, int y_dir);
 int			close_win(t_game_info *game);
 void		init_mlx_controller(t_game_info *game);

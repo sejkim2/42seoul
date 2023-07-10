@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:26:27 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/06/05 16:35:10 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:25:40 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,23 @@ static int	return_move_col_size(int i)
 	return (move_col[i]);
 }
 
+void	init_visited(t_game_info *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	game->map.visited = (int **)malloc(sizeof(int *) * game->map.height);
+	while (i < game->map.height)
+	{
+		game->map.visited[i] = (int *)malloc(sizeof(int) * game->map.width);
+		j = 0;
+		while (j < game->map.width)
+			game->map.visited[i][j++] = 0;
+		i++;
+	}
+}
+
 void	dfs(t_game_info *game, int row, int col)
 {
 	int	i;
@@ -49,13 +66,10 @@ void	dfs(t_game_info *game, int row, int col)
 		if (x < 0 || y < 0 || x >= game->map.height
 			|| y >= game->map.width || game->map.visited[x][y] == 1)
 			continue ;
-		if (game->map.visited[x][y] == 0)
+		if (game->map.map_table[x][y] != '1')
 		{
-			if (game->map.map_table[x][y] != '1')
-			{
-				game->map.visited[x][y] = 1;
-				dfs(game, x, y);
-			}
+			game->map.visited[x][y] = 1;
+			dfs(game, x, y);
 		}
 	}
 }
