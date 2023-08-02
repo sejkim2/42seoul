@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/01 15:49:06 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/02 13:37:24 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static void check_file_is_accessable(t_node *node)
         ft_printf("%s is not writable", node->outfile_name);
         exit(1);
     }
+    node->fd[0] = open(node->infile_name, O_WRONLY);
+    node->fd[1] = open(node->outfile_name, O_WRONLY);
 }
 
 static char **find_path_in_envp_and_split(char **envp)
@@ -78,25 +80,39 @@ static char **find_path_in_envp_and_split(char **envp)
     return (ft_split(p + 5, ':'));
 }
 
-static void check_cmd_is_availabe(t_node *node, char **envp)
+static int check_cmd_is_availabe(t_node *node, char **envp, char *input_cmd)
 {
     int i = 0;
+    char *cmd_with_root;
+    char *cmd_with_path;
+    char **first_cmd;
 
     node->path_env = find_path_in_envp_and_split(envp);
+    first_cmd = ft_split(input_cmd, ' ');
+    if (first_cmd = 0)
+        exit(1);
+
     if (node->path_env == 0)
     {
         ft_printf("$PATH is not exist\n");
         exit(1);
     }
+    cmd_with_root = ft_strjoin("/", first_cmd[0]);   //   /ls -l
     while (node->path_env[i])
     {
-        if (access(node->path_env[i], X_OK) == -1)
+        cmd_with_path = ft_strjoin(node->path_env[i], cmd_with_root);   //  path/ls -l
+        if (access(cmd_with_path, X_OK) == 0)
         {
-            ft_printf("%s is not available\n", node->path_env[i]);
-            exit(1);
+            free(cmd_with_root);
+            free(cmd_with_path);
+            return (1);
         }
+        free(cmd_with_path);
         i++;
     }
+    ft_printf("%s is not available\n", input_cmd);
+    free(cmd_with_root);
+    return (0);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -112,6 +128,9 @@ int main(int argc, char **argv, char **envp)
         exit(1);
     parsing_cmd_and_filename(argv, &node);
     check_file_is_accessable(&node);
-    check_cmd_is_availabe(&node, envp);
+    if (check_cmd_is_availabe(&node, envp, node.cmd1) == 0)
+        exit(1);
+    if (check_cmd_is_availabe(&node, envp, node.cmd2) == 0)
+        exit(1);
     run_pipex(&node);
 }

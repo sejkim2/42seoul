@@ -16,6 +16,7 @@ int main(int argc, char **argv, char **envp);
 
 typedef struct s_node
 {
+    int fd[2];
     char *cmd1;
     char *cmd2;
     char *infile_name;

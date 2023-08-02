@@ -1,21 +1,28 @@
 #include "../includes/pipex.h"
 
-static void parent_process(t_node *node, int fd[2])
+static void parent_process(t_node *node)
 {
     
 }
 
-static void child_process(t_node *node, int fd[2])
+static void child_process(t_node *node)
 {
+    char buf[4096];
+    int read_size;
 
+    close(fd[0]);
+    dup2(fd[1], STDOUT_FILENO);
+    dup2(node->fd[0], STDIN_FILENO);
+    close(node->fd[0]);
+    read(STDIN_FILENO, buf, 100);
+    write(STDOUT_FILENO, buf, 100);
 }
 
 void run_pipex(t_node *node)
 {
     pid_t pid;
-    int fd[2];
 
-    if (pipe(fd) < 0)
+    if (pipe(node->fd) < 0)
     {
         ft_printf("pipe error\n");
         exit(1);
@@ -26,8 +33,14 @@ void run_pipex(t_node *node)
         ft_printf("fork error\n");
         exit(1);
     }
+    // child_process(node, fd);
     else if (pid == 0)
-        child_process(node, fd);
+    {
+        
+    }
+    // parent_process(node, fd);
     else
-        parent_process(node, fd);
+    {
+
+    }
 }
