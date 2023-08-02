@@ -12,16 +12,18 @@
 
 # define MAX_IND 100000
 
-int main(int argc, char **argv, char **envp);
-
 typedef struct s_node
 {
     int fd[2];
-    char *cmd1;
-    char *cmd2;
+    char **cmd1;
+    char **cmd2;
     char *infile_name;
     char *outfile_name;
-    char **path_env;
+    char *path_env1;
+    char *path_env2;
 }	t_node;
+
+int main(int argc, char **argv, char **envp);
+void run_pipex(t_node *node);
 
 #endif

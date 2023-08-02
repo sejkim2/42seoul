@@ -6,13 +6,15 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/08/02 12:50:36 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/08/02 16:47:56 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 C_FLAGS = -Wall -Werror -Wextra
-SRCS = srcs/main.c
+SRCS = srcs/main.c \
+srcs/run_pipex.c
+
 HEADER = includes/pipex.h
 SRCS_BONUS =
 

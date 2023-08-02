@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/02 13:37:24 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/02 16:47:23 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void parsing_cmd_and_filename(char **argv, t_node *node)
 {
     node->infile_name = argv[1];
-    node->cmd1 = argv[2];
-    node->cmd2 = argv[3];
+    node->cmd1 = ft_split(argv[2], ' ');
+    node->cmd2 = ft_split(argv[3], ' ');
     node->outfile_name = argv[4];
 }
 
@@ -80,29 +80,27 @@ static char **find_path_in_envp_and_split(char **envp)
     return (ft_split(p + 5, ':'));
 }
 
-static int check_cmd_is_availabe(t_node *node, char **envp, char *input_cmd)
+static int check_cmd_is_availabe(char **envp, char *input_cmd, char **path_env_cmd)
 {
     int i = 0;
     char *cmd_with_root;
     char *cmd_with_path;
-    char **first_cmd;
+    char **path_env;
 
-    node->path_env = find_path_in_envp_and_split(envp);
-    first_cmd = ft_split(input_cmd, ' ');
-    if (first_cmd = 0)
-        exit(1);
+    path_env = find_path_in_envp_and_split(envp);
 
-    if (node->path_env == 0)
+    if (path_env == 0)
     {
         ft_printf("$PATH is not exist\n");
         exit(1);
     }
-    cmd_with_root = ft_strjoin("/", first_cmd[0]);   //   /ls -l
-    while (node->path_env[i])
+    cmd_with_root = ft_strjoin("/", input_cmd);   //   /ls
+    while (path_env[i])
     {
-        cmd_with_path = ft_strjoin(node->path_env[i], cmd_with_root);   //  path/ls -l
+        cmd_with_path = ft_strjoin(path_env[i], cmd_with_root);   //  path/ls
         if (access(cmd_with_path, X_OK) == 0)
         {
+            *path_env_cmd = cmd_with_path;
             free(cmd_with_root);
             free(cmd_with_path);
             return (1);
@@ -128,9 +126,9 @@ int main(int argc, char **argv, char **envp)
         exit(1);
     parsing_cmd_and_filename(argv, &node);
     check_file_is_accessable(&node);
-    if (check_cmd_is_availabe(&node, envp, node.cmd1) == 0)
+    if (check_cmd_is_availabe(envp, node.cmd1[0], &(node.path_env1)) == 0)
         exit(1);
-    if (check_cmd_is_availabe(&node, envp, node.cmd2) == 0)
+    if (check_cmd_is_availabe(envp, node.cmd2[0], &(node.path_env2)) == 0)
         exit(1);
     run_pipex(&node);
 }
