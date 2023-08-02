@@ -14,7 +14,11 @@
 
 typedef struct s_node
 {
-    int fd[2];
+    pid_t pid;
+    int pipe_fd[2];
+    
+    int infile_fd;
+    int outfile_fd;
     char **cmd1;
     char **cmd2;
     char *infile_name;
@@ -24,6 +28,6 @@ typedef struct s_node
 }	t_node;
 
 int main(int argc, char **argv, char **envp);
-void run_pipex(t_node *node);
+void run_pipex(t_node *node, char **envp);
 
 #endif

@@ -20,40 +20,10 @@ static void parsing_cmd_and_filename(char **argv, t_node *node)
     node->outfile_name = argv[4];
 }
 
-static void check_file_is_accessable(t_node *node)
+static void check_file_is_openable(t_node *node)
 {
-    if (access(node->infile_name, F_OK) == -1)
-    {
-        ft_printf("%s is not exist\n", node->infile_name);
-        exit(1);
-    }
-    if (access(node->infile_name, R_OK) == -1)
-    {
-        ft_printf("%s is not readable", node->infile_name);
-        exit(1);
-    }
-    if (access(node->infile_name, W_OK) == -1)
-    {
-        ft_printf("%s is not writable", node->infile_name);
-        exit(1);
-    }
-    if (access(node->outfile_name, F_OK) == -1)
-    {
-        ft_printf("%s is not exist\n", node->outfile_name);
-        exit(1);
-    }
-    if (access(node->outfile_name, R_OK) == -1)
-    {
-        ft_printf("%s is not readable", node->outfile_name);
-        exit(1);
-    }
-    if (access(node->outfile_name, W_OK) == -1)
-    {
-        ft_printf("%s is not writable", node->outfile_name);
-        exit(1);
-    }
-    node->fd[0] = open(node->infile_name, O_WRONLY);
-    node->fd[1] = open(node->outfile_name, O_WRONLY);
+    node->infile_fd = open(node->infile_name, O_WRONLY);
+    node->outfile_fd = open(node->outfile_name, O_WRONLY);
 }
 
 static char **find_path_in_envp_and_split(char **envp)
@@ -125,10 +95,14 @@ int main(int argc, char **argv, char **envp)
     if (envp == 0)
         exit(1);
     parsing_cmd_and_filename(argv, &node);
-    check_file_is_accessable(&node);
+    check_file_is_openable(&node);
     if (check_cmd_is_availabe(envp, node.cmd1[0], &(node.path_env1)) == 0)
         exit(1);
     if (check_cmd_is_availabe(envp, node.cmd2[0], &(node.path_env2)) == 0)
         exit(1);
-    run_pipex(&node);
+    ft_printf("%s\n", node.path_env1);
+        ft_printf("%s\n", node.cmd1[0]);
+        ft_printf("%s\n", node.path_env2);
+        ft_printf("%s\n", node.cmd2[0]);
+    run_pipex(&node, envp);
 }
