@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/03 15:25:26 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/03 16:01:35 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void parsing_cmd_and_filename(char **argv, t_node *node)
 
 static void check_file_is_openable(t_node *node)
 {
-    node->infile_fd = open(node->infile_name, O_WRONLY, 0644);
+    node->infile_fd = open(node->infile_name, O_RDONLY, 0644);
     node->outfile_fd = open(node->outfile_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (node->infile_fd == -1)
     {
