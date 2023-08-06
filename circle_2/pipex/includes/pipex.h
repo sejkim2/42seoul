@@ -9,14 +9,12 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <stdio.h>
 
 # define MAX_IND 100000
 
 typedef struct s_node
 {
-    pid_t pid;
-    int pipe_fd[2];
-    
     int infile_fd;
     int outfile_fd;
     char **cmd1;
