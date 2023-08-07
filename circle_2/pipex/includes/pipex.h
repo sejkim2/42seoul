@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/07 16:26:11 by sejkim2           #+#    #+#             */
+/*   Updated: 2023/08/07 18:02:51 by sejkim2          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
@@ -15,14 +27,17 @@
 
 typedef struct s_node
 {
+    int num_of_cmd;
     int infile_fd;
     int outfile_fd;
-    char **cmd1;
-    char **cmd2;
+    char ***cmd;
+    // char **cmd1;
+    // char **cmd2;
     char *infile_name;
     char *outfile_name;
-    char *path_env1;
-    char *path_env2;
+    char **path_env;
+    // char *path_env1;
+    // char *path_env2;
 }	t_node;
 
 int main(int argc, char **argv, char **envp);

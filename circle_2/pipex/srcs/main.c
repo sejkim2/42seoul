@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/03 16:01:35 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/07 18:04:57 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,19 @@
 
 static void parsing_cmd_and_filename(char **argv, t_node *node)
 {
+    int i;
+
+    i = 0;
     node->infile_name = argv[1];
-    node->cmd1 = ft_split(argv[2], ' ');
-    node->cmd2 = ft_split(argv[3], ' ');
-    node->outfile_name = argv[4];
+    node->cmd = (char ***)malloc(sizeof(char **) * (node->num_of_cmd));
+    while (i < node->num_of_cmd)
+    {
+        node->cmd[i] = ft_split(argv[i + 2], ' ');
+        i++;
+    }
+    // node->cmd1 = ft_split(argv[2], ' ');
+    // node->cmd2 = ft_split(argv[3], ' ');
+    node->outfile_name = argv[argc - 1];
 }
 
 static void check_file_is_openable(t_node *node)
@@ -83,6 +92,19 @@ static char *check_cmd_is_availabe(char **path, char *input_cmd)
     return (0);
 }
 
+static void init_path_env(t_node *node, char **path)
+{
+    int i;
+
+    i = 0;
+    node->path_env = (char **)malloc(sizeof(char *) * (node->num_of_cmd));
+    while (i < node->num_of_cmd)
+    {
+        node->path_env[i] = check_cmd_is_availabe(path, node->cmd[i][0]);
+        i++;
+    }
+}
+
 int main(int argc, char **argv, char **envp)
 {
     t_node node;
@@ -95,6 +117,7 @@ int main(int argc, char **argv, char **envp)
     }
     if (envp == 0)
         exit(1);
+    node.num_of_cmd = argc - 3;
     parsing_cmd_and_filename(argv, &node);
     check_file_is_openable(&node);
     path = find_path_in_envp_and_split(envp);
@@ -103,7 +126,8 @@ int main(int argc, char **argv, char **envp)
         ft_printf("$PATH is not exist\n");
         exit(1);
     }
-    node.path_env1 = check_cmd_is_availabe(path, node.cmd1[0]);
-    node.path_env2 = check_cmd_is_availabe(path, node.cmd2[0]);
+    init_path_env(argc, &node, path);
+    // node.path_env1 = check_cmd_is_availabe(path, node.cmd1[0]);
+    // node.path_env2 = check_cmd_is_availabe(path, node.cmd2[0]);
     run_pipex(&node, envp);
 }
