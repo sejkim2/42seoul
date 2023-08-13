@@ -12,7 +12,7 @@
 
 #include "../includes/pipex.h"
 
-static void parsing_cmd_and_filename(char **argv, t_node *node)
+static void parsing_cmd_and_filename(int argc, char **argv, t_node *node)
 {
     int i;
 
@@ -24,8 +24,6 @@ static void parsing_cmd_and_filename(char **argv, t_node *node)
         node->cmd[i] = ft_split(argv[i + 2], ' ');
         i++;
     }
-    // node->cmd1 = ft_split(argv[2], ' ');
-    // node->cmd2 = ft_split(argv[3], ' ');
     node->outfile_name = argv[argc - 1];
 }
 
@@ -110,15 +108,15 @@ int main(int argc, char **argv, char **envp)
     t_node node;
     char **path;
 
-    if (argc != 5)
-    {
-        ft_printf("argument error\n");
-        exit(1);
-    }
+    // if (argc != 5)
+    // {
+    //     ft_printf("argument error\n");
+    //     exit(1);
+    // }
     if (envp == 0)
         exit(1);
     node.num_of_cmd = argc - 3;
-    parsing_cmd_and_filename(argv, &node);
+    parsing_cmd_and_filename(argc, argv, &node);
     check_file_is_openable(&node);
     path = find_path_in_envp_and_split(envp);
     if (path == 0)
@@ -126,8 +124,6 @@ int main(int argc, char **argv, char **envp)
         ft_printf("$PATH is not exist\n");
         exit(1);
     }
-    init_path_env(argc, &node, path);
-    // node.path_env1 = check_cmd_is_availabe(path, node.cmd1[0]);
-    // node.path_env2 = check_cmd_is_availabe(path, node.cmd2[0]);
+    init_path_env(&node, path);
     run_pipex(&node, envp);
 }
