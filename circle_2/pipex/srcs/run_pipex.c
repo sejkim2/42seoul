@@ -17,7 +17,6 @@ static void child_process(int index, t_node *node, char **envp)
     {
         close(fd[1]);
         dup2(fd[0], STDIN_FILENO);
-        waitpid(pid, 0, WNOHANG);
     }
 }
 
@@ -36,5 +35,9 @@ void run_pipex(t_node *node, char **envp)
     }
     dup2(node->outfile_fd, STDOUT_FILENO);
     close(node->outfile_fd);
+    while (wait(NULL) == -1)
+        ;
+    if (node->is_heredoc == 1)
+        unlink(node->infile_name);
     execve(node->path_env[index - 1], node->cmd[index - 1], envp);
 }
