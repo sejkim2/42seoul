@@ -12,12 +12,31 @@
 
 #include "../includes/pipex.h"
 
+void run_heredoc()
+{
+    int fd;
+    char *str;
+
+    fd = open("heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    while (1)
+    {
+        ft_printf("heredoc> ");
+        str = get_next_line(0);
+
+    }
+}
+
 static void parsing_cmd_and_filename(int argc, char **argv, t_node *node)
 {
     int i;
 
     i = 0;
-    node->infile_name = argv[1];
+    if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+    {
+
+    }
+    else
+        node->infile_name = argv[1];    
     node->cmd = (char ***)malloc(sizeof(char **) * (node->num_of_cmd));
     while (i < node->num_of_cmd)
     {
@@ -108,11 +127,11 @@ int main(int argc, char **argv, char **envp)
     t_node node;
     char **path;
 
-    // if (argc != 5)
-    // {
-    //     ft_printf("argument error\n");
-    //     exit(1);
-    // }
+    if (argc < 5)
+    {
+        ft_printf("argument error\n");
+        exit(1);
+    }
     if (envp == 0)
         exit(1);
     node.num_of_cmd = argc - 3;
