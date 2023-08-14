@@ -11,33 +11,40 @@ static void child_process(int index, t_node *node, char **envp)
     {
         close(fd[0]);
         dup2(fd[1], STDOUT_FILENO);
+        close(fd[1]);
         execve(node->path_env[index], node->cmd[index], envp);
     }
     else
     {
         close(fd[1]);
         dup2(fd[0], STDIN_FILENO);
+        close(fd[0]);
     }
 }
 
 void run_pipex(t_node *node, char **envp)
 {
     int index;
+    pid_t pid;
 
     index = 0;
+
     dup2(node->infile_fd, STDIN_FILENO);
     close(node->infile_fd);
-
-    while (index < node->num_of_cmd)
+    while (index < node->num_of_cmd - 1)
     {
         child_process(index, node, envp);
         index++;
     }
-    dup2(node->outfile_fd, STDOUT_FILENO);
-    close(node->outfile_fd);
-    while (wait(NULL) == -1)
+    pid = fork();
+    if (pid == 0)
+    {
+        dup2(node->outfile_fd, STDOUT_FILENO);
+        close(node->outfile_fd);
+        execve(node->path_env[index], node->cmd[index], envp);
+    }
+    while (wait(0) == -1)
         ;
     if (node->is_heredoc == 1)
         unlink(node->infile_name);
-    execve(node->path_env[index - 1], node->cmd[index - 1], envp);
 }
