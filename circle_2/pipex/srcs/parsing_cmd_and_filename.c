@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:00:17 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/15 14:00:19 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/15 14:10:55 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void parsing_cmd_and_filename(int argc, char **argv, t_node *node)
         node->num_of_cmd = argc - 4;    
         run_heredoc(node, argv[2]);
     }
-    node->infile_name = argv[1];
     node->num_of_cmd = argc - 3 - node->is_heredoc;
     node->cmd = (char ***)malloc(sizeof(char **) * (node->num_of_cmd));
     while (i < node->num_of_cmd)
@@ -60,5 +59,4 @@ void parsing_cmd_and_filename(int argc, char **argv, t_node *node)
         node->cmd[i] = ft_split(argv[i + 2 + node->is_heredoc], ' ');
         i++;
     }
-    node->outfile_name = argv[argc - 1];
 }

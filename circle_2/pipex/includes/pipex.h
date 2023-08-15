@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:26:11 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/15 12:04:44 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/15 14:12:39 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ typedef struct s_node
     int infile_fd;
     int outfile_fd;
     char ***cmd;
-    char *infile_name;
-    char *outfile_name;
     char **path_env;
     int is_heredoc;
 }	t_node;

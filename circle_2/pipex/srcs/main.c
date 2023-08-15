@@ -6,19 +6,19 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/15 14:04:27 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/15 15:50:41 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static void check_file_is_openable(t_node *node)
+static void open_infile_and_outfile(int argc, char **argv, t_node *node)
 {
-    node->infile_fd = open(node->infile_name, O_RDONLY, 0644);
+    node->infile_fd = open(argv[1], O_RDONLY | O_CREAT, 0644);
     if (node->is_heredoc == 0)
-        node->outfile_fd = open(node->outfile_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        node->outfile_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
     else
-        node->outfile_fd = open(node->outfile_name, O_WRONLY | O_APPEND, 0644);
+        node->outfile_fd = open(argv[argc - 1], O_WRONLY | O_APPEND, 0644);
     if (node->infile_fd == -1)
     {
         ft_printf("infile open error\n");
@@ -102,7 +102,7 @@ int main(int argc, char **argv, char **envp)
         exit(1);
     }
     parsing_cmd_and_filename(argc, argv, &node);
-    check_file_is_openable(&node);
+    open_infile_and_outfile(argc, argv, &node);
     path = find_path_in_envp_and_split(envp);
     if (path == 0)
     {
@@ -111,4 +111,5 @@ int main(int argc, char **argv, char **envp)
     }
     init_path_env(&node, path);
     run_pipex(&node, envp);
+    return (0);
 }
