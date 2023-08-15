@@ -6,13 +6,13 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:00:17 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/15 14:10:55 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/15 21:01:45 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void run_heredoc(t_node *node, char *limiter)
+static void run_heredoc(t_node *node, char *limiter)
 {
     char *str;
     int heredoc_fd;
@@ -37,8 +37,8 @@ void run_heredoc(t_node *node, char *limiter)
             break;
         write(heredoc_fd, str, ft_strlen(str));
     }
-    close(heredoc_fd);
     node->is_heredoc = 1;
+    close(heredoc_fd);
 }
 
 void parsing_cmd_and_filename(int argc, char **argv, t_node *node)
@@ -46,13 +46,13 @@ void parsing_cmd_and_filename(int argc, char **argv, t_node *node)
     int i;
 
     i = 0;
-    node->is_heredoc = 0;
     if (ft_strncmp(argv[1], "here_doc", 8) == 0)
     {
         node->num_of_cmd = argc - 4;    
         run_heredoc(node, argv[2]);
     }
-    node->num_of_cmd = argc - 3 - node->is_heredoc;
+    else
+        node->num_of_cmd = argc - 3;
     node->cmd = (char ***)malloc(sizeof(char **) * (node->num_of_cmd));
     while (i < node->num_of_cmd)
     {
