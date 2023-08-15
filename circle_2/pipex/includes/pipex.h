@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:26:11 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/14 19:08:52 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/15 12:04:44 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,14 @@ typedef struct s_node
     int infile_fd;
     int outfile_fd;
     char ***cmd;
-    // char **cmd1;
-    // char **cmd2;
     char *infile_name;
     char *outfile_name;
     char **path_env;
     int is_heredoc;
-    // char *path_env1;
-    // char *path_env2;
 }	t_node;
 
 int main(int argc, char **argv, char **envp);
+void parsing_cmd_and_filename(int argc, char **argv, t_node *node);
 void run_pipex(t_node *node, char **envp);
 
 #endif
