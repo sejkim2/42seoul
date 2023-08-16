@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/15 21:56:41 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/16 13:40:15 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,52 @@ static char *check_cmd_is_availabe(char **path, char *input_cmd)
     return (0);
 }
 
-static void init_path_env(t_node *node, char **path)
+static int find_root(char *cmd)
 {
     int i;
 
+    i = ft_strlen(cmd);
+    while (i >= 0)
+    {
+        if (cmd[i] == '/')
+            return (i + 1);
+        i--;
+    }
+    return (0);
+}
+
+static void init_path_env(t_node *node, char **path)
+{
+    int i;
+    int root_place;
+
     i = 0;
-    node->path_env = (char **)malloc(sizeof(char *) * (node->num_of_cmd));
+    node->path_env = (char **)malloc(sizeof(char *) * (node->num_of_cmd + 1));
     while (i < node->num_of_cmd)
     {
-        node->path_env[i] = check_cmd_is_availabe(path, node->cmd[i][0]);
+        root_place = find_root(node->cmd[i][0]);
+        node->path_env[i] = check_cmd_is_availabe(path, node->cmd[i][0] + root_place);
+        if (root_place > 0 && node->path_env[i] != 0)
+        {
+            if (access(node->cmd[i][0], X_OK) != 0)
+            {
+                node->path_env[i] = 0;
+                ft_printf("%s is not available\n", node->cmd[i][0]);
+            }
+        }
         i++;
     }
+    node->path_env[i] = 0;
+}
+
+void f()
+{
+    system("leaks --list pipex");
 }
 
 int main(int argc, char **argv, char **envp)
 {
+    atexit(f);
     t_node node;
     char **path;
 
@@ -111,5 +142,6 @@ int main(int argc, char **argv, char **envp)
     }
     init_path_env(&node, path);
     run_pipex(&node, envp);
+    free_all_data(path, &node);
     return (0);
 }

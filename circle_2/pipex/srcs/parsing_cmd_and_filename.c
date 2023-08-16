@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:00:17 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/15 21:01:45 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/16 13:06:30 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,12 @@ static void run_heredoc(t_node *node, char *limiter)
         if (str == 0)
             break;
         if (ft_strlen(str) - 1 == len && ft_strncmp(str, limiter, len) == 0)
+        {
+            free(str);
             break;
+        }
         write(heredoc_fd, str, ft_strlen(str));
+        free(str);
     }
     node->is_heredoc = 1;
     close(heredoc_fd);

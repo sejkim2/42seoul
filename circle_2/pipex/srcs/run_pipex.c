@@ -46,7 +46,6 @@ void run_pipex(t_node *node, char **envp)
         execve(node->path_env[index], node->cmd[index], envp);
     }
     close(0);
-    close(1);
     while (i < node->num_of_cmd)
     {
         wait(0);
