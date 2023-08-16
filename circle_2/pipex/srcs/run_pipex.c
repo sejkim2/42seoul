@@ -71,12 +71,12 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
             if (index % 2 == 0)
             {
                 close(pipe_B[0]);
-                close(pipe_A[1]);
+                // close(pipe_A[1]);
             }
             else
             {
                 close(pipe_A[0]);
-                close(pipe_B[1]);
+                // close(pipe_B[1]);
             }
         }
         else
