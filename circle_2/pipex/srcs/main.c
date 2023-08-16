@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/16 13:40:15 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/16 16:16:52 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void f()
 
 int main(int argc, char **argv, char **envp)
 {
-    atexit(f);
+    // atexit(f);
     t_node node;
     char **path;
 
@@ -141,7 +141,8 @@ int main(int argc, char **argv, char **envp)
         exit(1);
     }
     init_path_env(&node, path);
+    free_two_pointer(path);
     run_pipex(&node, envp);
-    free_all_data(path, &node);
+    free_all_data(&node);
     return (0);
 }

@@ -1,51 +1,122 @@
 #include "../includes/pipex.h"
 
-static void child_process(int index, t_node *node, char **envp)
+static void child_process(int index, t_node *node, char **envp, int pipe_A[2], int pipe_B[2])
 {
     pid_t pid;
-    int fd[2];
 
-    pipe(fd);
     pid = fork();
     if (pid == 0)
     {
-        close(fd[0]);
-        dup2(fd[1], STDOUT_FILENO);
-        close(fd[1]);
+        if (index == 0)
+        {
+            close(pipe_A[0]);
+
+            dup2(node->infile_fd, STDIN_FILENO);
+            close(node->infile_fd);
+            dup2(pipe_A[1], STDOUT_FILENO);
+            close(pipe_A[1]);
+        }
+        else if (index == node->num_of_cmd - 1)
+        {
+            if (index % 2 == 0)
+            {
+                close(pipe_B[1]);
+
+                dup2(pipe_B[0], STDIN_FILENO);
+                close(pipe_B[0]);
+                dup2(node->outfile_fd, STDOUT_FILENO);
+                close(node->outfile_fd);
+            }
+            else
+            {
+                close(pipe_A[1]);
+
+                dup2(pipe_A[0], STDIN_FILENO);
+                close(pipe_A[0]);
+                dup2(node->outfile_fd, STDOUT_FILENO);
+                close(node->outfile_fd);
+            }
+        }
+        else
+        {
+            if (index % 2 == 0)
+            {
+                close(pipe_B[1]);
+
+                dup2(pipe_B[0], STDIN_FILENO);
+                close(pipe_B[0]);
+                dup2(pipe_A[1], STDOUT_FILENO);
+                close(pipe_A[1]);
+            }
+            else
+            {
+                close(pipe_A[1]);
+                
+                dup2(pipe_A[0], STDIN_FILENO);
+                close(pipe_A[0]);
+                dup2(pipe_B[1], STDOUT_FILENO);
+                close(pipe_B[1]);
+            }
+        }
         execve(node->path_env[index], node->cmd[index], envp);
     }
     else
     {
-        close(fd[1]);
-        dup2(fd[0], STDIN_FILENO);
-        close(fd[0]);
+        if (index == 0)
+        {
+            close(pipe_A[1]);
+        }
+        else if (index == node->num_of_cmd - 1)
+        {
+            if (index % 2 == 0)
+            {
+                close(pipe_B[0]);
+                close(pipe_A[1]);
+            }
+            else
+            {
+                close(pipe_A[0]);
+                close(pipe_B[1]);
+            }
+        }
+        else
+        {
+            if (index % 2 == 0)
+            {
+                close(pipe_B[0]);
+                close(pipe_A[1]);
+            }
+            else
+            {
+                close(pipe_A[0]);
+                close(pipe_B[1]);
+            }
+        }
     }
 }
 
 void run_pipex(t_node *node, char **envp)
 {
+    int pipe_A[2];
+    int pipe_B[2];
     int index;
     int i;
-    pid_t pid;
 
     index = 0;
     i = 0;
-
-    dup2(node->infile_fd, STDIN_FILENO);
-    close(node->infile_fd);
-    while (index < node->num_of_cmd - 1)
+    while (index < node->num_of_cmd)
     {
-        child_process(index, node, envp);
+        if (index % 2 == 0)
+            pipe(pipe_A);
+        else
+            pipe(pipe_B);
+        child_process(index, node, envp, pipe_A, pipe_B);
         index++;
     }
-    pid = fork();
-    if (pid == 0)
-    {
-        dup2(node->outfile_fd, STDOUT_FILENO);
-        close(node->outfile_fd);
-        execve(node->path_env[index], node->cmd[index], envp);
-    }
-    close(0);
+    close(pipe_A[0]);
+    close(pipe_A[1]);
+    close(pipe_B[0]);
+    close(pipe_B[1]);
     while (i < node->num_of_cmd)
     {
         wait(0);

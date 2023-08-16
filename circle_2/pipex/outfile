@@ -1,1 +1,7 @@
-a
+Makefile
+includes
+infile
+mylib
+outfile
+pipex
+srcs

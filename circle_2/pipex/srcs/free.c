@@ -34,7 +34,7 @@ static void free_cmd(t_node *node)
         free(node->cmd);
 }
 
-static void free_two_pointer(char **path)
+void free_two_pointer(char **path)
 {
     int i;
     
@@ -48,9 +48,8 @@ static void free_two_pointer(char **path)
         free(path);
 }
 
-void free_all_data(char **path, t_node *node)
+void free_all_data(t_node *node)
 {
     free_cmd(node);
-    free_two_pointer(path);
     free_two_pointer(node->path_env);
 }
