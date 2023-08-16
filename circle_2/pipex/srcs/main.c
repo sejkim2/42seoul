@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/16 20:13:44 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/16 20:26:21 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static void init_path_env(t_node *node, char **path)
 
 void f()
 {
-    system("leaks -quiet pipex");
+    system("leaks pipex");
 }
 
 int main(int argc, char **argv, char **envp)
