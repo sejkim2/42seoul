@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:26:11 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/16 14:19:16 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/16 19:56:21 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int main(int argc, char **argv, char **envp);
 void parsing_cmd_and_filename(int argc, char **argv, t_node *node);
 void run_pipex(t_node *node, char **envp);
 void free_all_data(t_node *node);
-void free_two_pointer(char **path);
+void free_path(char **path);
 
 #endif
