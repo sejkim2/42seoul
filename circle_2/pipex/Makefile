@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/08/17 11:29:34 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/08/17 20:47:32 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ CC = cc
 C_FLAGS = -Wall -Werror -Wextra
 SRCS = srcs/main.c \
 srcs/parsing_cmd_and_filename.c \
+srcs/init_path_env.c \
 srcs/run_pipex.c \
 srcs/free.c
 

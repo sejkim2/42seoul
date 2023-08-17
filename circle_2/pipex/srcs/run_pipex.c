@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_pipex.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/17 20:37:15 by sejkim2           #+#    #+#             */
+/*   Updated: 2023/08/17 20:59:08 by sejkim2          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/pipex.h"
 
 static void child_process(int index, t_node *node, char **envp, int pipe_A[2], int pipe_B[2])
@@ -33,7 +45,6 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
             {
                 close(pipe_B[0]);
                 close(pipe_B[1]);
-                // close(pipe_A[1]);
 
                 dup2(pipe_A[0], STDIN_FILENO);
                 close(pipe_A[0]);
@@ -64,7 +75,7 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
         }
         if (execve(node->path_env[index], node->cmd[index], envp) == -1)
         {
-            // perror("hi");
+            // perror("hddfasdadfadfi");
             exit(0);
         }
     }
@@ -72,7 +83,6 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
     {
         if (index == 0)
         {
-            // close(pipe_A[0]);   //
             close(pipe_A[1]);
         }
         else if (index == node->num_of_cmd - 1)
@@ -88,7 +98,6 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
                 close(pipe_B[0]);
                 close(pipe_B[1]);
                 close(pipe_A[0]);
-                // close(pipe_A[1]);
             }
         }
         else
@@ -101,7 +110,6 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
             else
             {
                 close(pipe_A[0]);
-                // close(pipe_B[0]);
                 close(pipe_B[1]);
             }
         }
