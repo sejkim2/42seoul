@@ -22,6 +22,9 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
             {
                 close(pipe_B[1]);
 
+                close(pipe_A[0]);
+                close(pipe_A[1]);
+
                 dup2(pipe_B[0], STDIN_FILENO);
                 close(pipe_B[0]);
                 dup2(node->outfile_fd, STDOUT_FILENO);
@@ -30,6 +33,9 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
             else
             {
                 close(pipe_A[1]);
+
+                close(pipe_B[0]);
+                close(pipe_B[1]);
 
                 dup2(pipe_A[0], STDIN_FILENO);
                 close(pipe_A[0]);
@@ -43,6 +49,8 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
             {
                 close(pipe_B[1]);
 
+                close(pipe_A[0]);
+
                 dup2(pipe_B[0], STDIN_FILENO);
                 close(pipe_B[0]);
                 dup2(pipe_A[1], STDOUT_FILENO);
@@ -51,6 +59,8 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
             else
             {
                 close(pipe_A[1]);
+
+                close(pipe_B[0]);
                 
                 dup2(pipe_A[0], STDIN_FILENO);
                 close(pipe_A[0]);
@@ -58,7 +68,10 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
                 close(pipe_B[1]);
             }
         }
-        execve(node->path_env[index], node->cmd[index], envp);
+        if (execve(node->path_env[index], node->cmd[index], envp) == -1)
+        {
+
+        }
     }
     else
     {
@@ -71,12 +84,12 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
             if (index % 2 == 0)
             {
                 close(pipe_B[0]);
-                // close(pipe_A[1]);
+                close(pipe_A[1]);
             }
             else
             {
                 close(pipe_A[0]);
-                // close(pipe_B[1]);
+                close(pipe_B[1]);
             }
         }
         else

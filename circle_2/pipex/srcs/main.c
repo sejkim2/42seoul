@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/16 20:26:21 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/17 12:51:32 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void f()
 
 int main(int argc, char **argv, char **envp)
 {
-    atexit(f);
+    // atexit(f);
     t_node node;
     char **path;
 

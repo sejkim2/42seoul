@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:00:17 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/16 13:06:30 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/17 10:47:08 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void run_heredoc(t_node *node, char *limiter)
     while (1)
     {
         i = 0;
-        while (i < node->num_of_cmd - 1)
+        while (i < node->num_of_cmd)
         {
             ft_printf("pipe ");
             i++;
@@ -50,7 +50,7 @@ void parsing_cmd_and_filename(int argc, char **argv, t_node *node)
     int i;
 
     i = 0;
-    if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+    if (ft_strlen(argv[1]) == 8 && ft_strncmp(argv[1], "here_doc", 8) == 0)
     {
         node->num_of_cmd = argc - 4;    
         run_heredoc(node, argv[2]);
