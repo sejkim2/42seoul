@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/17 12:51:32 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/17 17:54:43 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void open_infile_and_outfile(int argc, char **argv, t_node *node)
     if (node->is_heredoc == 0)
         node->outfile_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
     else
-        node->outfile_fd = open(argv[argc - 1], O_WRONLY | O_APPEND, 0644);
+        node->outfile_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (node->infile_fd == -1)
     {
         ft_printf("infile open error\n");
