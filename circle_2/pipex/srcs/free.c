@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:37:10 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 10:51:54 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 12:11:52 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static	int	check_string_length(char **str)
 	return (i);
 }
 
-static	void	free_cmd(t_node *node)
+void	free_cmd(t_node *node, int str_len)
 {
 	int	i;
 	int	j;
 	int	len;
 
 	i = 0;
-	while (i < node->num_of_cmd)
+	while (i < str_len)
 	{
 		j = 0;
 		len = check_string_length(node->cmd[i]);
@@ -60,7 +60,7 @@ void	free_path(char **path)
 		free(path);
 }
 
-void	free_all_data(t_node *node)
+void	free_all_data(t_node *node, int error_num)
 {
 	int	i;
 
@@ -72,5 +72,7 @@ void	free_all_data(t_node *node)
 	}
 	if (i > 0)
 		free(node->path_env);
-	free_cmd(node);
+	free_cmd(node, node->num_of_cmd);
+	if (error_num == 1)
+		exit(1);
 }

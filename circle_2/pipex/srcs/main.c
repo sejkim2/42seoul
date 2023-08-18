@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 10:47:07 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 12:57:06 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,20 @@
 
 static	void	open_infile_and_outfile(int argc, char **argv, t_node *node)
 {
-	node->infile_fd = open(argv[1], O_RDONLY | O_CREAT, 0644);
+	node->infile_fd = open(argv[1], O_RDONLY, 0644);
+	if (node->infile_fd == -1)
+		ft_printf("no such file or directory: %s\n", argv[1]);
 	if (node->is_heredoc == 0)
 		node->outfile_fd = open(argv[argc - 1], \
 		O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		node->outfile_fd = open(argv[argc - 1], \
 		O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (node->infile_fd == -1)
-	{
-		ft_printf("infile open error\n");
-		exit(1);
-	}
 	if (node->outfile_fd == -1)
 	{
 		ft_printf("outfile open error\n");
+		close(node->infile_fd);
+		free_cmd(node, node->num_of_cmd);
 		exit(1);
 	}
 }
@@ -73,11 +72,12 @@ int	main(int argc, char **argv, char **envp)
 	if (path == 0)
 	{
 		ft_printf("$PATH is not exist\n");
+		free_cmd(&node, node.num_of_cmd);
 		exit(1);
 	}
 	init_path_env(&node, path);
 	free_path(path);
 	run_pipex(&node, envp);
-	free_all_data(&node);
+	free_all_data(&node, 0);
 	return (0);
 }

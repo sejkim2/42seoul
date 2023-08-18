@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:26:11 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 11:03:38 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 12:40:44 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	run_pipex(t_node *node, char **envp);
 void	make_process(int index, t_node *node, char **envp);
 void	parent_process(int index, t_node *node);
 void	child_process(int index, t_node *node);
-void	free_all_data(t_node *node);
+void	free_cmd(t_node *node, int str_len);
+void	free_all_data(t_node *node, int error_num);
 void	free_path(char **path);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:54:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 11:24:47 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 12:50:40 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ void	init_path_env(t_node *node, char **path)
 
 	i = 0;
 	node->path_env = (char **)malloc(sizeof(char *) * (node->num_of_cmd + 1));
+	if (node->path_env == 0)
+	{
+		ft_printf("malloc error\n");
+		free_cmd(node, node->num_of_cmd);
+		exit(1);
+	}
 	while (i < node->num_of_cmd)
 	{
 		if (node->cmd[i][0] == 0)

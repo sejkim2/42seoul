@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:00:17 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 10:58:08 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 12:41:59 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,20 @@ void	parsing_cmd_and_filename(int argc, char **argv, t_node *node)
 	else
 		node->num_of_cmd = argc - 3;
 	node->cmd = (char ***)malloc(sizeof(char **) * (node->num_of_cmd));
+	if (node->cmd == 0)
+	{
+		ft_printf("malloc error\n");
+		exit(1);
+	}
 	while (i < node->num_of_cmd)
 	{
 		node->cmd[i] = ft_split(argv[i + 2 + node->is_heredoc], ' ');
+		if (node->cmd[i] == 0)
+		{
+			ft_printf("malloc error");
+			free_cmd(node, i);
+			exit(1);
+		}
 		i++;
 	}
 }
