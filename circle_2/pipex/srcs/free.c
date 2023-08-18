@@ -6,71 +6,71 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:37:10 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/17 20:39:33 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 10:51:54 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static int check_string_length(char **str)
+static	int	check_string_length(char **str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-        i++;
-    return (i);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
-static void free_cmd(t_node *node)
+static	void	free_cmd(t_node *node)
 {
-    int i;
-    int j;
-    int len;
+	int	i;
+	int	j;
+	int	len;
 
-    i = 0;
-    while (i < node->num_of_cmd)
-    {
-        j = 0;
-        len = check_string_length(node->cmd[i]);
-        while (j < len)
-        {
-            free(node->cmd[i][j]);
-            j++;
-        }
-        if (j > 0)
-            free(node->cmd[i]);
-        i++;
-    }
-    if (i > 0)
-        free(node->cmd);
+	i = 0;
+	while (i < node->num_of_cmd)
+	{
+		j = 0;
+		len = check_string_length(node->cmd[i]);
+		while (j < len)
+		{
+			free(node->cmd[i][j]);
+			j++;
+		}
+		if (j > 0)
+			free(node->cmd[i]);
+		i++;
+	}
+	if (i > 0)
+		free(node->cmd);
 }
 
-void free_path(char **path)
+void	free_path(char **path)
 {
-    int i;
-    
-    i = 0;
-    while (path[i])
-    {
-        free(path[i]);
-        i++;
-    }
-    if (i > 0)
-        free(path);
+	int	i;
+
+	i = 0;
+	while (path[i])
+	{
+		free(path[i]);
+		i++;
+	}
+	if (i > 0)
+		free(path);
 }
 
-void free_all_data(t_node *node)
+void	free_all_data(t_node *node)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (i <= node->num_of_cmd)
-    {
-        free(node->path_env[i]);
-        i++;
-    }
-    if (i > 0)
-        free(node->path_env);
-    free_cmd(node);
+	i = 0;
+	while (i <= node->num_of_cmd)
+	{
+		free(node->path_env[i]);
+		i++;
+	}
+	if (i > 0)
+		free(node->path_env);
+	free_cmd(node);
 }

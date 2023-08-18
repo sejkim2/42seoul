@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:26:11 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 10:40:29 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 11:03:38 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@
 
 typedef struct s_node
 {
-    int num_of_cmd;
-    int infile_fd;
-    int outfile_fd;
-    char ***cmd;
-    char **path_env;
-    int is_heredoc;
-    int pipe_A[2];
-    int pipe_B[2];
+	int		num_of_cmd;
+	int		infile_fd;
+	int		outfile_fd;
+	char	***cmd;
+	char	**path_env;
+	int		is_heredoc;
+	int		pipe_a[2];
+	int		pipe_b[2];
 }	t_node;
 
-int main(int argc, char **argv, char **envp);
-void parsing_cmd_and_filename(int argc, char **argv, t_node *node);
-void init_path_env(t_node *node, char **path);
-void run_pipex(t_node *node, char **envp);
-void make_process(int index, t_node *node, char **envp);
-void parent_process(int index, t_node *node);
-void child_process(int index, t_node *node);
-void free_all_data(t_node *node);
-void free_path(char **path);
+int		main(int argc, char **argv, char **envp);
+void	parsing_cmd_and_filename(int argc, char **argv, t_node *node);
+void	init_path_env(t_node *node, char **path);
+void	run_pipex(t_node *node, char **envp);
+void	make_process(int index, t_node *node, char **envp);
+void	parent_process(int index, t_node *node);
+void	child_process(int index, t_node *node);
+void	free_all_data(t_node *node);
+void	free_path(char **path);
 
 #endif
