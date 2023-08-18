@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_path_env.c                                    :+:      :+:    :+:   */
+/*   init_path_env_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:54:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 16:58:36 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 17:01:04 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/pipex_bonus.h"
 
 static	char	*check_cmd_is_availabe(char **path, char *input_cmd)
 {

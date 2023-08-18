@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parent_process.c                                   :+:      :+:    :+:   */
+/*   parent_process_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:56:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 15:03:56 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 17:01:12 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/pipex_bonus.h"
 
 static	void	last_parent_process(int index, t_node *node)
 {

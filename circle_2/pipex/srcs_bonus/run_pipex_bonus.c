@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_pipex.c                                        :+:      :+:    :+:   */
+/*   run_pipex_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:37:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 16:42:27 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 17:01:19 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/pipex_bonus.h"
 
 void	make_process(int index, t_node *node, char **envp)
 {
