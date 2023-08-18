@@ -49,7 +49,7 @@ void init_path_env(t_node *node, char **path)
         if (node->cmd[i][0] == 0)
         {
             node->path_env[i] = 0;
-            ft_printf("blank is not available\n");
+            ft_printf("empty command\n");
         }
         else
         {

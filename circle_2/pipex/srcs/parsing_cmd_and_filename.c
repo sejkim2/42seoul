@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:00:17 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/17 21:00:21 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 10:16:42 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,12 @@ static void run_heredoc(t_node *node, char *limiter)
     char *str;
     int heredoc_fd;
     size_t len;
-    int i;
 
     heredoc_fd = open("here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
     len = ft_strlen(limiter);
     while (1)
     {
-        i = 0;
-        while (i < node->num_of_cmd)
-        {
-            ft_printf("pipe ");
-            i++;
-        }
-        ft_printf("heredoc> ");
+        ft_printf("pipe heredoc> ");
         str = get_next_line(0);
         if (str == 0)
             break;

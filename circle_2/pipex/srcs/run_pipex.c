@@ -6,73 +6,20 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:37:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/17 20:59:08 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 10:40:14 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static void child_process(int index, t_node *node, char **envp, int pipe_A[2], int pipe_B[2])
+void make_process(int index, t_node *node, char **envp)
 {
     pid_t pid;
 
     pid = fork();
     if (pid == 0)
     {
-        if (index == 0)
-        {
-            close(pipe_A[0]);
-
-            dup2(node->infile_fd, STDIN_FILENO);
-            close(node->infile_fd);
-            dup2(pipe_A[1], STDOUT_FILENO);
-            close(pipe_A[1]);
-        }
-        else if (index == node->num_of_cmd - 1)
-        {
-            if (index % 2 == 0)
-            {
-                close(pipe_A[0]);
-                close(pipe_A[1]);
-                close(pipe_B[1]);
-
-                dup2(pipe_B[0], STDIN_FILENO);
-                close(pipe_B[0]);
-                dup2(node->outfile_fd, STDOUT_FILENO);
-                close(node->outfile_fd);
-            }
-            else
-            {
-                close(pipe_B[0]);
-                close(pipe_B[1]);
-
-                dup2(pipe_A[0], STDIN_FILENO);
-                close(pipe_A[0]);
-                dup2(node->outfile_fd, STDOUT_FILENO);
-                close(node->outfile_fd);
-            }
-        }
-        else
-        {
-            if (index % 2 == 0)
-            {
-                close(pipe_A[0]);
-
-                dup2(pipe_B[0], STDIN_FILENO);
-                close(pipe_B[0]);
-                dup2(pipe_A[1], STDOUT_FILENO);
-                close(pipe_A[1]);
-            }
-            else
-            {
-                close(pipe_B[0]);
-
-                dup2(pipe_A[0], STDIN_FILENO);
-                close(pipe_A[0]);
-                dup2(pipe_B[1], STDOUT_FILENO);
-                close(pipe_B[1]);
-            }
-        }
+        child_process(index, node);
         if (execve(node->path_env[index], node->cmd[index], envp) == -1)
         {
             // perror("hddfasdadfadfi");
@@ -80,46 +27,11 @@ static void child_process(int index, t_node *node, char **envp, int pipe_A[2], i
         }
     }
     else
-    {
-        if (index == 0)
-        {
-            close(pipe_A[1]);
-        }
-        else if (index == node->num_of_cmd - 1)
-        {
-            if (index % 2 == 0)
-            {
-                close(pipe_A[0]);
-                close(pipe_A[1]);
-                close(pipe_B[0]);
-            }
-            else
-            {
-                close(pipe_B[0]);
-                close(pipe_B[1]);
-                close(pipe_A[0]);
-            }
-        }
-        else
-        {
-            if (index % 2 == 0)
-            {
-                close(pipe_A[1]);
-                close(pipe_B[0]);
-            }
-            else
-            {
-                close(pipe_A[0]);
-                close(pipe_B[1]);
-            }
-        }
-    }
+        parent_process(index, node);
 }
 
 void run_pipex(t_node *node, char **envp)
 {
-    int pipe_A[2];
-    int pipe_B[2];
     int index;
     int i;
 
@@ -128,16 +40,16 @@ void run_pipex(t_node *node, char **envp)
     while (index < node->num_of_cmd)
     {
         if (index % 2 == 0)
-            pipe(pipe_A);
+            pipe(node->pipe_A);
         else
-            pipe(pipe_B);
-        child_process(index, node, envp, pipe_A, pipe_B);
+            pipe(node->pipe_B);
+        make_process(index, node, envp);
         index++;
     }
-    close(pipe_A[0]);
-    close(pipe_A[1]);
-    close(pipe_B[0]);
-    close(pipe_B[1]);
+    close(node->pipe_A[0]);
+    close(node->pipe_A[1]);
+    close(node->pipe_B[0]);
+    close(node->pipe_B[1]);
     while (i < node->num_of_cmd)
     {
         wait(0);
