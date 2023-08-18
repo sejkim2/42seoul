@@ -6,12 +6,13 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/08/18 15:07:21 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/08/18 17:24:20 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-C_FLAGS = -Wall -Werror -Wextra
+# C_FLAGS = -Wall -Werror -Wextra
+C_FLAGS =
 
 SRCS = srcs/main.c \
 srcs/parsing_cmd_and_filename.c \

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 16:41:58 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 17:39:27 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,14 @@ static	char	**find_path_in_envp_and_split(char **envp)
 	return (ft_split(p + 5, ':'));
 }
 
+void f()
+{
+	system("leaks --list pipex");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
+	atexit(f);
 	t_node	node;
 	char	**path;
 
@@ -81,5 +87,6 @@ int	main(int argc, char **argv, char **envp)
 	free_all_data(&node, 0);
 	if (node.is_error == 1)
 		exit(1);
+	exit(0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:54:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 16:58:36 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 17:36:18 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	init_path_env(t_node *node, char **path)
 	if (node->path_env == 0)
 	{
 		ft_printf("malloc error\n");
+		free_path(path);
 		free_cmd(node, node->num_of_cmd);
 		exit(1);
 	}
