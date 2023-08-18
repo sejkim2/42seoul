@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:54:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 17:01:04 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 18:17:53 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ static	int	find_root(char *cmd)
 	return (0);
 }
 
+static	void	malloc_error(t_node *node, char **path)
+{
+	ft_printf("malloc error\n");
+	free_path(path);
+	free_cmd(node, node->num_of_cmd);
+	exit(1);
+}
+
 static	void	init_path_env_utils(t_node *node, char **path, int i)
 {
 	int	root_place;
@@ -83,11 +91,7 @@ void	init_path_env(t_node *node, char **path)
 	i = 0;
 	node->path_env = (char **)malloc(sizeof(char *) * (node->num_of_cmd + 1));
 	if (node->path_env == 0)
-	{
-		ft_printf("malloc error\n");
-		free_cmd(node, node->num_of_cmd);
-		exit(1);
-	}
+		malloc_error(node, path);
 	node->is_error = 0;
 	while (i < node->num_of_cmd)
 	{
