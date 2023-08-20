@@ -14,7 +14,7 @@ CC = cc
 C_FLAGS = -Wall -Werror -Wextra
 
 SRCS = srcs/main.c \
-srcs/parsing_cmd_and_filename.c \
+srcs/parsing_cmd_and_check_heredoc.c \
 srcs/init_path_env.c \
 srcs/run_pipex.c \
 srcs/parent_process.c \
@@ -22,7 +22,7 @@ srcs/child_process.c \
 srcs/free.c
 
 SRCS_BONUS = srcs_bonus/main_bonus.c \
-srcs_bonus/parsing_cmd_and_filename_bonus.c \
+srcs_bonus/parsing_cmd_and_check_heredoc_bonus.c \
 srcs_bonus/init_path_env_bonus.c \
 srcs_bonus/run_pipex_bonus.c \
 srcs_bonus/parent_process_bonus.c \
