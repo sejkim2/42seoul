@@ -29,18 +29,16 @@ srcs_bonus/parent_process_bonus.c \
 srcs_bonus/child_process_bonus.c \
 srcs_bonus/free_bonus.c
 
-HEADER = includes/pipex.h
-
-OBJS = $(SRCS:%.c=%.o)
 NAME = pipex
 
 ifdef BONUS
 	SRC = $(SRCS_BONUS)
-	OBJ = $(SRC:%.c=%.o)
+	OBJ = $(SRCS_BONUS:%.c=%.o)
 	HEADER = includes/pipex_bonus.h
 else
-	OBJ = $(OBJS)
 	SRC = $(SRCS)
+	OBJ = $(SRCS:%.c=%.o)
+	HEADER = includes/pipex.h
 endif
 
 all : $(NAME)
