@@ -12,7 +12,7 @@
 
 #include "../includes/pipex.h"
 
-static	void	run_heredoc(t_node *node, char *limiter)
+static	void	run_heredoc(char *limiter)
 {
 	char	*str;
 	int		heredoc_fd;
@@ -34,7 +34,6 @@ static	void	run_heredoc(t_node *node, char *limiter)
 		write(heredoc_fd, str, ft_strlen(str));
 		free(str);
 	}
-	node->is_heredoc = 1;
 	close(heredoc_fd);
 }
 
@@ -42,14 +41,18 @@ static	void	check_is_heredoc(int argc, char **argv, t_node *node)
 {
 	if (ft_strlen(argv[1]) == 8 && ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
+		node->is_heredoc = 1;
 		node->num_of_cmd = argc - 4;
-		run_heredoc(node, argv[2]);
+		run_heredoc(argv[2]);
 	}
 	else
+	{
+		node->is_heredoc = 0;
 		node->num_of_cmd = argc - 3;
+	}
 }
 
-void	parsing_cmd_and_filename(int argc, char **argv, t_node *node)
+void	parsing_cmd_and_check_heredoc(int argc, char **argv, t_node *node)
 {
 	int	i;
 

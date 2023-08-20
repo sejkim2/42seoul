@@ -18,6 +18,8 @@
 # include "../mylib/includes/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
+# include <string.h>
+# include <errno.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>
@@ -37,7 +39,7 @@ typedef struct s_node
 }	t_node;
 
 int		main(int argc, char **argv, char **envp);
-void	parsing_cmd_and_filename(int argc, char **argv, t_node *node);
+void	parsing_cmd_and_check_heredoc(int argc, char **argv, t_node *node);
 void	init_path_env(t_node *node, char **path);
 void	run_pipex(t_node *node, char **envp);
 void	make_process(int index, t_node *node, char **envp);

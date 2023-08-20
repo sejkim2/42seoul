@@ -68,7 +68,7 @@ static	void	init_path_env_utils(t_node *node, char **path, int i)
 		if (access(node->cmd[i][0], X_OK) != 0)
 		{
 			node->path_env[i] = 0;
-			ft_printf("pipex: no such file or directory: %s\n", node->cmd[i][0]);
+			ft_printf("pipex: %s: %s\n", strerror(errno), node->cmd[i][0]);
 			if (i == node->num_of_cmd - 1)
 				node->is_error = 1;
 		}

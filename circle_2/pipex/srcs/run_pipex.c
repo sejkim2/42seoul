@@ -31,6 +31,7 @@ void	make_process(int index, t_node *node, char **envp)
 
 static	void	after_make_process(t_node *node)
 {
+	pid_t pid;
 	int	i;
 
 	i = 0;
@@ -40,7 +41,12 @@ static	void	after_make_process(t_node *node)
 	close(node->pipe_b[1]);
 	while (i < node->num_of_cmd)
 	{
-		wait(0);
+		pid = wait(0);
+		if (pid < 0)
+		{
+			perror("wait:");
+			free_all_data(node, 1);
+		}
 		i++;
 	}
 }

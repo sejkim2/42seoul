@@ -16,7 +16,7 @@ static	void	open_infile_and_outfile(int argc, char **argv, t_node *node)
 {
 	node->infile_fd = open(argv[1], O_RDONLY, 0644);
 	if (node->infile_fd == -1)
-		ft_printf("pipex: no such file or directory: %s\n", argv[1]);
+		ft_printf("pipex: %s: %s\n", strerror(errno), argv[1]);
 	if (node->is_heredoc == 0)
 		node->outfile_fd = open(argv[argc - 1], \
 		O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -25,7 +25,7 @@ static	void	open_infile_and_outfile(int argc, char **argv, t_node *node)
 		O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (node->outfile_fd == -1)
 	{
-		perror("outfile:");
+		ft_printf("pipex: %s: %s\n", strerror(errno), argv[argc - 1]);
 		close(node->infile_fd);
 		free_cmd(node, node->num_of_cmd);
 		exit(1);
@@ -66,7 +66,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("argument error\n");
 		exit(1);
 	}
-	parsing_cmd_and_filename(argc, argv, &node);
+	parsing_cmd_and_check_heredoc(argc, argv, &node);
 	open_infile_and_outfile(argc, argv, &node);
 	path = find_path_in_envp_and_split(envp);
 	if (path == 0)

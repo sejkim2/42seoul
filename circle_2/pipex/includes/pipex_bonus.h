@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:26:11 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 17:03:31 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 16:33:32 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include "../mylib/includes/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
+# include <string.h>
+# include <errno.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>
@@ -37,7 +39,7 @@ typedef struct s_node
 }	t_node;
 
 int		main(int argc, char **argv, char **envp);
-void	parsing_cmd_and_filename(int argc, char **argv, t_node *node);
+void	parsing_cmd_and_check_heredoc(int argc, char **argv, t_node *node);
 void	init_path_env(t_node *node, char **path);
 void	run_pipex(t_node *node, char **envp);
 void	make_process(int index, t_node *node, char **envp);

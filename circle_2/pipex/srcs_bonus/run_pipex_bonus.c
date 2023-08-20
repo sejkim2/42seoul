@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_pipex_bonus.c                                  :+:      :+:    :+:   */
+/*   run_pipex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:37:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 17:59:23 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 17:14:55 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	make_process(int index, t_node *node, char **envp)
 
 static	void	after_make_process(t_node *node)
 {
+	pid_t pid;
 	int	i;
 
 	i = 0;
@@ -40,7 +41,12 @@ static	void	after_make_process(t_node *node)
 	close(node->pipe_b[1]);
 	while (i < node->num_of_cmd)
 	{
-		wait(0);
+		pid = wait(0);
+		if (pid < 0)
+		{
+			perror("wait:");
+			free_all_data(node, 1);
+		}
 		i++;
 	}
 }

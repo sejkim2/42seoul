@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_path_env_bonus.c                              :+:      :+:    :+:   */
+/*   init_path_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:54:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 18:17:53 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/18 18:18:50 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static	void	init_path_env_utils(t_node *node, char **path, int i)
 		if (access(node->cmd[i][0], X_OK) != 0)
 		{
 			node->path_env[i] = 0;
-			ft_printf("pipex: no such file or directory: %s\n", node->cmd[i][0]);
+			ft_printf("pipex: %s: %s\n", strerror(errno), node->cmd[i][0]);
 			if (i == node->num_of_cmd - 1)
 				node->is_error = 1;
 		}
