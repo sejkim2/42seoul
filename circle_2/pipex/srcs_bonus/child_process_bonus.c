@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child_process.c                                    :+:      :+:    :+:   */
+/*   child_process_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:49:31 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 15:03:41 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/21 12:03:34 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static	void	redirection(t_node *node, int read_dest_fd, int write_dest_fd)
 {
-	int res1;
-	int res2;
+	int	res1;
+	int	res2;
 
 	res1 = dup2(read_dest_fd, STDIN_FILENO);
 	close(read_dest_fd);

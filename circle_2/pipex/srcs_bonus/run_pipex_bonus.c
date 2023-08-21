@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_pipex.c                                        :+:      :+:    :+:   */
+/*   run_pipex_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:37:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/18 17:14:55 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/21 12:03:42 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	make_process(int index, t_node *node, char **envp)
 
 static	void	after_make_process(t_node *node)
 {
-	pid_t pid;
-	int	i;
+	pid_t	pid;
+	int		i;
 
 	i = 0;
 	close(node->pipe_a[0]);
