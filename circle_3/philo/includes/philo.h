@@ -20,4 +20,24 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+typedef struct s_philo_info
+{
+    int id;
+    int left_hand;
+    int right_hand;
+    int life_time;
+    int count_eat;
+}   t_philo_info;
+
+typedef struct s_disPatcher
+{
+    int num_philosophers;
+    int num_fork;
+    int time_to_die;
+    int time_to_eat;
+    int time_to_sleep;
+    int num_of_must_eat;
+    t_philo_info *philo_array;
+}   t_disPatcher;
+
 #endif

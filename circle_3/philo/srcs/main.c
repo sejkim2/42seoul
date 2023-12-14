@@ -16,11 +16,8 @@ int	main(int argc, char **argv)
 {
 	if (argc == 5)
 	{
-		printf("mandatory part\n");
-	}
-	else if (argc == 6)
-	{
-		printf("bonus part\n");
+		tableSetting(argv);
+
 	}
 	else
 		printf("argument error\n");
