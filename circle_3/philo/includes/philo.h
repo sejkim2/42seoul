@@ -20,6 +20,16 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+#define TRUE  1
+#define FALSE 0
+
+typedef enum e_error_num
+{
+    SYSTEM_CALL = 0,
+    NUMERIC,
+    ARGUMENT
+}   t_error_num;
+
 typedef struct s_philo_info
 {
     int id;
@@ -29,7 +39,7 @@ typedef struct s_philo_info
     int count_eat;
 }   t_philo_info;
 
-typedef struct s_disPatcher
+typedef struct s_philo_manager
 {
     int num_philosophers;
     int num_fork;
@@ -37,7 +47,10 @@ typedef struct s_disPatcher
     int time_to_eat;
     int time_to_sleep;
     int num_of_must_eat;
-    t_philo_info *philo_array;
-}   t_disPatcher;
+    t_philo_info *philo_table;
+}   t_manager;
+
+int	ft_atoi(const char *str);
+
 
 #endif

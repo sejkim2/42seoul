@@ -1,0 +1,15 @@
+//방법 1
+pthread_mutex_lock(&mutex_1);
+	pthread_mutex_lock(&mutex_2);
+	함수2 실행
+	pthread_mutex_unlock(&mutex_2);
+함수1 실행	
+pthread_mutex_unlock(&mutex_1);
+
+//방법2
+pthread_mutex_lock(&mutex_2);
+함수2 실행
+pthread_mutex_unlock(&mutex_2);
+pthread_mutex_lock(&mutex_1);
+함수1 실행	
+pthread_mutex_unlock(&mutex_1);
