@@ -6,25 +6,21 @@
 
 int cnt = 0;
 pthread_mutex_t mutex_cnt;
-pthread_mutex_t mutex_print;
+// pthread_mutex_t mutex_print;
 
 void *thread_func(void *data)
 {
 	char *name = (char *)data;
-
-	pthread_mutex_lock(&mutex_print);
 	
+	printf("cnt : %d\n", cnt);
 	pthread_mutex_lock(&mutex_cnt);
 	for(int i = 0; i<10; i++)
 	{
-		// printf("%s cnt : %d\n", name, cnt);
+		printf("%s cnt : %d\n", name, cnt);
 		cnt++;
-		usleep(10);
+		// usleep(5);
 	}
 	pthread_mutex_unlock(&mutex_cnt);
-	
-	printf("%s cnt : %d\n", name, cnt);
-	pthread_mutex_unlock(&mutex_print);
 
 	return NULL;
 }
@@ -42,7 +38,6 @@ int main()
 	printf("Before Thread\n"); 
 
 	pthread_mutex_init(&mutex_cnt, 0);
-	pthread_mutex_init(&mutex_print, 0);
 
 	while (i < 5)
 	{
@@ -60,7 +55,6 @@ int main()
 
 	printf("After Thread\n");
 	pthread_mutex_destroy(&mutex_cnt);
-	pthread_mutex_destroy(&mutex_print);
 
     return 0;
 }

@@ -50,7 +50,11 @@ typedef struct s_philo_manager
     t_philo_info *philo_table;
 }   t_manager;
 
+size_t	ft_strlen(const char *s);
+int	ft_isdigit(int c);
 int	ft_atoi(const char *str);
 
+int init_philo_manager(int argc, char **argv, t_manager *manager);
+int run_simulation(t_manager *manager);
 
 #endif

@@ -1,5 +1,20 @@
 #include "../includes/philo.h"
 
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+int	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
 int	ft_atoi(const char *str)
 {
 	int	i;
