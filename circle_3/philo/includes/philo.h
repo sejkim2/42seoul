@@ -23,23 +23,14 @@
 #define TRUE  1
 #define FALSE 0
 
-typedef enum e_error_num
+typedef struct e_error_num
 {
     SYSTEM_CALL = 0,
-    NUMERIC,
-    ARGUMENT
-}   t_error_num;
+    MALLOC,
+    NOT_ENOUGH_BOUNDARY
+}   t_error;
 
-typedef struct s_philo_info
-{
-    int id;
-    int left_hand;
-    int right_hand;
-    int life_time;
-    int count_eat;
-}   t_philo_info;
-
-typedef struct s_philo_manager
+typedef struct s_argument
 {
     int num_philosophers;
     int num_fork;
@@ -47,14 +38,32 @@ typedef struct s_philo_manager
     int time_to_eat;
     int time_to_sleep;
     int num_of_must_eat;
-    t_philo_info *philo_table;
-}   t_manager;
+}   t_arg;
 
-size_t	ft_strlen(const char *s);
+typedef struct s_share_info
+{
+    pthread_mutex_t *fork;
+    pthread_mutex_t print;
+    pthread_mutex_t start_time;
+}   t_share_info;
+
+typedef struct s_philo
+{
+    t_arg *arg;
+    int id;
+    int left_hand;
+    int right_hand;
+    int life_time;
+    int count_eat;
+    pthread_t th;
+    t_share_info shared;
+}   t_philo;
+
+int	ft_strlen(char *s);
 int	ft_isdigit(int c);
-int	ft_atoi(const char *str);
+int	ft_atoi(char *str);
 
-int init_philo_manager(int argc, char **argv, t_manager *manager);
-int run_simulation(t_manager *manager);
+int	main(int argc, char **argv);
+int parse_argument(int argc, char **argv, t_arg *arg);
 
 #endif

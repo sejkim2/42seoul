@@ -18,9 +18,8 @@ HEADER = includes
 PHILO_DIR = srcs
 
 PHILO_SRCS = main.c \
-	philo_utils.c \
-	init_philo_manager.c \
-	run_simulation.c
+	parse_argument.c \
+	philo_utils.c
 
 SRCS = $(addprefix $(PHILO_DIR)/,$(PHILO_SRCS))
 
