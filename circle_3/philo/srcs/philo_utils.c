@@ -42,3 +42,15 @@ int	ft_atoi(char *str)
 	else
 		return (num);
 }
+
+long long get_current_time(void)
+{
+    struct timeval time;
+    long long result;
+
+    if (gettimeofday(&time, NULL) == -1)
+		return (FALSE);
+    //1초 : 0.001ms, 1초 : 0.000001us
+    result = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+    return result;
+}

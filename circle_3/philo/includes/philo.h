@@ -23,7 +23,7 @@
 #define TRUE  1
 #define FALSE 0
 
-typedef struct e_error_num
+typedef enum e_error_num
 {
     SYSTEM_CALL = 0,
     MALLOC,
@@ -55,7 +55,7 @@ typedef struct s_philo
     int right_hand;
     int life_time;
     int count_eat;
-    pthread_t th;
+    pthread_t thread;
     t_share_info shared;
 }   t_philo;
 
@@ -65,5 +65,6 @@ int	ft_atoi(char *str);
 
 int	main(int argc, char **argv);
 int parse_argument(int argc, char **argv, t_arg *arg);
+long long get_current_time(void);
 
 #endif

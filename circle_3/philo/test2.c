@@ -6,10 +6,10 @@
 int main()
 {
     struct timeval time;
+    long long result;
 
     gettimeofday(&time, NULL);
     //1초 : 0.001ms, 1초 : 0.000001us
-    long	result = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-    printf("%ld", result);  //result : ms로 변환
-    return 0;
+    result = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+    return result;
 }
