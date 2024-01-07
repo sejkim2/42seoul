@@ -54,3 +54,20 @@ long long get_current_time(void)
     result = (time.tv_sec * 1000) + (time.tv_usec / 1000);
     return result;
 }
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	write(fd, s, ft_strlen(s));
+}
+
+void run_time(t_philo *philo, long long t_time)
+{
+	long long s = get_current_time();
+    long long cur_time;
+    while (philo->arg->is_finish == FALSE)
+    {
+        cur_time = get_current_time() - s;
+        if (cur_time - philo->life_time >= t_time)
+            break ;
+    }
+}

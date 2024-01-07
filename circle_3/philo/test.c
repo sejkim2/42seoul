@@ -4,7 +4,9 @@
 #include <string.h>
 #include <unistd.h>
 
-int cnt = 0;
+int cnt1 = 0;
+int cnt2 = 0;
+int cnt3 = 0;
 pthread_mutex_t mutex_cnt;
 // pthread_mutex_t mutex_print;
 
@@ -12,14 +14,45 @@ void *thread_func(void *data)
 {
 	char *name = (char *)data;
 	
-	printf("cnt : %d\n", cnt);
 	pthread_mutex_lock(&mutex_cnt);
-	for(int i = 0; i<10; i++)
+	int i = 0;
+	while (i < 10)
 	{
-		printf("%s cnt : %d\n", name, cnt);
-		cnt++;
-		// usleep(5);
+		printf("%s %d ver1\n", name, cnt1);
+		cnt1++;
+		i++;
+		sleep(1);
 	}
+	i = 0;
+	while (i < 10)
+	{
+		printf("%s %d ver2\n", name, cnt1);
+		cnt1--;
+		i++;
+		sleep(1);
+	}
+	// if (name[6] == '0' || name[6] == '2' || name[6] == '4')
+	// {
+	// 	for (int i = 0; i < 10; i++)
+	// 	{
+	// 		printf("%s cnt1 : %d\n", name, cnt1);
+	// 		cnt1++;
+	// 		printf("%s cnt2 : %d\n", name, cnt2);
+	// 		cnt2--;
+	// 		// usleep(5);
+	// 	}
+	// }
+	// else if (name[6] == '1' || name[6] == '3')
+	// {
+	// 	for (int i = 0; i < 10; i++)
+	// 	{
+	// 		printf("%s cnt1 : %d\n", name, cnt1);
+	// 		cnt1--;
+	// 		printf("%s cnt2 : %d\n", name, cnt2);
+	// 		cnt2++;
+	// 		// usleep(5);
+	// 	}
+	// }
 	pthread_mutex_unlock(&mutex_cnt);
 
 	return NULL;
@@ -33,7 +66,6 @@ int main()
 	char name[5][8] = { "thread0", "thread1", "thread2", "thread3", "thread4"};
 	char *thread_name = 0;
 	i = 0;
-	cnt = 0;
 
 	printf("Before Thread\n"); 
 

@@ -1,6 +1,6 @@
 #include "../includes/philo.h"
 
-static int check_is_minus(t_arg *arg)
+static int verify_sign(t_arg *arg)
 {
 	if (arg->num_philosophers <= 0 || \
 	arg->time_to_die < 0 || \
@@ -12,7 +12,7 @@ static int check_is_minus(t_arg *arg)
 		return (TRUE);
 }
 
-static int check_is_number(int argc, char **argv)
+static int verify_number(int argc, char **argv)
 {
 	int i;
 	int j;
@@ -32,7 +32,7 @@ static int check_is_number(int argc, char **argv)
 	return (TRUE);
 }
 
-static void set_argmuent(int argc, char **argv, t_arg *arg)
+static  int set_argmuent(int argc, char **argv, t_arg *arg)
 {
 	arg->num_philosophers = ft_atoi(argv[1]);
 	arg->num_fork = arg->num_philosophers;
@@ -43,6 +43,11 @@ static void set_argmuent(int argc, char **argv, t_arg *arg)
 		arg->num_of_must_eat = ft_atoi(argv[5]);
 	else
 		arg->num_of_must_eat = FALSE;
+	if (init_shared_info(arg) == FALSE)
+		return (FALSE);
+	arg->is_finish = FALSE;
+	return (TRUE);
+		
 }
 
 static void init_argument(t_arg *arg)
@@ -53,10 +58,11 @@ static void init_argument(t_arg *arg)
 int parse_argument(int argc, char **argv, t_arg *arg)
 {
 	init_argument(arg);
-	if (check_is_number(argc, argv) == FALSE)
+	if (verify_number(argc, argv) == FALSE)
 		return (FALSE);
-	set_argmuent(argc, argv, arg);
-	if (check_is_minus(arg) == FALSE)
+	if (set_argmuent(argc, argv, arg) == FALSE)
+		return (FALSE);
+	if (verify_sign(arg) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }

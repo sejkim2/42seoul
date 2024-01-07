@@ -30,6 +30,22 @@ typedef enum e_error_num
     NOT_ENOUGH_BOUNDARY
 }   t_error;
 
+typedef enum e_message_type
+{
+    TAKEN_FORK = 0,
+    EATING,
+    SLEEPING,
+    THINKING,
+    DIED
+}   t_message_type;
+
+typedef struct s_share_info
+{
+    pthread_mutex_t *fork;
+    pthread_mutex_t print;
+    pthread_mutex_t time_update;
+}   t_share_info;
+
 typedef struct s_argument
 {
     int num_philosophers;
@@ -38,14 +54,9 @@ typedef struct s_argument
     int time_to_eat;
     int time_to_sleep;
     int num_of_must_eat;
+    int is_finish;
+    t_share_info shared;
 }   t_arg;
-
-typedef struct s_share_info
-{
-    pthread_mutex_t *fork;
-    pthread_mutex_t print;
-    pthread_mutex_t start_time;
-}   t_share_info;
 
 typedef struct s_philo
 {
@@ -53,18 +64,22 @@ typedef struct s_philo
     int id;
     int left_hand;
     int right_hand;
-    int life_time;
+    long long life_time;
     int count_eat;
     pthread_t thread;
-    t_share_info shared;
 }   t_philo;
 
 int	ft_strlen(char *s);
 int	ft_isdigit(int c);
 int	ft_atoi(char *str);
+long long get_current_time(void);
+void	ft_putstr_fd(char *s, int fd);
 
 int	main(int argc, char **argv);
 int parse_argument(int argc, char **argv, t_arg *arg);
-long long get_current_time(void);
+int init_philosophers(t_philo **philo, t_arg *arg, int num);
+int init_shared_info(t_arg *arg);
+int run_simulation(t_philo *philo, t_arg *arg);
+void run_time(t_philo *philo, long long t_time);
 
 #endif

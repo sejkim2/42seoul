@@ -19,7 +19,10 @@ PHILO_DIR = srcs
 
 PHILO_SRCS = main.c \
 	parse_argument.c \
-	philo_utils.c
+	philo_utils.c \
+	init_philosophers.c \
+	init_shared_info.c \
+	run_simulation.c
 
 SRCS = $(addprefix $(PHILO_DIR)/,$(PHILO_SRCS))
 
