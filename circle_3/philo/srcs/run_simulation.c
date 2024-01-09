@@ -1,10 +1,10 @@
 #include "../includes/philo.h"
 
-void philo_message(t_share_info *shared, long long ms, int philo_id, t_message_type message_type)
+void philo_message(t_arg *arg, long long ms, int philo_id, t_message_type message_type)
 {
     long long cur_time;
 
-    pthread_mutex_lock(&(shared->print));
+    pthread_mutex_lock(&(arg->print));
     cur_time = get_current_time();
     printf("%lld %d ", cur_time - ms, philo_id);
     if (message_type == TAKEN_FORK)
@@ -18,43 +18,43 @@ void philo_message(t_share_info *shared, long long ms, int philo_id, t_message_t
     else
         printf("died");
     printf("\n");
-    pthread_mutex_unlock(&(shared->print));
+    pthread_mutex_unlock(&(arg->print));
 }
 
 void run_eating(t_philo *philo)
 {
     //hold on fork
-    pthread_mutex_lock(&(philo->arg->shared.fork[philo->left_hand]));
-    philo_message(&philo->arg->shared, philo->life_time, philo->id, TAKEN_FORK);
-    pthread_mutex_lock(&(philo->arg->shared.fork[philo->right_hand]));
-    philo_message(&philo->arg->shared, philo->life_time, philo->id, TAKEN_FORK);
+    pthread_mutex_lock(&(philo->arg->fork[philo->left_hand]));
+    philo_message(philo->arg, philo->life_time, philo->id, TAKEN_FORK);
+    pthread_mutex_lock(&(philo->arg->fork[philo->right_hand]));
+    philo_message(philo->arg, philo->life_time, philo->id, TAKEN_FORK);
 
     //eat
-    philo_message(&philo->arg->shared, philo->life_time, philo->id, EATING);
+    philo_message(philo->arg, philo->life_time, philo->id, EATING);
     
     //time update
-    // pthread_mutex_lock(&(philo->arg->shared.time_update));
+    pthread_mutex_lock(&(philo->arg->time_update));
     philo->life_time = get_current_time();
-    // pthread_mutex_unlock(&(philo->arg->shared.time_update));
+    pthread_mutex_unlock(&(philo->arg->time_update));
 
     //spend eating time
     (philo->count_eat)++;
     run_time(philo, philo->arg->time_to_eat);
 
     //put down fork
-    pthread_mutex_unlock(&(philo->arg->shared.fork[philo->right_hand]));
-    pthread_mutex_unlock(&(philo->arg->shared.fork[philo->left_hand]));
+    pthread_mutex_unlock(&(philo->arg->fork[philo->right_hand]));
+    pthread_mutex_unlock(&(philo->arg->fork[philo->left_hand]));
 }
 
 void run_sleeping(t_philo *philo)
 {
-    philo_message(&philo->arg->shared, philo->life_time, philo->id, SLEEPING);
+    philo_message(philo->arg, philo->life_time, philo->id, SLEEPING);
     run_time(philo, philo->arg->time_to_sleep);
 }
 
 void run_thinking(t_philo *philo)
 {
-    philo_message(&philo->arg->shared, philo->life_time, philo->id, THINKING);
+    philo_message(philo->arg, philo->life_time, philo->id, THINKING);
 }
 
 void *thread_function(void *data)
@@ -63,15 +63,15 @@ void *thread_function(void *data)
 
     philo = (t_philo *)data;
     if ((philo->id) % 2 == 0)
-        usleep(1000);
+        usleep(100);
     while (philo->arg->is_finish == FALSE)
     {
         run_eating(philo);
-        if (philo->arg->num_of_must_eat && philo->count_eat == philo->arg->num_of_must_eat)
-        {
-            philo->arg->is_finish = TRUE;
-            break ;
-        }
+        // if (philo->arg->num_of_must_eat && philo->count_eat == philo->arg->num_of_must_eat)
+        // {
+        //     philo->arg->is_finish = TRUE;
+        //     break ;
+        // }
         run_sleeping(philo);
         run_thinking(philo);
     }
@@ -85,7 +85,8 @@ int run_simulation(t_philo *philo, t_arg *arg)
     i = 0;
     while (i < arg->num_philosophers)
     {
-        if (pthread_create(&philo[i].thread, NULL, thread_function, (void *)&(philo[i])) == 1)
+        philo[i].life_time = get_current_time();
+        if (pthread_create(&(philo[i].thread), NULL, thread_function, &(philo[i])) == 1)
 			return (FALSE);
         i++;
     }

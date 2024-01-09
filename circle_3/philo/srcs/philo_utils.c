@@ -64,10 +64,12 @@ void run_time(t_philo *philo, long long t_time)
 {
 	long long s = get_current_time();
     long long cur_time;
+
     while (philo->arg->is_finish == FALSE)
     {
-        cur_time = get_current_time() - s;
-        if (cur_time - philo->life_time >= t_time)
+        cur_time = get_current_time();
+        if (cur_time - s >= t_time)
             break ;
+		usleep(100);
     }
 }
