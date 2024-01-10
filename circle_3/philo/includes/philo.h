@@ -55,6 +55,7 @@ typedef struct s_argument
     int time_to_sleep;
     int num_of_must_eat;
     int is_finish;
+    long long start_time;
     // t_share_info shared;
     pthread_mutex_t *fork;
     pthread_mutex_t print;
@@ -67,7 +68,7 @@ typedef struct s_philo
     int id;
     int left_hand;
     int right_hand;
-    long long life_time;
+    long long last_eat_time;
     int count_eat;
     pthread_t thread;
 }   t_philo;
