@@ -56,10 +56,7 @@ typedef struct s_argument
     int num_of_must_eat;
     int is_finish;
     long long start_time;
-    // t_share_info shared;
-    pthread_mutex_t *fork;
-    pthread_mutex_t print;
-    pthread_mutex_t time_update;
+    t_share_info shared;
 }   t_arg;
 
 typedef struct s_philo
@@ -84,6 +81,6 @@ int parse_argument(int argc, char **argv, t_arg *arg);
 int init_philosophers(t_philo **philo, t_arg *arg, int num);
 int init_shared_info(t_arg *arg);
 int run_simulation(t_philo *philo, t_arg *arg);
-void run_time(t_philo *philo, long long t_time);
+void run_time(t_philo *philo, long long required_time);
 
 #endif

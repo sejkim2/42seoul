@@ -60,15 +60,16 @@ void	ft_putstr_fd(char *s, int fd)
 	write(fd, s, ft_strlen(s));
 }
 
-void run_time(t_philo *philo, long long t_time)
+void run_time(t_philo *philo, long long required_time)
 {
-	long long s = get_current_time();
+	long long start_time;
     long long cur_time;
 
+	start_time = get_current_time();
     while (philo->arg->is_finish == FALSE)
     {
         cur_time = get_current_time();
-        if (cur_time - s >= t_time)
+        if (cur_time - start_time >= required_time)
             break ;
 		usleep(100);
     }
