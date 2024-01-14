@@ -71,6 +71,6 @@ void run_time(t_philo *philo, long long required_time)
         cur_time = get_current_time();
         if (cur_time - start_time >= required_time)
             break ;
-		usleep(100);
+		usleep(10);
     }
 }

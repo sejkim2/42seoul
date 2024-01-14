@@ -12,15 +12,16 @@ void *thread_func(void *data)
 {
 	char *name = (char *)data;
 	
-	pthread_mutex_lock(&mutex_cnt);
+	// pthread_mutex_lock(&mutex_cnt);
 	int i = 0;
-	while (i < 1000000)
+	while (i < 10)
     {
+		usleep(10);
         printf("%s %d\n", name, cnt1);
 		cnt1++;
         i++;
     }
-	pthread_mutex_unlock(&mutex_cnt);
+	// pthread_mutex_unlock(&mutex_cnt);
 
 	return NULL;
 }
@@ -45,13 +46,14 @@ int main()
 		i++;
 	}
 
-	i = 0;
-	while (i < 100)
-    {
-        printf("%s %d\n", "main thread", cnt1);
-		cnt1--;
-        i++;
-    }
+	// i = 0;
+	// while (i < 10000)
+	// {
+	// 	usleep(10);
+    //     printf("main %d\n", cnt1);
+	// 	cnt1++;
+    //     i++;
+	// }
 	i = 0;
 	while (i < 5)
 	{

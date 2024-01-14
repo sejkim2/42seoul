@@ -2,8 +2,16 @@
 
 static void print_message(t_message_type message_type)
 {
-    if (message_type == TAKEN_FORK)
-        printf("has taken a fork");
+    if (message_type == TAKEN_FORK_LEFT)
+        printf("has taken a left fork");
+    else if (message_type == TAKEN_FORK_RIGHT)
+        printf("has taken a right fork");
+    else if (message_type == PUT_FORK_LEFT)
+        printf("has put a left fork");
+    else if (message_type == PUT_FORK_RIGHT)
+        printf("has put a right fork");
+    // if (message_type == TAKEN_FORK)
+        // printf("has taken a fork");
     else if (message_type == EATING)
         printf("is eating");
     else if (message_type == SLEEPING)
@@ -35,9 +43,9 @@ void run_eating(t_philo *philo)
 {
     //hold on fork
     pthread_mutex_lock(&(philo->arg->shared.fork[philo->left_hand]));
-    philo_message(philo->arg, philo->last_eat_time, philo->id, TAKEN_FORK);
+    philo_message(philo->arg, philo->last_eat_time, philo->id, TAKEN_FORK_LEFT);
     pthread_mutex_lock(&(philo->arg->shared.fork[philo->right_hand]));
-    philo_message(philo->arg, philo->last_eat_time, philo->id, TAKEN_FORK);
+    philo_message(philo->arg, philo->last_eat_time, philo->id, TAKEN_FORK_RIGHT);
 
     //eat
     philo_message(philo->arg, philo->last_eat_time, philo->id, EATING);
@@ -53,6 +61,8 @@ void run_eating(t_philo *philo)
     run_time(philo, philo->arg->time_to_eat);
 
     //put down fork
+    philo_message(philo->arg, philo->last_eat_time, philo->id, PUT_FORK_RIGHT);
+    philo_message(philo->arg, philo->last_eat_time, philo->id, PUT_FORK_LEFT);
     pthread_mutex_unlock(&(philo->arg->shared.fork[philo->right_hand]));
     pthread_mutex_unlock(&(philo->arg->shared.fork[philo->left_hand]));
 }
@@ -75,7 +85,6 @@ void *thread_function(void *data)
     philo = (t_philo *)data;
     if ((philo->id) % 2 == 0)
         usleep(philo->arg->time_to_eat);
-        // usleep(100);
     while (philo->arg->is_finish == FALSE)
     {
         run_eating(philo);

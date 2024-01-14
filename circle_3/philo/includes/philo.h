@@ -32,7 +32,10 @@ typedef enum e_error_num
 
 typedef enum e_message_type
 {
-    TAKEN_FORK = 0,
+    TAKEN_FORK_LEFT = 0,
+    TAKEN_FORK_RIGHT,
+    PUT_FORK_LEFT,
+    PUT_FORK_RIGHT,
     EATING,
     SLEEPING,
     THINKING,
