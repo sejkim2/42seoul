@@ -2,16 +2,16 @@
 
 static void print_message(t_message_type message_type)
 {
-    if (message_type == TAKEN_FORK_LEFT)
-        printf("has taken a left fork");
-    else if (message_type == TAKEN_FORK_RIGHT)
-        printf("has taken a right fork");
-    else if (message_type == PUT_FORK_LEFT)
-        printf("has put a left fork");
-    else if (message_type == PUT_FORK_RIGHT)
-        printf("has put a right fork");
-    // if (message_type == TAKEN_FORK)
-        // printf("has taken a fork");
+    // if (message_type == TAKEN_FORK_LEFT)
+    //     printf("has taken a left fork");
+    // else if (message_type == TAKEN_FORK_RIGHT)
+    //     printf("has taken a right fork");
+    // else if (message_type == PUT_FORK_LEFT)
+    //     printf("has put a left fork");
+    // else if (message_type == PUT_FORK_RIGHT)
+    //     printf("has put a right fork");
+    if (message_type == TAKEN_FORK)
+        printf("has taken a fork");
     else if (message_type == EATING)
         printf("is eating");
     else if (message_type == SLEEPING)
@@ -23,7 +23,7 @@ static void print_message(t_message_type message_type)
     printf("\n");
 }
 
-void philo_message(t_arg *arg, long long ms, int philo_id, t_message_type message_type)
+void philo_message(t_arg *arg, int philo_id, t_message_type message_type)
 {
     long long cur_time;
 
@@ -43,12 +43,14 @@ void run_eating(t_philo *philo)
 {
     //hold on fork
     pthread_mutex_lock(&(philo->arg->shared.fork[philo->left_hand]));
-    philo_message(philo->arg, philo->last_eat_time, philo->id, TAKEN_FORK_LEFT);
+    // philo_message(philo->arg, philo->last_eat_time, philo->id, TAKEN_FORK_LEFT);
+    philo_message(philo->arg, philo->id, TAKEN_FORK);
     pthread_mutex_lock(&(philo->arg->shared.fork[philo->right_hand]));
-    philo_message(philo->arg, philo->last_eat_time, philo->id, TAKEN_FORK_RIGHT);
+    // philo_message(philo->arg, philo->last_eat_time, philo->id, TAKEN_FORK_RIGHT);
+    philo_message(philo->arg, philo->id, TAKEN_FORK);
 
     //eat
-    philo_message(philo->arg, philo->last_eat_time, philo->id, EATING);
+    philo_message(philo->arg, philo->id, EATING);
     
     //time update
     //remove mutex??
@@ -61,21 +63,22 @@ void run_eating(t_philo *philo)
     run_time(philo, philo->arg->time_to_eat);
 
     //put down fork
-    philo_message(philo->arg, philo->last_eat_time, philo->id, PUT_FORK_RIGHT);
-    philo_message(philo->arg, philo->last_eat_time, philo->id, PUT_FORK_LEFT);
+    // philo_message(philo->arg, philo->last_eat_time, philo->id, PUT_FORK);
+    // philo_message(philo->arg, philo->last_eat_time, philo->id, PUT_FORK_RIGHT);
+    // philo_message(philo->arg, philo->last_eat_time, philo->id, PUT_FORK_LEFT);
     pthread_mutex_unlock(&(philo->arg->shared.fork[philo->right_hand]));
     pthread_mutex_unlock(&(philo->arg->shared.fork[philo->left_hand]));
 }
 
 void run_sleeping(t_philo *philo)
 {
-    philo_message(philo->arg, philo->last_eat_time, philo->id, SLEEPING);
+    philo_message(philo->arg, philo->id, SLEEPING);
     run_time(philo, philo->arg->time_to_sleep);
 }
 
 void run_thinking(t_philo *philo)
 {
-    philo_message(philo->arg, philo->last_eat_time, philo->id, THINKING);
+    philo_message(philo->arg, philo->id, THINKING);
 }
 
 void *thread_function(void *data)
@@ -88,11 +91,11 @@ void *thread_function(void *data)
     while (philo->arg->is_finish == FALSE)
     {
         run_eating(philo);
-        if (philo->arg->num_of_must_eat && philo->count_eat == philo->arg->num_of_must_eat)
-        {
-            philo->arg->is_finish = TRUE;
-            break ;
-        }
+        // if (philo->arg->num_of_must_eat && philo->count_eat == philo->arg->num_of_must_eat)
+        // {
+        //     philo->arg->is_finish = TRUE;
+        //     break ;
+        // }
         run_sleeping(philo);
         run_thinking(philo);
     }
@@ -119,7 +122,9 @@ int run_simulation(t_philo *philo, t_arg *arg)
             cur_time = get_current_time();
             if (cur_time - philo[i].last_eat_time >= arg->time_to_die)
             {
-                philo_message(arg, cur_time, philo[i].id, DIED);
+                printf("died time : %lld\n", cur_time - philo[i].last_eat_time);
+                // printf("last eat : %lld\n", philo[i].last_eat_time);
+                philo_message(arg, philo[i].id, DIED);
                 arg->is_finish = TRUE;
                 break ;
             }

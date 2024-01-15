@@ -36,6 +36,7 @@ typedef enum e_message_type
     TAKEN_FORK_RIGHT,
     PUT_FORK_LEFT,
     PUT_FORK_RIGHT,
+    TAKEN_FORK,
     EATING,
     SLEEPING,
     THINKING,
