@@ -23,12 +23,14 @@
 #define TRUE  1
 #define FALSE 0
 
-typedef enum e_error_num
+typedef enum e_error_type
 {
-    SYSTEM_CALL = 0,
-    MALLOC,
-    NOT_ENOUGH_BOUNDARY
-}   t_error;
+    NOT_ERROR = 0,
+    SYSTEM_CALL_ERROR,
+    NOT_VERIFY_BOUNDARY,
+    NOT_NUMBER,
+    ARGUMENT_ERROR
+}   t_error_type;
 
 typedef enum e_message_type
 {
@@ -83,7 +85,7 @@ long long get_current_time(void);
 void	ft_putstr_fd(char *s, int fd);
 
 int	main(int argc, char **argv);
-int parse_argument(int argc, char **argv, t_arg *arg);
+t_error_type parse_argument(int argc, char **argv, t_arg *arg);
 int init_philosophers(t_philo **philo, t_arg *arg, int num);
 int init_shared_info(t_arg *arg);
 int run_simulation(t_philo *philo, t_arg *arg);

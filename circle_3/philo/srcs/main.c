@@ -12,23 +12,40 @@
 
 #include "../includes/philo.h"
 
+static void print_error(t_error_type error_type)
+{
+	if (error_type == SYSTEM_CALL_ERROR)
+		printf("system call error");
+	else if (error_type == NOT_VERIFY_BOUNDARY)
+		printf("not verify boundary");
+	else if (error_type == NOT_NUMBER)
+		printf("not number");
+	else
+		printf("argument error");
+	printf("\n");
+}
+
 int	main(int argc, char **argv)
 {
+	t_error_type error_type;
 	t_arg arg;
 	t_philo *philo;
 
 	if (argc == 5 || argc == 6)
 	{
-		if (parse_argument(argc, argv, &arg) == FALSE)
-			printf("system call error\n");
+		error_type = parse_argument(argc, argv, &arg);
+		if (error_type != NOT_ERROR)
+			print_error(error_type);
 		else
 		{
-			if (init_philosophers(&philo, &arg, arg.num_philosophers) == FALSE)
-				printf("system call error\n");
-			run_simulation(philo, &arg);
+			error_type = init_philosophers(&philo, &arg, arg.num_philosophers);
+			if (error_type != NOT_ERROR)
+				print_error(error_type);
+			else
+				run_simulation(philo, &arg);
 		}
 	}
 	else
-		printf("argument error\n");
+		print_error(ARGUMENT_ERROR);
 	return (0);
 }

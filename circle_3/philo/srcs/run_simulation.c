@@ -47,15 +47,15 @@ void run_eating(t_philo *philo)
     //eat
     philo_message(philo->arg, philo->id, EATING);
     
+    //spend eating time
+    run_time(philo, philo->arg->time_to_eat);
+
     //time update
     //remove mutex??
     pthread_mutex_lock(&(philo->arg->shared.time_update));
     philo->last_eat_time = get_current_time();
     (philo->count_eat)++;
     pthread_mutex_unlock(&(philo->arg->shared.time_update));
-
-    //spend eating time
-    run_time(philo, philo->arg->time_to_eat);
 
     pthread_mutex_lock(&(philo->arg->shared.must_eat_cnt));
     if (philo->count_eat == philo->arg->num_of_must_eat)
@@ -69,14 +69,20 @@ void run_eating(t_philo *philo)
 
 void run_sleeping(t_philo *philo)
 {
-    philo_message(philo->arg, philo->id, SLEEPING);
-    run_time(philo, philo->arg->time_to_sleep);
+    if (philo->arg->is_finish == FALSE)
+    {
+        philo_message(philo->arg, philo->id, SLEEPING);
+        run_time(philo, philo->arg->time_to_sleep);
+    }
 }
 
 void run_thinking(t_philo *philo)
 {
-    philo_message(philo->arg, philo->id, THINKING);
-    usleep(100);
+    if (philo->arg->is_finish == FALSE)
+    {
+        philo_message(philo->arg, philo->id, THINKING);
+        usleep(100);
+    }
 }
 
 void *thread_function(void *data)
@@ -85,7 +91,6 @@ void *thread_function(void *data)
 
     philo = (t_philo *)data;
     if ((philo->id) % 2 == 0)
-        // usleep(philo->arg->time_to_eat + 10 * philo->arg->num_philosophers / 2);
         usleep(philo->arg->time_to_eat + 10);
     while (philo->arg->is_finish == FALSE)
     {

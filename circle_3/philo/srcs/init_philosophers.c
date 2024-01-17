@@ -6,7 +6,7 @@ int init_philosophers(t_philo **philo, t_arg *arg, int num)
 
     *philo = malloc(sizeof(t_philo *) * num);
     if (*philo == 0)
-        return (FALSE);
+        return (SYSTEM_CALL_ERROR);
     i = 0;
     while (i < num)
     {
@@ -21,5 +21,5 @@ int init_philosophers(t_philo **philo, t_arg *arg, int num)
         (*philo)[i].count_eat = 0;
         i++;
     }
-    return (TRUE);
+    return (NOT_ERROR);
 }
