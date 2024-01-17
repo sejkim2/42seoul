@@ -48,6 +48,7 @@ typedef struct s_share_info
     pthread_mutex_t *fork;
     pthread_mutex_t print;
     pthread_mutex_t time_update;
+    pthread_mutex_t must_eat_cnt;
 }   t_share_info;
 
 typedef struct s_argument
@@ -60,6 +61,7 @@ typedef struct s_argument
     int num_of_must_eat;
     int is_finish;
     long long start_time;
+    int global_must_eat_cnt;
     t_share_info shared;
 }   t_arg;
 

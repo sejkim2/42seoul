@@ -47,6 +47,7 @@ static  int set_argmuent(int argc, char **argv, t_arg *arg)
 		return (FALSE);
 	arg->is_finish = FALSE;
 	arg->start_time = get_current_time();
+	arg->global_must_eat_cnt = 0;
 	return (TRUE);
 		
 }

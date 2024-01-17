@@ -18,5 +18,7 @@ int init_shared_info(t_arg *arg)
         return (FALSE);
     if (pthread_mutex_init(&(arg->shared.time_update), NULL) == -1)
         return (FALSE);
+    if (pthread_mutex_init(&(arg->shared.must_eat_cnt), NULL) == -1)
+        return (FALSE);
     return (TRUE);
 }
