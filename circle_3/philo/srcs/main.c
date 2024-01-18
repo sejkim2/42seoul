@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:54:25 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/11/25 13:24:00 by sejkim2          ###   ########.fr       */
+/*   Updated: 2024/01/18 14:44:43 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,37 @@ static void print_error(t_error_type error_type)
 	printf("\n");
 }
 
+void leaks()
+{
+	system("leaks philo");
+}
+
+void free_philosophers(t_philo **philo)
+{
+	t_arg *arg;
+	int i;
+	int num_philosophers;
+
+	arg = philo[0]->arg;
+	// free_shared_info(arg, arg->num_philosophers);
+	i = 0;
+	num_philosophers = arg->num_philosophers;
+	// while (i < num_philosophers)
+	// {
+	// 	free(philo[i]);
+	// 	i++;
+	// }
+	// if (i > 0)
+		free(philo);
+}
+
 int	main(int argc, char **argv)
 {
-	t_error_type error_type;
-	t_arg arg;
-	t_philo *philo;
+	t_error_type	error_type;
+	t_philo			*philo;
+	t_arg_info		arg;
 
+	atexit(leaks);
 	if (argc == 5 || argc == 6)
 	{
 		error_type = parse_argument(argc, argv, &arg);
@@ -42,10 +67,11 @@ int	main(int argc, char **argv)
 			if (error_type != NOT_ERROR)
 				print_error(error_type);
 			else
-				run_simulation(philo, &arg);
+				run_simulation(philo);
 		}
 	}
 	else
 		print_error(ARGUMENT_ERROR);
-	return (0);
+	free_philosophers(&philo);
+	// return (0);
 }

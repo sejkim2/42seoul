@@ -31,18 +31,17 @@ void philo_message(t_arg *arg, int philo_id, t_message_type message_type)
     pthread_mutex_unlock(&(arg->shared.print));
 }
 
-void run_eating(t_philo *philo)
+void	run_eating(t_philo *philo)
 {
-    //hold on fork
-    pthread_mutex_lock(&(philo->arg->shared.fork[philo->left_hand]));
-    philo_message(philo->arg, philo->id, TAKEN_FORK);
-    if (philo->arg->num_philosophers == 1)
-    {
-        pthread_mutex_unlock(&(philo->arg->shared.fork[philo->left_hand]));
-        return ;
-    }
-    pthread_mutex_lock(&(philo->arg->shared.fork[philo->right_hand]));
-    philo_message(philo->arg, philo->id, TAKEN_FORK);
+	pthread_mutex_lock(&(philo->arg.shared.fork[philo->left_hand]));
+	philo_message(philo->arg, philo->id, TAKEN_FORK);
+	if (philo->arg->num_philosophers == 1)
+	{
+		pthread_mutex_unlock(&(philo->arg->shared.fork[philo->left_hand]));
+		return ;
+	}
+	pthread_mutex_lock(&(philo->arg->shared.fork[philo->right_hand]));
+	philo_message(philo->arg, philo->id, TAKEN_FORK);
 
     //eat
     philo_message(philo->arg, philo->id, EATING);
@@ -85,31 +84,31 @@ void run_thinking(t_philo *philo)
     }
 }
 
-void *thread_function(void *data)
+void	*thread_function(void *data)
 {
-    t_philo *philo;
+	t_philo	*philo;
 
-    philo = (t_philo *)data;
-    if ((philo->id) % 2 == 0)
-        usleep(philo->arg->time_to_eat + 10);
-    while (philo->arg->is_finish == FALSE)
-    {
-        run_eating(philo);
-        if (philo->arg->num_philosophers == 1)
-        {
-            while (philo->arg->is_finish == FALSE)
-                usleep(1);
-            break ;
-        }
-        if (philo->arg->num_of_must_eat && philo->arg->global_must_eat_cnt == philo->arg->num_philosophers)
-        {
-            philo->arg->is_finish = TRUE;
-            break ;
-        }
-        run_sleeping(philo);
-        run_thinking(philo);
-    }
-    return (NULL);
+	philo = (t_philo *)data;
+	if ((philo->id) % 2 == 0)
+		usleep(philo->arg->time_to_eat + 10 * philo->arg->num_philosophers);
+	while (philo->arg.is_finish == FALSE)
+	{
+		run_eating(philo);
+		if (philo->arg.num_philosophers == 1)
+		{
+			while (philo->arg.is_finish == FALSE)
+				usleep(1);
+			break ;
+		}
+		if (philo->arg.num_of_must_eat && philo->arg.global_must_eat_cnt == philo->arg.num_philosophers)
+		{
+			philo->arg.is_finish = TRUE;
+			break ;
+		}
+		run_sleeping(philo);
+		run_thinking(philo);
+	}
+	return (NULL);
 }
 
 static void check_philo_died(t_philo *philo, t_arg *arg)
@@ -134,23 +133,26 @@ static void check_philo_died(t_philo *philo, t_arg *arg)
     }
 }
 
-int run_simulation(t_philo *philo, t_arg *arg)
+int	run_simulation(t_philo *philo)
 {
-    int i;
+	int	i;
+	int	num_philosophers;
 
-    i = 0;
-    while (i < arg->num_philosophers)
-    {
-        if (pthread_create(&(philo[i].thread), NULL, thread_function, &(philo[i])) == 1)
+	i = 0;
+	num_philosophers = philo[0].arg.num_philosophers;
+	while (i < num_philosophers)
+	{
+		if (pthread_create(&(philo[i].thread), NULL, \
+		thread_function, &(philo[i])) == 1)
 			return (FALSE);
-        i++;
-    }
-    check_philo_died(philo, arg);
-    i = 0;
-    while (i < arg->num_philosophers)
-    {
+		i++;
+	}
+	check_philo_died(philo, arg);
+	i = 0;
+	while (i < num_philosophers)
+	{
 		pthread_join(philo[i].thread, NULL);
-        i++;
-    }
-    return (TRUE);
+		i++;
+	}
+	return (TRUE);
 }
