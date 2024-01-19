@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_argument.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/19 15:32:02 by sejkim2           #+#    #+#             */
+/*   Updated: 2024/01/19 15:32:40 by sejkim2          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
-static int verify_sign(t_arg *arg, t_error_type *error_type)
+static int	verify_sign(t_arg *arg, t_error_type *error_type)
 {
 	if (arg->num_philosophers <= 0 || \
 	arg->time_to_die < 0 || \
@@ -15,7 +27,8 @@ static int verify_sign(t_arg *arg, t_error_type *error_type)
 		return (TRUE);
 }
 
-static  int set_argmuent(int argc, char **argv, t_arg *arg, t_error_type *error_type)
+static	int	set_argmuent(int argc, char **argv, t_arg *arg, \
+t_error_type *error_type)
 {
 	arg->num_philosophers = ft_atoi(argv[1]);
 	arg->num_fork = arg->num_philosophers;
@@ -27,13 +40,12 @@ static  int set_argmuent(int argc, char **argv, t_arg *arg, t_error_type *error_
 	else
 		arg->num_of_must_eat = FALSE;
 	return (TRUE);
-		
 }
 
-static int verify_number(int argc, char **argv, t_error_type *error_type)
+static int	verify_number(int argc, char **argv, t_error_type *error_type)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (i < argc)
@@ -58,9 +70,9 @@ static int verify_number(int argc, char **argv, t_error_type *error_type)
 	return (TRUE);
 }
 
-t_error_type parse_argument(int argc, char **argv, t_arg *arg)
+t_error_type	parse_argument(int argc, char **argv, t_arg *arg)
 {
-	t_error_type error_type;
+	t_error_type	error_type;
 
 	if (verify_number(argc, argv, &error_type) == FALSE)
 		return (error_type);

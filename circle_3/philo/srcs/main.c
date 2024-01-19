@@ -6,15 +6,15 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:54:25 by sejkim2           #+#    #+#             */
-/*   Updated: 2024/01/19 15:10:41 by sejkim2          ###   ########.fr       */
+/*   Updated: 2024/01/19 16:21:03 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void free_philo(t_philo *philo)
+static	void	free_philo(t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	free(philo->shared->fork);
@@ -22,7 +22,7 @@ void free_philo(t_philo *philo)
 	free(philo);
 }
 
-static void print_error(t_error_type error_type)
+static void	print_error(t_error_type error_type)
 {
 	if (error_type == SYSTEM_CALL_ERROR)
 		printf("system call error");
@@ -35,9 +35,9 @@ static void print_error(t_error_type error_type)
 
 int	main(int argc, char **argv)
 {
-	t_error_type error_type;
-	t_arg arg;
-	t_philo *philo;
+	t_error_type	error_type;
+	t_arg			arg;
+	t_philo			*philo;
 
 	if (argc == 5 || argc == 6)
 	{
@@ -60,5 +60,4 @@ int	main(int argc, char **argv)
 	}
 	else
 		print_error(ARGUMENT_ERROR);
-	return (0);
 }

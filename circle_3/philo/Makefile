@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2024/01/19 12:48:18 by sejkim2          ###   ########.fr        #
+#    Updated: 2024/01/19 15:48:55 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,10 @@ PHILO_SRCS = main.c \
 	philo_utils.c \
 	init_philosophers.c \
 	init_shared_info.c \
-	run_simulation.c
+	run_simulation.c \
+	philo_message.c \
+	thread_function.c \
+	run_eating.c
 
 SRCS = $(addprefix $(PHILO_DIR)/,$(PHILO_SRCS))
 
