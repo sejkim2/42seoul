@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:54:25 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/11/25 13:24:00 by sejkim2          ###   ########.fr       */
+/*   Updated: 2024/01/19 11:58:02 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,8 @@ int	main(int argc, char **argv)
 			print_error(error_type);
 		else
 		{
-			error_type = init_philosophers(&philo, &arg, arg.num_philosophers);
-			if (error_type != NOT_ERROR)
-				print_error(error_type);
-			else
-				run_simulation(philo, &arg);
+			philo = init_philosophers(arg, arg.num_philosophers);
+			run_simulation(philo, arg);
 		}
 	}
 	else

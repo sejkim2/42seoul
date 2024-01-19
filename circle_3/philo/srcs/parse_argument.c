@@ -26,14 +26,6 @@ static  int set_argmuent(int argc, char **argv, t_arg *arg, t_error_type *error_
 		arg->num_of_must_eat = ft_atoi(argv[5]);
 	else
 		arg->num_of_must_eat = FALSE;
-	if (init_shared_info(arg) == FALSE)
-	{
-		*error_type = SYSTEM_CALL_ERROR;
-		return (FALSE);
-	}
-	arg->is_finish = FALSE;
-	arg->start_time = get_current_time();
-	arg->global_must_eat_cnt = 0;
 	return (TRUE);
 		
 }
@@ -61,16 +53,10 @@ static int verify_number(int argc, char **argv, t_error_type *error_type)
 	return (TRUE);
 }
 
-static void init_argument(t_arg *arg)
-{
-	memset((void *)arg, 0, sizeof(t_arg));
-}
-
 t_error_type parse_argument(int argc, char **argv, t_arg *arg)
 {
 	t_error_type error_type;
 
-	init_argument(arg);
 	if (verify_number(argc, argv, &error_type) == FALSE)
 		return (error_type);
 	if (set_argmuent(argc, argv, arg, &error_type) == FALSE)

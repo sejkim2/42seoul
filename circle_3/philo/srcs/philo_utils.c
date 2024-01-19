@@ -66,7 +66,7 @@ void run_time(t_philo *philo, long long required_time)
     long long cur_time;
 
 	start_time = get_current_time();
-    while (philo->arg->is_finish == FALSE)
+    while (philo->shared->is_finish == FALSE)
     {
         cur_time = get_current_time();
         if (cur_time - start_time >= required_time)
