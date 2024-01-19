@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:55:28 by sejkim2           #+#    #+#             */
-/*   Updated: 2024/01/19 11:45:25 by sejkim2          ###   ########.fr       */
+/*   Updated: 2024/01/19 15:05:58 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-#define TRUE  1
-#define FALSE 0
+# define TRUE  1
+# define FALSE 0
+# define INTEGER_MAX 2147483647
+# define INTEGER_MIN -2147483648
 
 typedef enum e_error_type
 {
     NOT_ERROR = 0,
     SYSTEM_CALL_ERROR,
-    NOT_VERIFY_BOUNDARY,
-    NOT_NUMBER,
+    NUMBER_ERROR,
     ARGUMENT_ERROR
 }   t_error_type;
 
@@ -88,7 +89,7 @@ int	main(int argc, char **argv);
 t_error_type parse_argument(int argc, char **argv, t_arg *arg);
 t_philo *init_philosophers(t_arg arg, int num);
 t_shared_info *init_shared_info(int num_fork);
-int run_simulation(t_philo *philo, t_arg arg);
+t_error_type run_simulation(t_philo *philo, t_arg arg);
 void run_time(t_philo *philo, long long required_time);
 
 #endif

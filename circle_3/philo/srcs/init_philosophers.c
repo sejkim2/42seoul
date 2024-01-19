@@ -6,11 +6,11 @@ t_philo *init_philosophers(t_arg arg, int num)
     t_shared_info *shared;
     t_philo *philo;
 
-    philo = malloc(sizeof(t_philo) * num);
-    if (philo == NULL)
-        return (NULL);
     shared = init_shared_info(num);
     if (shared == NULL)
+        return (NULL);
+    philo = malloc(sizeof(t_philo) * num);
+    if (philo == NULL)
         return (NULL);
     i = 0;
     while (i < num)

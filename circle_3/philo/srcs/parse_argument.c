@@ -8,7 +8,7 @@ static int verify_sign(t_arg *arg, t_error_type *error_type)
 	arg->time_to_sleep < 0 || \
 	arg->num_of_must_eat < 0)
 	{
-		*error_type = NOT_VERIFY_BOUNDARY;
+		*error_type = NUMBER_ERROR;
 		return (FALSE);
 	}
 	else
@@ -39,11 +39,16 @@ static int verify_number(int argc, char **argv, t_error_type *error_type)
 	while (i < argc)
 	{
 		j = 0;
+		if (ft_strlen(argv[i]) > 10)
+		{
+			*error_type = NUMBER_ERROR;
+			return (FALSE);
+		}
 		while (j < ft_strlen(argv[i]))
 		{
 			if (ft_isdigit(argv[i][j]) == FALSE)
 			{
-				*error_type = NOT_NUMBER;
+				*error_type = NUMBER_ERROR;
 				return (FALSE);
 			}
 			j++;

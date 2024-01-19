@@ -17,14 +17,23 @@ t_shared_info *init_shared_info(int num_fork)
         return (NULL);
 	shared->is_finish = FALSE;
 	shared->start_time = get_current_time();
+    if (shared->start_time == FALSE)
+        return (NULL);
 	shared->global_must_eat_cnt = 0;
     shared->fork = malloc(sizeof(pthread_mutex_t) * num_fork);
     if (shared->fork == NULL)
+    {
+        free(shared);
         return (NULL);
+    }
     while (i < num_fork)
     {
         if (pthread_mutex_init(&(shared->fork[i]), NULL) == -1)
+        {
+            free(shared->fork);
+            free(shared);
             return (NULL);
+        }
         i++;
     }
     return (shared);

@@ -46,9 +46,6 @@ void run_eating(t_philo *philo)
 
     //eat
     philo_message(philo, EATING);
-    
-    //spend eating time
-    run_time(philo, philo->arg.time_to_eat);
 
     //time update
     //remove mutex??
@@ -61,6 +58,9 @@ void run_eating(t_philo *philo)
     if (philo->count_eat == philo->arg.num_of_must_eat)
         philo->shared->global_must_eat_cnt++;
     pthread_mutex_unlock(&(philo->shared->must_eat_cnt));
+
+    //spend eating time
+    run_time(philo, philo->arg.time_to_eat);
 
     //put down fork
     pthread_mutex_unlock(&(philo->shared->fork[philo->right_hand]));
@@ -139,7 +139,7 @@ static void check_philo_died(t_philo *philo, t_arg arg)
     }
 }
 
-int run_simulation(t_philo *philo, t_arg arg)
+t_error_type run_simulation(t_philo *philo, t_arg arg)
 {
     int i;
 
@@ -147,7 +147,7 @@ int run_simulation(t_philo *philo, t_arg arg)
     while (i < arg.num_philosophers)
     {
         if (pthread_create(&(philo[i].thread), NULL, thread_function, &philo[i]) == 1)
-			return (FALSE);
+			return (SYSTEM_CALL_ERROR);
         i++;
     }
     check_philo_died(philo, arg);
@@ -157,5 +157,5 @@ int run_simulation(t_philo *philo, t_arg arg)
 		pthread_join(philo[i].thread, NULL);
         i++;
     }
-    return (TRUE);
+    return (NOT_ERROR);
 }

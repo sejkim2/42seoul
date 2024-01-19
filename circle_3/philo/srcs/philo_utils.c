@@ -22,7 +22,7 @@ int	ft_atoi(char *str)
 {
 	int	i;
 	int	flag_minus;
-	int	num;
+	long long	num;
 
 	flag_minus = 1;
 	i = 0;
@@ -38,9 +38,10 @@ int	ft_atoi(char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 		num = (num * 10) + (str[i++] - '0');
 	if (flag_minus == -1)
-		return (-1 * num);
-	else
-		return (num);
+		num = num * -1;
+	if (num > INTEGER_MAX || num < INTEGER_MIN)
+		return (-1);
+	return (num);
 }
 
 long long get_current_time(void)
