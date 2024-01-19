@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:54:25 by sejkim2           #+#    #+#             */
-/*   Updated: 2024/01/19 12:45:35 by sejkim2          ###   ########.fr       */
+/*   Updated: 2024/01/19 13:05:28 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv)
 	t_arg arg;
 	t_philo *philo;
 
-	atexit(laeks);
+	// atexit(laeks);
 	if (argc == 5 || argc == 6)
 	{
 		error_type = parse_argument(argc, argv, &arg);
@@ -55,8 +55,13 @@ int	main(int argc, char **argv)
 		else
 		{
 			philo = init_philosophers(arg, arg.num_philosophers);
-			run_simulation(philo, arg);
-			free_philo(philo);
+			if (philo == NULL)
+				print_error(SYSTEM_CALL_ERROR);
+			else
+			{
+				run_simulation(philo, arg);
+				free_philo(philo);
+			}
 		}
 	}
 	else

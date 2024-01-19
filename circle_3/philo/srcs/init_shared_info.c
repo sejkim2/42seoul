@@ -9,15 +9,6 @@ t_shared_info *init_shared_info(int num_fork)
     shared = malloc(sizeof(t_shared_info));
     if (shared == NULL)
         return (NULL);
-    shared->fork = malloc(sizeof(pthread_mutex_t) * num_fork);
-    if (shared->fork == NULL)
-        return (NULL);
-    while (i < num_fork)
-    {
-        if (pthread_mutex_init(&(shared->fork[i]), NULL) == -1)
-            return (NULL);
-        i++;
-    }
     if (pthread_mutex_init(&(shared->print), NULL) == -1)
         return (NULL);
     if (pthread_mutex_init(&(shared->time_update), NULL) == -1)
@@ -27,5 +18,14 @@ t_shared_info *init_shared_info(int num_fork)
 	shared->is_finish = FALSE;
 	shared->start_time = get_current_time();
 	shared->global_must_eat_cnt = 0;
+    shared->fork = malloc(sizeof(pthread_mutex_t) * num_fork);
+    if (shared->fork == NULL)
+        return (NULL);
+    while (i < num_fork)
+    {
+        if (pthread_mutex_init(&(shared->fork[i]), NULL) == -1)
+            return (NULL);
+        i++;
+    }
     return (shared);
 }
