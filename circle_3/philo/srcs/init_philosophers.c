@@ -16,7 +16,7 @@ t_philo *init_philosophers(t_arg arg, int num)
     while (i < num)
     {
         philo[i].arg = arg;
-        philo[i].id = i;
+        philo[i].id = i + 1;
         philo[i].left_hand = i;
         if (i == 0)
             philo[i].right_hand = num - 1;
