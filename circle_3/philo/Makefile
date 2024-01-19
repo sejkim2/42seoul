@@ -6,13 +6,13 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2024/01/19 15:48:55 by sejkim2          ###   ########.fr        #
+#    Updated: 2024/01/19 16:37:14 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-C_FLAGS = -Wall -Werror -Wextra -I$(HEADER)
+C_FLAGS = -Wall -Werror -Wextra -I$(HEADER) -fsanitize=thread
 C_FLAGS = -I$(HEADER)
 HEADER = includes
 PHILO_DIR = srcs

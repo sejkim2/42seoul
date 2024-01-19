@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:54:25 by sejkim2           #+#    #+#             */
-/*   Updated: 2024/01/19 16:21:03 by sejkim2          ###   ########.fr       */
+/*   Updated: 2024/01/19 16:56:26 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ static	void	free_philo(t_philo *philo)
 	int	i;
 
 	i = 0;
+	pthread_mutex_destroy(philo->shared->fork);
+	pthread_mutex_destroy(&philo->shared->print);
+	pthread_mutex_destroy(&philo->shared->time_update);
+	pthread_mutex_destroy(&philo->shared->must_eat_cnt);
 	free(philo->shared->fork);
 	free(philo->shared);
 	free(philo);
@@ -33,12 +37,18 @@ static void	print_error(t_error_type error_type)
 	printf("\n");
 }
 
+void leaks()
+{
+	system("leaks philo");
+}
+
 int	main(int argc, char **argv)
 {
 	t_error_type	error_type;
 	t_arg			arg;
 	t_philo			*philo;
 
+	atexit(leaks);
 	if (argc == 5 || argc == 6)
 	{
 		error_type = parse_argument(argc, argv, &arg);
