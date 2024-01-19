@@ -6,7 +6,7 @@ t_philo *init_philosophers(t_arg arg, int num)
     t_shared_info *shared;
     t_philo *philo;
 
-    philo = malloc(sizeof(t_philo *) * num);
+    philo = malloc(sizeof(t_philo) * num);
     shared = init_shared_info(num);
     if (shared == NULL)
         return (NULL);
@@ -16,12 +16,10 @@ t_philo *init_philosophers(t_arg arg, int num)
         philo[i].arg = arg;
         philo[i].id = i;
         philo[i].left_hand = i;
-        printf("[%d]", shared->is_finish);
         if (i == 0)
             philo[i].right_hand = num - 1;
         else
             philo[i].right_hand = (i - 1) % num;
-        printf("[%d]", shared->is_finish);
         philo[i].last_eat_time = shared->start_time;
         philo[i].count_eat = 0;
         philo[i].shared = shared;

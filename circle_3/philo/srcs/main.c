@@ -6,11 +6,21 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:54:25 by sejkim2           #+#    #+#             */
-/*   Updated: 2024/01/19 11:58:02 by sejkim2          ###   ########.fr       */
+/*   Updated: 2024/01/19 12:45:35 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void free_philo(t_philo *philo)
+{
+	int i;
+
+	i = 0;
+	free(philo->shared->fork);
+	free(philo->shared);
+	free(philo);
+}
 
 static void print_error(t_error_type error_type)
 {
@@ -25,12 +35,18 @@ static void print_error(t_error_type error_type)
 	printf("\n");
 }
 
+void laeks(void)
+{
+	system("leaks philo");
+}
+
 int	main(int argc, char **argv)
 {
 	t_error_type error_type;
 	t_arg arg;
 	t_philo *philo;
 
+	atexit(laeks);
 	if (argc == 5 || argc == 6)
 	{
 		error_type = parse_argument(argc, argv, &arg);
@@ -40,6 +56,7 @@ int	main(int argc, char **argv)
 		{
 			philo = init_philosophers(arg, arg.num_philosophers);
 			run_simulation(philo, arg);
+			free_philo(philo);
 		}
 	}
 	else
