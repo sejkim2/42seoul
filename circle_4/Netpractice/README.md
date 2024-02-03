@@ -113,6 +113,13 @@
 
 ## 서브넷마스크
 
-## LAN
+## WAN
 
-출처 : https://brunch.co.kr/@toughrogrammer/16
+## LAN(Local Area Network)
+>> <img width="696" alt="Screen Shot 2024-02-03 at 8 48 55 PM" src="https://github.com/sejkim2/42seoul/assets/128696540/0a0072bd-ab24-4a6d-92a0-954a375f4a38">
+
+>> 같은 건물 내에 있는 근거리 통신망으로 대표적 LAN의 예시로는 Wi-Fi를 들 수 있다. 보통은 라우터를 통해 인터넷에 연결하지만 규모가 있는 공간에서는 효율적인 패킷 전달을 위해 추가로 스위치를 사용한다.
+
+
+>> 출처 : https://www.cloudflare.com/ko-kr/learning/network-layer/what-is-a-lan/
+>> 출처 : https://brunch.co.kr/@toughrogrammer/16
