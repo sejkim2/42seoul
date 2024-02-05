@@ -4,12 +4,12 @@ static	void	print_char(char ch)
 {
 	if (ch >= 'a' && ch <= 'z')
 		ch = ch - 'a' + 'A';
-	std::cout << ch << std::endl;
+	std::cout << ch;
 }
 
 int main(int argc, char **argv)
 {
-	if (argc == 0)
+	if (argc == 1)
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
 	else
 	{
@@ -23,4 +23,5 @@ int main(int argc, char **argv)
 			}
 		}
 	}
+	std::cout << std::endl;
 }
