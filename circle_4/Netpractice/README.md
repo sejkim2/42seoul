@@ -137,6 +137,8 @@
 >>> WFQ (Weighted Fair Queueing) : 라운드 로빈의 단점을 보완하고자 가중치에 따른 서로 다른 시간을 패킷에게 부여하여 전송을 처리한다.
 
 ## IP(Internet Protocol)
+>> 읽어보면 좋은 레퍼런스 : https://www.akamai.com/ko/glossary/what-is-an-ip-address
+
 >> 송신 호스트와 수신 호스트가 패킷 교환 네트워크에서 정보를 주고받는 데 사용되는 프로토콜이다. 쉽게 말해, 인터넷 상에서 데이터를 주고받는 데 사용되는 주소 체계라 보면 된다. 자세하게는, 호스트의 주소 지정과 패킷 분할 및 조립 기능을 담당한다. 버전은 IPv4와 IPv6이 있으며 특징으로는 비신뢰성, 비연결성, 프로세스 구분x 등이 있다. IP의 특징이 가지는 단점을 보완하기 위해서 4계층의 tcp와 같은 프로토콜과 같이 사용된다.
 > ## IP Header
 <img width="820" alt="Screen Shot 2024-02-06 at 5 43 35 PM" src="https://github.com/sejkim2/42seoul/assets/128696540/8f8fb512-c13f-4a51-8062-f7a2729771b1">
@@ -167,6 +169,15 @@
 >>> 같은 IP를 사용하는 서버에서 통신하는 어플리케이션의 경우 어떤 프로세스인지 구분할 수 없다.
 
 ## IP 주소 클래스
+>> IP 주소는 하나의 네트워크 안에 있는 IP들은 네트워크 영역은 같아야 하고, 호스트 IP는 서로 달라야 통신이 가능하다. n : 네트워크 영역, h : 호스트 영역이라 하면
+<img width="842" alt="Screen Shot 2024-02-06 at 7 18 05 PM" src="https://github.com/sejkim2/42seoul/assets/128696540/409eca1a-4ccf-4f60-bb8a-988e2ae61344">
+(D, E 클래스는 멀티캐스트, 연구 용이므로 제외함)
+> ## A 클래스
+>> 32bit 2진수로 표현되었을 때 항상 맨 앞자리가 0인 주소 (0xxx xxxx. xxxx xxxx. xxxx xxxx. xxxx xxxx)이며 첫 옥텟이 네트워크 주소이고 나머지는 호스트 주소이다. 네트워크 주소의 범위는 127개이며, ([0xxx xxxx.] xxxx xxxx. xxxx xxxx. xxxx xxxx 에서 [] 안의 범위 2^7 - 1, 127은 제외하기로 약속)이며 호스트 주소의 범위는 2^(32-8) - 2개이다. (0xxx xxxx. [xxxx xxxx. xxxx xxxx. xxxx xxxx] 에서 [] 안의 범위 2^24 - 2, 0.0.0.0은 네트워크 주소, 모두 1인 경우는 브로드캐스트이므로 제외)
+> ## B 클래스
+>> 10으로 시작하는 주소이며 네트워크 범위는 2^14개 (10[xx xxxx. xxxx xxxx.] xxxx xxxx. xxxx xxxx)이고 호스트 주소의 범위는 2^16 - 2개 이다.(10xx xxxx. xxxx xxxx. [xxxx xxxx. xxxx xxxx], 브로드캐스트, 네트워크 주소 제외)
+> ## C 클래스
+>> 110으로 시작하는 주소이며 네트워크 범위는 2^21개 (110[x xxxx. xxxx xxxx. xxxx xxxx.] xxxx xxxx)이고 호스트 주소의 범위는 2^8 -2개 이다.(10xx xxxx. xxxx xxxx. xxxx xxxx. [xxxx xxxx], 브로드캐스트, 네트워크 주소 제외)
 
 <hr/>
 
@@ -208,3 +219,4 @@
 >> 출처 : https://velog.io/@hsshin0602/%EC%BB%B4%ED%93%A8%ED%84%B0-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-SDNSoftware-Defined-Network
 >> 출처 : https://east-star.tistory.com/23
 >> 출처 : https://onecoin-life.com/19
+>> 출처 : https://limkydev.tistory.com/168
