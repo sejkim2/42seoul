@@ -171,11 +171,15 @@
 ## IP 주소 클래스
 >> IP 주소는 하나의 네트워크 안에 있는 IP들은 네트워크 영역은 같아야 하고, 호스트 IP는 서로 달라야 통신이 가능하다. n : 네트워크 영역, h : 호스트 영역이라 하면
 <img width="842" alt="Screen Shot 2024-02-06 at 7 18 05 PM" src="https://github.com/sejkim2/42seoul/assets/128696540/409eca1a-4ccf-4f60-bb8a-988e2ae61344">
+
 (D, E 클래스는 멀티캐스트, 연구 용이므로 제외함)
+
 > ## A 클래스
 >> 32bit 2진수로 표현되었을 때 항상 맨 앞자리가 0인 주소 (0xxx xxxx. xxxx xxxx. xxxx xxxx. xxxx xxxx)이며 첫 옥텟이 네트워크 주소이고 나머지는 호스트 주소이다. 네트워크 주소의 범위는 127개이며, ([0xxx xxxx.] xxxx xxxx. xxxx xxxx. xxxx xxxx 에서 [] 안의 범위 2^7 - 1, 127은 제외하기로 약속)이며 호스트 주소의 범위는 2^(32-8) - 2개이다. (0xxx xxxx. [xxxx xxxx. xxxx xxxx. xxxx xxxx] 에서 [] 안의 범위 2^24 - 2, 0.0.0.0은 네트워크 주소, 모두 1인 경우는 브로드캐스트이므로 제외)
+
 > ## B 클래스
 >> 10으로 시작하는 주소이며 네트워크 범위는 2^14개 (10[xx xxxx. xxxx xxxx.] xxxx xxxx. xxxx xxxx)이고 호스트 주소의 범위는 2^16 - 2개 이다.(10xx xxxx. xxxx xxxx. [xxxx xxxx. xxxx xxxx], 브로드캐스트, 네트워크 주소 제외)
+
 > ## C 클래스
 >> 110으로 시작하는 주소이며 네트워크 범위는 2^21개 (110[x xxxx. xxxx xxxx. xxxx xxxx.] xxxx xxxx)이고 호스트 주소의 범위는 2^8 -2개 이다.(10xx xxxx. xxxx xxxx. xxxx xxxx. [xxxx xxxx], 브로드캐스트, 네트워크 주소 제외)
 
