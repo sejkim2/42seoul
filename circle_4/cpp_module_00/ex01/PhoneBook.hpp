@@ -2,13 +2,13 @@
 # define _PHONEBOOK
 
 # include "Contact.hpp"
-# include <iostream>
 
 class PhoneBook
 {
 	private:
 		Contact contact[8];
 		int index;
+		void	increase_index();
 	public:
 		PhoneBook();
 		void	phonebook_add();

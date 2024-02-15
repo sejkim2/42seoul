@@ -1,7 +1,8 @@
 #ifndef _CONTACT
 # define _CONTACT
 
-#include <string>
+# include <iostream>
+# include <string>
 
 class Contact
 {
@@ -12,6 +13,12 @@ class Contact
 		std::string phone_number;
 		std::string darkest_secret;
 
+	public:
+		void	setFirstName();
+		void	setLastName();
+		void	setNickName();
+		void	setPhoneNumber();
+		void	setDarkestSecret();
 };
 
 #endif
