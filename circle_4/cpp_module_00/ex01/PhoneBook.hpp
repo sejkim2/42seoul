@@ -8,12 +8,13 @@ class PhoneBook
 	private:
 		Contact contact[8];
 		int index;
-		void	increase_index();
+		bool	phonebook_add();
+		bool	phonebook_search();
+		bool 	phonebook_exit();
+		bool	wrong_command();
 	public:
 		PhoneBook();
-		void	phonebook_add();
-		void	phonebook_search();
-		void 	phonebook_exit();
+		bool	input_command(std::string command);
 };
 
 #endif
