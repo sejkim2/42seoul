@@ -10,10 +10,10 @@ int main(void)
 	{
 		std::cout << "input phonebook command >> ";
 		std::cin >> command;
-		std::cout << "________________________" << std::endl;
+		std::cout << "________________________" << '\n';
 		b_isExit = pb.input_command(command);
 		if (b_isExit == false)
 			break ;
-		std::cout << "________________________" << std::endl;
+		else std::cout << "________________________" << '\n';
 	}
 }
