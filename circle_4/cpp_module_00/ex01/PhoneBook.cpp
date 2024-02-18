@@ -52,8 +52,14 @@ bool	PhoneBook::phonebook_search()
 	{
 		std::cout << "input phonebook index >> ";
 		std::cin >> index;
-		if (index < 1 || index > 8)
+		if (std::cin.eof())
+			return (false);
+		if (std::cin.fail() || index < 1 || index > 8)
 		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			if (std::cin.eof())
+				return (false);
 			std::cout << "invalid index" << '\n';
 			return (true);
 		}
