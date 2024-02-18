@@ -1,0 +1,25 @@
+NAME = account
+CC = g++
+C_FLAGS = -Wall -Werror -Wextra -std=c++98
+
+SRC = account.cpp \
+	tests.cpp
+
+OBJ = $(SRC:.cpp=.o)
+
+$(NAME) : $(OBJ)
+	$(CC) $(C_FLAGS) $(SRC) -o $@
+
+all : $(NAME)
+
+clean :
+	rm -rf $(OBJ)
+
+fclean : clean
+	rm -rf $(NAME)
+
+re :
+	make fclean
+	make all
+
+.PHONY : all clean fclean re
