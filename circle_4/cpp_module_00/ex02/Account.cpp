@@ -1,33 +1,38 @@
 #include "Account.hpp"
 #include <iostream>
 
+int Account::_nbAccounts;
+int	Account::_totalAmount;
+int	Account::_totalNbDeposits;
+int	Account::_totalNbWithdrawals;
+
 int		Account::getNbAccounts()
 {
-	return _nbAccounts;
+	return Account::_nbAccounts;
 }
 
 int		Account::getTotalAmount()
 {
-	return _totalAmount;
+	return Account::_totalAmount;
 }
 
 int		Account::getNbDeposits()
 {
-	return _totalNbDeposits;
+	return Account::_totalNbDeposits;
 }
 
 int		Account::getNbWithdrawals()
 {
-	return _totalNbWithdrawals;
+	return Account::_totalNbWithdrawals;
 }
 
 void		Account::displayAccountsInfos()
 {
-	_displayTimestamp();
-	std::cout << "accounts:" << getNbAccounts() << ";";
-	std::cout << "total:" << getTotalAmount() << ";";
-	std::cout << "deposits:" << getNbDeposits() << ";";
-	std::cout << "withdrawals:" << getNbWithdrawals();
+	Account::_displayTimestamp();
+	std::cout << "accounts:" << Account::getNbAccounts() << ";";
+	std::cout << "total:" << Account::getTotalAmount() << ";";
+	std::cout << "deposits:" << Account::getNbDeposits() << ";";
+	std::cout << "withdrawals:" << Account::getNbWithdrawals();
 	std::cout << '\n';
 }
 
@@ -87,6 +92,7 @@ bool	Account::makeWithdrawal(int withdrawal)
 	}
 	std::cout << '\n';
 	Account::_totalNbWithdrawals++;
+	return (true);
 }
 
 int		Account::checkAmount() const
