@@ -2,7 +2,7 @@
 
 PhoneBook::PhoneBook()
 {
-	index = 1;
+	index = 0;
 }
 
 bool	PhoneBook::input_command(std::string command)
@@ -28,6 +28,15 @@ bool	PhoneBook::phonebook_add()
 	new_contact.setPhoneNumber();
 	new_contact.setDarkestSecret();
 	
+	if (new_contact.getFirstName().length() == 0 || \
+		new_contact.getLastName().length() == 0 || \
+		new_contact.getLastName().length() == 0 || \
+		new_contact.getPhoneNumber().length() == 0 || \
+		new_contact.getDarkestSecret().length() == 0)
+	{
+		std::cout << "A saved contact can't have empty fields" << '\n';
+		return (false);
+	}
 	contact[index] = new_contact;
 	index = (index + 1) % 8;
 
@@ -41,38 +50,43 @@ void	PhoneBook::print_property(std::string string)
 	print_string = string.substr(0, 10);
 	if (string.length() > 10)
 		print_string += ".";
-	std::cout << std::setw(10) << print_string << '\n';
+	std::cout << std::setw(10) << print_string;
 }
 
 bool	PhoneBook::phonebook_search()
 {
-	int index;
 	std::cout << "COMMAND : SEARCH" << '\n';
 	while (1)
 	{
+		std::string string_index;
+		std::stringstream ss_index;
+		int int_index;
+
 		std::cout << "input phonebook index >> ";
-		std::cin >> index;
-		if (std::cin.eof())
-			return (false);
-		if (std::cin.fail() || index < 1 || index > 8)
+		std::getline(std::cin, string_index);
+		if (string_index.length() != 1)
 		{
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			if (std::cin.eof())
-				return (false);
 			std::cout << "invalid index" << '\n';
 			return (true);
 		}
-		std::cout << "index : " << index << '\n';
-		std::cout << '|' << '\n';
+		ss_index << string_index;
+		ss_index >> int_index;
+		if (int_index < 0 || int_index > 7)
+		{
+			std::cout << "invalid index" << '\n';
+			return (true);
+		}
+		std::cout << "index : " << int_index;
+		std::cout << " | ";
 		std::cout << "first name : ";
-		print_property(contact[index].getFirstName());
-		std::cout << '|' << '\n';
+		print_property(contact[int_index].getFirstName());
+		std::cout << " | ";
 		std::cout << "last name : ";
-		print_property(contact[index].getLastName());
-		std::cout << '|' << '\n';
+		print_property(contact[int_index].getLastName());
+		std::cout << " | ";
 		std::cout << "nick name : ";
-		print_property(contact[index].getNickName());
+		print_property(contact[int_index].getNickName());
+		std::cout << "\n";
 	}
 }
 		

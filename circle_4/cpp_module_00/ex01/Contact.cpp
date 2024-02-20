@@ -3,31 +3,31 @@
 void	Contact::setFirstName()
 {
 	std::cout << "input first name >> ";
-	std::cin >> first_name;
+	std::getline(std::cin, first_name);
 }
 
 void	Contact::setLastName()
 {
 	std::cout << "input last name >> ";
-	std::cin >> last_name;
+	std::getline(std::cin, last_name);
 }
 
 void	Contact::setNickName()
 {
 	std::cout << "input nick name >> ";
-	std::cin >> nickname;
+	std::getline(std::cin, nickname);
 }
 
 void	Contact::setPhoneNumber()
 {
 	std::cout << "input phone number >> ";
-	std::cin >> phone_number;
+	std::getline(std::cin, phone_number);
 }
 
 void 	Contact::setDarkestSecret()
 {
 	std::cout << "input darkest secret >> ";
-	std::cin >> darkest_secret;
+	std::getline(std::cin, darkest_secret);
 }
 
 std::string		Contact::getFirstName()
