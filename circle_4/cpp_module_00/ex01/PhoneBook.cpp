@@ -59,6 +59,7 @@ bool	PhoneBook::phonebook_search()
 	std::cout << "Display the saved contacts as a list of 4 columns" << '\n';
 	for(int i = 0; i < 8; i++)
 	{
+		std::cout << "|";
 		std::cout << i;
 		std::cout << "|";
 		print_property(contact[i].getFirstName());
@@ -66,29 +67,28 @@ bool	PhoneBook::phonebook_search()
 		print_property(contact[i].getLastName());
 		std::cout << "|";
 		print_property(contact[i].getNickName());
+		std::cout << "|";
 		std::cout << "\n";
 	}
 
-	while (1)
-	{
-		std::string string_index;
-		std::stringstream ss_index;
-		int int_index;
+	std::string string_index;
+	std::stringstream ss_index;
+	int int_index;
 
-		std::cout << "input phonebook index >> ";
-		std::getline(std::cin, string_index);
-		if (string_index.length() != 1)
-		{
-			std::cout << "invalid index" << '\n';
-			return (true);
-		}
-		ss_index << string_index;
-		ss_index >> int_index;
-		if (int_index < 0 || int_index > 7)
-		{
-			std::cout << "invalid index" << '\n';
-			return (true);
-		}
+	std::cout << "input phonebook index >> ";
+	std::getline(std::cin, string_index);
+	MyIostream::ioError();
+	if (string_index.length() != 1)
+	{
+		std::cout << "invalid index" << '\n';
+		return (true);
+	}
+	ss_index << string_index;
+	ss_index >> int_index;
+	if (int_index < 0 || int_index > 7)
+		std::cout << "invalid index" << '\n';
+	else
+	{
 		std::cout << "|";
 		std::cout << int_index;
 		std::cout << "|";
@@ -104,6 +104,7 @@ bool	PhoneBook::phonebook_search()
 		std::cout << "|";
 		std::cout << "\n";
 	}
+	return (true);
 }
 		
 bool 	PhoneBook::phonebook_exit()

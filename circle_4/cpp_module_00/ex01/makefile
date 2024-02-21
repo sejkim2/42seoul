@@ -17,7 +17,8 @@ C_FLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRC = PhoneBook.cpp \
 		main.cpp \
-		Contact.cpp
+		Contact.cpp \
+		MyIostream.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
