@@ -3,8 +3,7 @@ CC = g++
 HEADER = HumanA.hpp HumanB.hpp Weapon.hpp
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRC = Human.cpp \
-	HumanA.cpp \
+SRC = HumanA.cpp \
 	HumanB.cpp \
 	main.cpp \
 	Weapon.cpp
