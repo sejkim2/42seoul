@@ -1,16 +1,16 @@
-NAME = phonebook
+NAME = ex00
 CC = c++
-HEADER = Contact.hpp PhoneBook.hpp
+HEADERS = Zombie.hpp
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRC = PhoneBook.cpp \
-		main.cpp \
-		Contact.cpp \
-		MyIostream.cpp
+SRC = main.cpp \
+	newZombie.cpp \
+	randomChump.cpp \
+	Zombie.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
-$(NAME) : $(OBJ) $(HEADER)
+$(NAME) : $(OBJ) $(HEADERS)
 	$(CC) $(C_FLAGS) $(SRC) -o $@
 
 all : $(NAME)

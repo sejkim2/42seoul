@@ -1,11 +1,19 @@
-#include "ZombieHorde.cpp"
+#include "Zombie.hpp"
+
+void leaks()
+{
+    system("leaks ex01");
+}
 
 int main(void)
 {
+    atexit(leaks);
     std::string name;
     int         N;
 
-    std::cin >> name;
+    std::cout << "input zombie name >> ";
+    std::getline(std::cin, name);
+    std::cout << "input zombie count >>";
     std::cin >> N;
 
     Zombie *zombieArr = zombieHorde(N, name);
@@ -14,4 +22,5 @@ int main(void)
         zombieArr[i].announce();
 
     delete [] zombieArr;
+    exit(1);
 }

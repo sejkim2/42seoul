@@ -1,12 +1,9 @@
-NAME = phonebook
+NAME = ex02
 CC = c++
-HEADER = Contact.hpp PhoneBook.hpp
+HEADER = 
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRC = PhoneBook.cpp \
-		main.cpp \
-		Contact.cpp \
-		MyIostream.cpp
+SRC = main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

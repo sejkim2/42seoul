@@ -3,7 +3,6 @@
 
 # include <string>
 # include <iostream>
-# include <stdlib.h>
 
 class Zombie
 {
@@ -15,6 +14,7 @@ class Zombie
         ~Zombie();
 };
 
-Zombie*	zombieHorde(int N, std::string name);
+Zombie* newZombie(std::string name);
+void randomChump(std::string name);
 
 #endif

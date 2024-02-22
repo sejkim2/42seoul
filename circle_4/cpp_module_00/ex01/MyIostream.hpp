@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <stdlib.h>
+# define BUF_SIZE 1024
 
 class MyIostream
 {

@@ -1,5 +1,5 @@
-NAME = zzz
-CC = g++
+NAME = ex01
+CC = c++
 HEADER = Zombie.hpp
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
 
