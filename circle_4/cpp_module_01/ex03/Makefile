@@ -1,6 +1,6 @@
 NAME = ex03
 CC = g++
-HEADER = Zombie.hpp
+HEADER = HumanA.hpp HumanB.hpp Weapon.hpp
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRC = Human.cpp \
