@@ -2,6 +2,7 @@
 # define _MYIO
 
 # include <iostream>
+# include <stdlib.h>
 
 class MyIostream
 {
