@@ -5,10 +5,8 @@
 
 class MyIostream
 {
-    private:
-
     public:
-        static void    ioError(void);
+        static void    ioError();
 };
 
 #endif

@@ -1,13 +1,7 @@
 #include "PhoneBook.hpp"
 
-void leaks()
-{
-	system("leaks phonebook");
-}
-
 int main(void)
 {
-	atexit(leaks);
 	PhoneBook pb;
 	bool	b_isExit;
 	std::string command;
@@ -21,5 +15,4 @@ int main(void)
 		if (b_isExit == false)
 			break ;
 	}
-	exit(1);
 }
