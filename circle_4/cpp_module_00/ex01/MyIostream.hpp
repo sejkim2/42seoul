@@ -2,7 +2,7 @@
 # define _MYIO
 
 # include <iostream>
-# include <stdlib.h>
+# include <cstdlib>
 # define BUF_SIZE 1024
 
 class MyIostream
