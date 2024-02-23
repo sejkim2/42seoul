@@ -1,4 +1,4 @@
-NAME = ex02
+NAME = ex04
 CC = c++
 HEADER = 
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
