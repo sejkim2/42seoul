@@ -1,5 +1,13 @@
 #include "Harl.hpp"
 
+Harl::Harl()
+{
+    levels[0] = "DEBUG";
+    levels[1] = "INFO";
+    levels[2] = "WARNING";
+    levels[3] = "ERROR";
+}
+
 void Harl::debug( void )
 {
     std::cout << "I love having extra bacon for my 7XL-double-cheese-triple-pickle-special- ketchup burger. I really do!" << '\n';
@@ -22,14 +30,18 @@ void Harl::error( void )
 
 void Harl::complain(std::string level)
 {
-    // (level == DEBUG) ? debug() : (level == INFO) ? info() : (level == WARNING) ? warning() : (level == ERROR) ? error() : (std::cout << "invalid level" << '\n');
-    (level == DEBUG) ? debug() :
-(level == INFO) ? info() :
-(level == WARNING) ? warning() :
-(level == ERROR) ? Harl::error() :
-(std::cout << "invalid level" << '\n');
+    typedef void (Harl::*funcArr)();
+    funcArr arr[4] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
 
-
+    for(size_t i = 0; i < levels->length(); i++)
+    {
+        if (level == levels[i])
+        {
+            (*this.*arr[i])();
+            return;
+        }
+    }
+    std::cout << "invalid level" << '\n';
 }
 
 

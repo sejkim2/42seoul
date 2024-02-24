@@ -20,10 +20,8 @@ int main(int argc, char **argv)
             {
                 getline(in, s);
                 string_replace.append(s);
-                // out << s;
                 if (in.eof())
                     break ;
-                // out << "\n";
                 string_replace.append("\n");
             }
             int find_index = 0;

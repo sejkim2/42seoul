@@ -2,6 +2,9 @@
 
 int main(void)
 {
-    Harl *harl = new Harl();
-    harl->complain("INFO");
+    std::string input;
+    Harl harl;
+    
+    std::cin >> input;
+    harl.complain(input);
 }
