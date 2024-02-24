@@ -57,12 +57,15 @@ void Harl::complain(std::string level)
         case 0:
             Harl::debug();
             std::cout << '\n';
+            //fall through
         case 1:
             Harl::info();
             std::cout << '\n';
+            //fall through 
         case 2:
             Harl::warning();
             std::cout << '\n';
+            //fall through
         case 3:
             Harl::error();
             std::cout << '\n';
