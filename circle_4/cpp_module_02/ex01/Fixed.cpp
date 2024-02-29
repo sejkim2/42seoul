@@ -10,11 +10,17 @@ Fixed::~Fixed(void)
     std::cout << "Destructor called" << '\n';
 }
 
-// Fixed::Fixed(const Fixed& fixed) : rawBits(fixed.getRawBits())
-// {
-//     std::cout << "Copy constructor called" << '\n';
-//     // rawBits = fixed.getRawBits();
-// }
+Fixed::Fixed(const int n)
+{
+    std::cout << "Int constructor called" << '\n';
+    rawBits = n * (1 << fractionalBits);
+}
+
+Fixed::Fixed(const float f)
+{
+    std::cout << "Float constructor called" << '\n';
+    rawBits = roundf(f * (1 << fractionalBits));
+}
 
 Fixed::Fixed(const Fixed& fixed)
 {
@@ -40,4 +46,20 @@ int Fixed::getRawBits(void) const
 void Fixed::setRawBits(int const raw)
 {
     this->rawBits = raw;
+}
+
+float Fixed::toFloat(void) const
+{
+    return ((float)rawBits / (1 << fractionalBits));
+}
+
+int Fixed::toInt(void) const
+{
+    return (rawBits / (1 << fractionalBits));
+}
+
+std::ostream& operator<<(std::ostream& out, const Fixed& fixed)
+{
+    out << fixed.toFloat();
+    return (out);
 }
