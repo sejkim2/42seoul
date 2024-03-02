@@ -1,10 +1,10 @@
-NAME = harlFilter
-CC = c++
-HEADER = Harl.hpp
+NAME = ex02
+CC = clang++
+HEADER = Fixed.hpp
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRC = main.cpp \
-	Harl.cpp
+	Fixed.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
