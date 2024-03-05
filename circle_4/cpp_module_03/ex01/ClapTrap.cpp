@@ -2,12 +2,12 @@
 
 ClapTrap::ClapTrap(void) : hitPoint(10), energyPoint(10), attackDamage(0)
 {
-    std::cout << "Default constructor called" << '\n';
+    std::cout << "ClapTrap Default constructor called" << '\n';
 }
 
 ClapTrap::~ClapTrap(void)
 {
-    std::cout << "Destructor called" << '\n';
+    std::cout << "ClapTrap Destructor called" << '\n';
 }
         
 ClapTrap::ClapTrap(const ClapTrap& clapTrap)
@@ -28,7 +28,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& clapTrap)
 
 ClapTrap::ClapTrap(std::string name) : name(name), hitPoint(10), energyPoint(10), attackDamage(0)
 {
-    std::cout << "constructor called" << '\n';
+    std::cout << "ClapTrap constructor called" << '\n';
 }
 
 void ClapTrap::attack(const std::string& target)
@@ -56,7 +56,7 @@ void ClapTrap::beRepaired(unsigned int amount)
         return;
     std::cout << this->name << " is repaired" << '\n';
     this->energyPoint--;
-    this->hitPoint += amount;
+    this->hitPoint++;
 }
 
 std::string     ClapTrap::getName(void)

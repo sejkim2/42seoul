@@ -1,4 +1,4 @@
-NAME = ex00
+NAME = ex01
 CC = clang++
 HEADER = ClapTrap.hpp
 C_FLAGS = -Wall -Werror -Wextra -std=c++98

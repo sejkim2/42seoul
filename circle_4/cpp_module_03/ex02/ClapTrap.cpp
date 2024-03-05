@@ -56,7 +56,7 @@ void ClapTrap::beRepaired(unsigned int amount)
         return;
     std::cout << this->name << " is repaired" << '\n';
     this->energyPoint--;
-    this->hitPoint += amount;
+    this->hitPoint++;
 }
 
 std::string     ClapTrap::getName(void)
