@@ -7,6 +7,4 @@ int main(void)
 
     ct1.attack(ct2.getName());
     ct2.takeDamage(ct1.getAttackDamage());
-
-    
 }

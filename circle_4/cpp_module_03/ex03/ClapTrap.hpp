@@ -23,12 +23,12 @@ class ClapTrap
         unsigned int    getEnergyPoint(void);
         unsigned int    getAttackDamage(void);
 
-    private:
-        bool            isDisabled();
+    protected:
         std::string          name;
         unsigned int         hitPoint;
         unsigned int         energyPoint;
         unsigned int         attackDamage;
+        bool            isDisabled();
 };
 
 #endif
