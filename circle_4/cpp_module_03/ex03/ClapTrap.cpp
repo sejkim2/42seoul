@@ -26,7 +26,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& clapTrap)
     return (*this);
 }
 
-ClapTrap::ClapTrap(std::string name) : name(name), hitPoint(10), energyPoint(10), attackDamage(0)
+ClapTrap::ClapTrap(std::string name) : name("_clap_name" + name), hitPoint(10), energyPoint(10), attackDamage(0)
 {
     std::cout << "ClapTrap constructor called" << '\n';
 }
