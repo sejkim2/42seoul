@@ -9,12 +9,12 @@ class ClapTrap
     public:
         /*canonical form*/
         ClapTrap(void);
-        ~ClapTrap(void);
+        virtual ~ClapTrap(void);
         ClapTrap(const ClapTrap& clapTrap);
         ClapTrap& operator=(const ClapTrap& clapTrap);
 
         ClapTrap(std::string name);
-        void attack(const std::string& target);
+        virtual void attack(const std::string& target);
         void takeDamage(unsigned int amount);
         void beRepaired(unsigned int amount);
 
@@ -23,12 +23,13 @@ class ClapTrap
         unsigned int    getEnergyPoint(void);
         unsigned int    getAttackDamage(void);
 
+    // private:
     protected:
+        bool            isDisabled();
         std::string          name;
         unsigned int         hitPoint;
         unsigned int         energyPoint;
         unsigned int         attackDamage;
-        bool            isDisabled();
 };
 
 #endif

@@ -1,22 +1,22 @@
-#ifndef _DIAMONDTRAP
-# define _DIAMONDTRAP
+#ifndef _DIAMONDTRAP_HPP_
+# define _DIAMONDTRAP_HPP_
 
-# include "ScavTrap.hpp"
 # include "FragTrap.hpp"
+# include "ScavTrap.hpp"
 
 class DiamondTrap : public FragTrap, public ScavTrap
 {
+    /*canonical form*/
     public:
-        /*canonical form*/
         DiamondTrap(void);
-        ~DiamondTrap(void);
+        virtual ~DiamondTrap(void);
         DiamondTrap(const DiamondTrap& diamondTrap);
         DiamondTrap& operator=(const DiamondTrap& diamondTrap);
 
-        DiamondTrap(std::string name);
+        virtual void attack(const std::string& target);
         void whoAmI(void);
     private:
-        std::string name;
+        std::string name;    
 };
 
 #endif

@@ -1,7 +1,7 @@
 NAME = ex01
 CC = clang++
 HEADER = ClapTrap.hpp FragTrap.hpp
-C_FLAGS = -Wall -Werror -Wextra -std=c++98
+C_FLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic
 
 SRC = main.cpp \
 	ClapTrap.cpp \
