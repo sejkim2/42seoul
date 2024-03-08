@@ -3,6 +3,9 @@
 DiamondTrap::DiamondTrap(void) : FragTrap(), ScavTrap()
 {
     std::cout << "DiamondTrap " << this->name << " Default constructor called" << '\n';
+    this->hitPoint = FragTrap::hitPoint;
+    this->energyPoint = ScavTrap::energyPoint;
+    this->attackDamage = FragTrap::attackDamage;
 }
 
 DiamondTrap::~DiamondTrap(void)
@@ -20,13 +23,27 @@ DiamondTrap& DiamondTrap::operator=(const DiamondTrap& diamondTrap)
     if (&diamondTrap == this)
         return (*this);
     this->name = diamondTrap.name;
-    // this->hitPoint = diamondTrap.hitPoint;
-    // this->energyPoint = diamondTrap.energyPoint;
-    // this->attackDamage = diamondTrap.attackDamage;
+    this->hitPoint = diamondTrap.hitPoint;
+    this->energyPoint = diamondTrap.energyPoint;
+    this->attackDamage = diamondTrap.attackDamage;
     return (*this);
+}
+
+DiamondTrap::DiamondTrap(std::string name) : ClapTrap(name), FragTrap(name), ScavTrap(name)
+{
+    this->name = name;
+    std::cout << "DiamondTrap " << this->name << " constructor called" << '\n';
+    this->hitPoint = FragTrap::hitPoint;
+    this->energyPoint = ScavTrap::energyPoint;
+    this->attackDamage = FragTrap::attackDamage;
 }
 
 void DiamondTrap::attack(const std::string& target)
 {
     ScavTrap::attack(target);
+}
+
+void DiamondTrap::whoAmI(void)
+{
+    std::cout << "DiamondTrap name is " << DiamondTrap::name << ", and ClapTrap name is " << ClapTrap::name << '\n';
 }

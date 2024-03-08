@@ -1,11 +1,13 @@
-NAME = ex01
+NAME = ex03
 CC = clang++
-HEADER = ClapTrap.hpp ScavTrap.hpp
+HEADER = ClapTrap.hpp ScavTrap.hpp FragTrap.hpp DiamondTrap.hpp
 C_FLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic
 
 SRC = main.cpp \
 	ClapTrap.cpp \
-	ScavTrap.cpp
+	ScavTrap.cpp \
+	FragTrap.cpp \
+	DiamondTrap.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

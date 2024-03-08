@@ -1,38 +1,15 @@
-#include "ScavTrap.hpp"
-
-class TrapHandler
-{
-    public:
-        TrapHandler(ClapTrap* attacker, ClapTrap* defender)
-        {
-            this->attacker = attacker;
-            this->defender = defender;
-        }
-        void trapAction()
-        {
-            attacker->attack(defender->getName());
-            defender->takeDamage(attacker->getAttackDamage());
-            std::cout << "hitpoint : " << defender->getHitPoint() << '\n';        
-        }
-    private:
-        ClapTrap* attacker;
-        ClapTrap* defender;
-};
+#include "DiamondTrap.hpp"
 
 int main(void)
 {
-    // ScavTrap st1("st1");
-    // ScavTrap st2("st2");
-    ClapTrap ct1("ct1");
-    ClapTrap ct2("ct2");
+    DiamondTrap dt1("dt1");
+    DiamondTrap dt2("dt2");
 
-    // st1.attack(st2.getName());
-    // st2.takeDamage(st1.getAttackDamage());
-    // std::cout << "st2 hitpoint : " << st2.getHitPoint() << '\n';
+    dt1.whoAmI();
+    dt2.whoAmI();
 
-    // std::cout << "_____________________________________________________" << '\n';
-
-    // TrapHandler trapHandler(&st1, &st2);
-    TrapHandler trapHandler(&ct1, &ct2);
-    trapHandler.trapAction();
+    // dt1.attack(dt2.getName());
+    std::cout << "dt2 hit point is " << dt2.getHitPoint() << '\n';
+    std::cout << "dt2 energy point is " << dt2.getEnergyPoint() << '\n';
+    std::cout << "dt2 attack point is " << dt2.getAttackDamage() << '\n';
 }
