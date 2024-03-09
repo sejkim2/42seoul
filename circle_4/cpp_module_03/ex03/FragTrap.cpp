@@ -3,9 +3,9 @@
 FragTrap::FragTrap(void) : ClapTrap()
 {
     std::cout << "FragTrap " << this->name << " Default constructor called" << '\n';
-    this->hitPoint = 100;
-    this->energyPoint = 100;
-    this->attackDamage = 30;
+    this->hitPoint = FragTrap::HITPOINT;
+    this->energyPoint = FragTrap::ENERGYPOINT;
+    this->attackDamage = FragTrap::ATTACKDAMAGE;
 }
 
 FragTrap::~FragTrap(void)
@@ -32,9 +32,9 @@ FragTrap& FragTrap::operator=(const FragTrap& fragTrap)
 FragTrap::FragTrap(std::string name) : ClapTrap(name)
 {
     std::cout << "FragTrap " << this->name << " constructor called" << '\n';
-    this->hitPoint = 100;
-    this->energyPoint = 100;
-    this->attackDamage = 30;
+    this->hitPoint = FragTrap::HITPOINT;
+    this->energyPoint = FragTrap::ENERGYPOINT;
+    this->attackDamage = FragTrap::ATTACKDAMAGE;
 }
 
 void FragTrap::attack(const std::string& target)

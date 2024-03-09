@@ -1,6 +1,6 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(void) : name("(no name)_clap_name"), hitPoint(10), energyPoint(10), attackDamage(0)
+ClapTrap::ClapTrap(void) : name("(no name)_clap_name"), hitPoint(HITPOINT), energyPoint(ENERGYPOINT), attackDamage(ATTACKDAMAGE)
 {
     std::cout << "ClapTrap " << this->name << " Default constructor called" << '\n';
 }
@@ -26,7 +26,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& clapTrap)
     return (*this);
 }
 
-ClapTrap::ClapTrap(std::string name) : name(name + "_clap_name"), hitPoint(10), energyPoint(10), attackDamage(0)
+ClapTrap::ClapTrap(std::string name) : name(name + "_clap_name"), hitPoint(HITPOINT), energyPoint(ENERGYPOINT), attackDamage(ATTACKDAMAGE)
 {
     std::cout << "ClapTrap " << this->name << " constructor called" << '\n';
 }

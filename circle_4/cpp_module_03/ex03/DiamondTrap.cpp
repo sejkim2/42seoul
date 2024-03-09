@@ -3,9 +3,9 @@
 DiamondTrap::DiamondTrap(void) : FragTrap(), ScavTrap()
 {
     std::cout << "DiamondTrap " << this->name << " Default constructor called" << '\n';
-    this->hitPoint = FragTrap::hitPoint;
-    this->energyPoint = ScavTrap::energyPoint;
-    this->attackDamage = FragTrap::attackDamage;
+    this->hitPoint = FragTrap::HITPOINT;
+    this->energyPoint = ScavTrap::ENERGYPOINT;
+    this->attackDamage = FragTrap::ATTACKDAMAGE;
 }
 
 DiamondTrap::~DiamondTrap(void)
@@ -33,9 +33,9 @@ DiamondTrap::DiamondTrap(std::string name) : ClapTrap(name), FragTrap(name), Sca
 {
     this->name = name;
     std::cout << "DiamondTrap " << this->name << " constructor called" << '\n';
-    this->hitPoint = FragTrap::hitPoint;
-    this->energyPoint = ScavTrap::energyPoint;
-    this->attackDamage = FragTrap::attackDamage;
+    this->hitPoint = FragTrap::HITPOINT;
+    this->energyPoint = ScavTrap::ENERGYPOINT;
+    this->attackDamage = FragTrap::ATTACKDAMAGE;
 }
 
 void DiamondTrap::attack(const std::string& target)
