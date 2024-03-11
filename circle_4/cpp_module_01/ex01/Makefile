@@ -1,7 +1,7 @@
 NAME = ex01
 CC = c++
 HEADER = Zombie.hpp
-C_FLAGS = -Wall -Werror -Wextra -std=c++98
+C_FLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic
 
 SRC = Zombie.cpp \
 	ZombieHorde.cpp \

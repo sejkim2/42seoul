@@ -43,6 +43,3 @@ void Harl::complain(std::string level)
     }
     std::cout << "invalid level" << '\n';
 }
-
-
-

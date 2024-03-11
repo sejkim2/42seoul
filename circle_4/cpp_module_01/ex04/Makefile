@@ -1,9 +1,10 @@
 NAME = ex04
 CC = c++
-HEADER = 
+HEADER = MyStream.hpp
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRC = main.cpp
+SRC = main.cpp \
+	MyStream.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
