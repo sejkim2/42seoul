@@ -33,7 +33,7 @@ Fixed& Fixed::operator=(const Fixed& fixed)
     std::cout << "Assignation operator called" << '\n';
     if (&fixed == this)
         return (*this);
-    rawBits = fixed.getRawBits();
+    rawBits = fixed.rawBits;
     return (*this);
 }
 
