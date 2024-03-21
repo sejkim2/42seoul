@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <string>
+# include "Brain.hpp"
 
 class Animal
 {
@@ -17,10 +18,12 @@ class Animal
         // void        setType(std::string type);
         // virtual void makeSound(void) const = 0; //pure virtual function
         virtual void makeSound(void) const; //virtual function
-        static int a;
 
     protected:
-        Animal(std::string type);        
+        Animal(std::string type);
+        Brain* brain;
+
+    private:
         std::string type;
 };
 
