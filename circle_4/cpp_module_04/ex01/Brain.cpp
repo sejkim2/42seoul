@@ -19,5 +19,9 @@ Brain& Brain::operator=(const Brain& brain)
 {
     if (&brain == this)
         return (*this);
+
+    for(int i = 0; i<100; i++)
+        ideas[i] = brain.ideas[i];
+
     return (*this);
 }
