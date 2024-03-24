@@ -1,4 +1,4 @@
-NAME = ex00
+NAME = ex01
 CC = c++
 HEADER = Animal.hpp Cat.hpp Dog.hpp Brain.hpp
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
