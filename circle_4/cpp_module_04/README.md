@@ -149,7 +149,7 @@ The use(ICharacter&) member function will display:
 
 \<name> is the name of the Character passed as parameter. Don’t print the angle
 brackets (< and >).
-><name>은 매개 변수로 전달된 Character의 이름입니다. 꺽쇠 괄호 (<와 >)를 출력하지 마세요.
+>\<name>은 매개 변수로 전달된 Character의 이름입니다. 꺽쇠 괄호 (<와 >)를 출력하지 마세요.
 
 * While assigning a Materia to another, copying the type doesn’t make sense.
   >다른 Materia에 Materia를 할당할 때, 타입을 복사하는 것은 의미가 없습니다.
