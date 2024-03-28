@@ -28,11 +28,11 @@ bool	PhoneBook::phonebook_add()
 	new_contact.setPhoneNumber();
 	new_contact.setDarkestSecret();
 	
-	if (new_contact.getFirstName().length() == 0 || \
-		new_contact.getLastName().length() == 0 || \
-		new_contact.getLastName().length() == 0 || \
-		new_contact.getPhoneNumber().length() == 0 || \
-		new_contact.getDarkestSecret().length() == 0)
+	if (new_contact.getFirstName().find_first_not_of(" \t\n\v\f\r") == std::string::npos || \
+		new_contact.getLastName().find_first_not_of(" \t\n\v\f\r") == std::string::npos || \
+		new_contact.getLastName().find_first_not_of(" \t\n\v\f\r") == std::string::npos || \
+		new_contact.getPhoneNumber().find_first_not_of(" \t\n\v\f\r") == std::string::npos || \
+		new_contact.getDarkestSecret().find_first_not_of(" \t\n\v\f\r") == std::string::npos)
 	{
 		std::cout << "A saved contact can't have empty fields" << '\n';
 		return (false);
@@ -89,20 +89,18 @@ bool	PhoneBook::phonebook_search()
 		std::cout << "invalid index" << '\n';
 	else
 	{
-		std::cout << "|";
+		std::cout << "index : ";
 		std::cout << int_index;
-		std::cout << "|";
-		print_property(contact[int_index].getFirstName());
-		std::cout << "|";
-		print_property(contact[int_index].getLastName());
-		std::cout << "|";
-		print_property(contact[int_index].getNickName());
-		std::cout << "|";
-		print_property(contact[int_index].getPhoneNumber());
-		std::cout << "|";
-		print_property(contact[int_index].getDarkestSecret());
-		std::cout << "|";
-		std::cout << "\n";
+		std::cout << "FirstName : ";
+		std::cout << contact[int_index].getFirstName() << '\n';
+		std::cout << "LastName : ";
+		std::cout << contact[int_index].getLastName() << '\n';
+		std::cout << "NickName : ";
+		std::cout << contact[int_index].getNickName() << '\n';
+		std::cout << "PhoneNumber : ";
+		std::cout << contact[int_index].getPhoneNumber() << '\n';
+		std::cout << "DarkestSecret : ";
+		std::cout << contact[int_index].getDarkestSecret() << '\n';
 	}
 	return (true);
 }
