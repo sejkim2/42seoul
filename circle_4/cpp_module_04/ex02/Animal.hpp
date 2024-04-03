@@ -16,8 +16,8 @@ class Animal
 
         virtual std::string getType(void) const;        //virtual function
         // void        setType(std::string type);
-        // virtual void makeSound(void) const = 0; //pure virtual function
-        virtual void makeSound(void) const; //virtual function
+        virtual void makeSound(void) const = 0; //pure virtual function
+        // virtual void makeSound(void) const; //virtual function
 
     protected:
         Animal(std::string type);
