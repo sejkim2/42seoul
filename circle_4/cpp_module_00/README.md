@@ -224,60 +224,37 @@ lost file. Something went wrong and a source file was deleted by mistake. Unfort
 your colleagues don’t know what Git is and use USB keys to share code. At this point, it
 would make sense to leave this place right now. However, you decide to stay. Challenge
 accepted!
->어쨌든, 당신의 매니저가 당신에게 할 일을 줬습니다. 첫 번째 작업은 손실된 파일을 재생성하는 것입니다. 어떤 문제가 발생하여 소스 파일이 실수로 삭제되었습니다. 불행히도, 당신의 동료들은 Git이 무엇인지 모르고 코드를 공유하기 위해 USB 키를 사용합니다.
+>어쨌든, 당신의 매니저가 당신에게 할 일을 줬습니다. 첫 번째 작업은 손실된 파일을 재생성하는 것입니다. 어떤 문제가 발생하여 소스 파일이 실수로 삭제되었습니다. 불행히도, 당신의 동료들은 Git이 무엇인지 모르고 코드를 공유하기 위해 USB 키를 사용합니다. 이 시점에서는 지금 이곳을 떠나는 것이 합리적일 것 같습니다. 그러나 당신은 머물기로 결정합니다. 도전 수락했습니다!
 
 Your fellow developers give you a bunch of files. Compiling tests.cpp reveals that
 the missing file is Account.cpp. Lucky you, the header file Account.hpp was saved.
 There is also a log file. Maybe you could use it in order to understand how the Account
 class was implemented.
+>당신의 동료 개발자들이 여러 파일을 제공합니다. tests.cpp를 컴파일하면 누락된 파일이 Account.cpp임을 알 수 있습니다. 운이 좋게도 Account.hpp 헤더 파일이 저장되어 있습니다. 또한 로그 파일도 있습니다. 아마도 이 로그 파일을 활용하여 Account 클래스가 어떻게 구현되었는지 이해할 수 있을 것입니다.
 
 You start to recreate the Account.cpp file. In only a few minutes, you code a few
 lines of pure awesome C++. After a couple of failed compilations, your program passes
 the tests. Its output matches perfectly the one saved in the log file (except for the
 timestamps which will obviously differ since the tests saved in the log file were run
 before you were hired).
+>멋진 C++ 코드 몇 줄을 몇 분 안에 작성했습니다! 정말 멋지네요. 계속해서 진행하시겠습니까? 도움이 필요하시면 언제든지 말씀해주세요! 몇 번의 컴파일 실패 후에, 당신의 프로그램이 테스트를 통과합니다. 그 출력 결과는 로그 파일에 저장된 것과 완벽하게 일치합니다 (당연히 타임스탬프는 다를 것입니다. 왜냐하면 로그 파일에 저장된 테스트는 당신이 고용되기 전에 실행되었기 때문입니다).
 
 Damn, you’re impressive!
+>당신은 인상적이세요!
 
 The order in which the destructors are called may differ depending on
 your compiler/operating system. So your destructors may be called in
 a reverse order.
+>소멸자가 호출되는 순서는 컴파일러나 운영 체제에 따라 달라질 수 있습니다. 따라서 당신의 소멸자는 반대 순서로 호출될 수 있습니다.
 
 You can pass this module without doing exercise 02.
+>Exercise 02를 수행하지 않고도 이 모듈을 통과할 수 있습니다.
 
 # Submission and peer-evaluation
 Turn in your assignment in your Git repository as usual. Only the work inside your
 repository will be evaluated during the defense. Don’t hesitate to double check the
 names of your files to ensure they are correct.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+>평소처럼 귀하의 Git 저장소에 과제를 제출하십시오. 방어 시에는 저장소 내의 작업만 평가됩니다. 파일 이름이 정확한지 확인하기 위해 두 번 확인하는 것을 주저하지 마십시오.
 
 ***
 
