@@ -2,7 +2,7 @@
 C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or "C with Classes" (source: Wikipedia).
 >C++은 C 프로그래밍 언어의 확장인 "클래스를 포함한 C"로 알려진 일반 목적의 프로그래밍 언어로, Bjarne Stroustrup에 의해 만들어졌습니다. (출처: 위키피디아)
 
-The goal of these modules is to introduce you to Object-Oriented Programming.
+The goal of these modules is to introduce you to __Object-Oriented Programming__.
 This will be the starting point of your C++ journey. Many languages are recommended
 to learn OOP. We decided to choose C++ since it’s derived from your old friend C.
 Because this is a complex language, and in order to keep things simple, your code will
@@ -30,7 +30,7 @@ in complexity.
 * Name your files, classes, functions, member functions and attributes as required in
 the guidelines.
 >가이드라인에서 요구하는 대로 파일, 클래스, 함수, 멤버 함수 및 속성을 이름 지어야 합니다.
-* Write class names in UpperCamelCase format. Files containing class code will
+* Write class names in __UpperCamelCase__ format. Files containing class code will
 always be named according to the class name. For instance:
 ClassName.hpp/ClassName.h, ClassName.cpp, or ClassName.tpp. Then, if you
 have a header file containing the definition of a class "BrickWall" standing for a
@@ -39,7 +39,7 @@ brick wall, its name will be BrickWall.hpp
 * Unless specified otherwise, every output messages must be ended by a new-line
 character and displayed to the standard output.
 >특별한 지시가 없는 한, 모든 출력 메시지는 새 줄 문자로 끝나고 표준 출력에 표시되어야 합니다.
-* Goodbye Norminette! No coding style is enforced in the C++ modules. You can
+* _Goodbye Norminette!_ No coding style is enforced in the C++ modules. You can
 follow your favorite one. But keep in mind that a code your peer-evaluators can’t
 understand is a code they can’t grade. Do your best to write a clean and readable
 code.
@@ -59,24 +59,24 @@ that’s it.
 * Note that unless explicitly stated otherwise, the using namespace <ns_name> and
 friend keywords are forbidden. Otherwise, your grade will be -42.
 >암시적으로 다르게 명시되지 않는 한, using namespace <ns_name>과 friend 키워드는 금지됩니다. 그렇지 않다면 여러분의 성적은 -42점이 될 것입니다.
-* You are allowed to use the STL in the Module 08 and 09 only. That means:
-no Containers (vector/list/map/and so forth) and no Algorithms (anything that
+* __You are allowed to use the STL in the Module 08 and 09 only.__ That means:
+no __Containers__ (vector/list/map/and so forth) and no __Algorithms__ (anything that
 requires to include the <algorithm> header) until then. Otherwise, your grade will
 be -42.
 >Module 08 및 09에서만 STL을 사용할 수 있습니다. 이는 컨테이너 (vector/list/map/등) 및 알고리즘 (<algorithm> 헤더를 포함해야 하는 모든 것)을 사용할 수 없음을 의미합니다. 그렇지 않으면 여러분의 성적은 -42점이 될 것입니다.
 # A few design requirements
 * Memory leakage occurs in C++ too. When you allocate memory (by using the new
-keyword), you must avoid memory leaks.
+keyword), you must avoid __memory leaks__.
 >C++에서도 메모리 누수가 발생할 수 있습니다. 메모리를 할당할 때 (new 키워드를 사용하여) 메모리 누수를 피해야 합니다.
-* From Module 02 to Module 09, your classes must be designed in the Orthodox
-Canonical Form, except when explicitely stated otherwise.
+* From Module 02 to Module 09, your classes must be designed in the __Orthodox
+Canonical Form, except when explicitely stated otherwise.__
 >Module 02부터 Module 09까지, 클래스는 명시적으로 다르게 명시되지 않는 한 정형 캐노니컬 형식으로 설계되어야 합니다.
 * Any function implementation put in a header file (except for function templates)
 means 0 to the exercise.
 >함수 템플릿을 제외한 헤더 파일에 함수 구현을 넣으면 연습문제에 대해 0점을 받게 됩니다.
 * You should be able to use each of your headers independently from others. Thus,
 they must include all the dependencies they need. However, you must avoid the
-problem of double inclusion by adding include guards. Otherwise, your grade will
+problem of double inclusion by adding __include guards.__ Otherwise, your grade will
 be 0.
 >각 헤더를 다른 헤더와 독립적으로 사용할 수 있어야 합니다. 따라서 헤더가 필요한 모든 종속성을 포함해야 합니다. 그러나 include guards를 추가하여 이중 포함 문제를 피해야 합니다. 그렇지 않으면 여러분의 성적은 0점이 될 것입니다.
 # Read me
