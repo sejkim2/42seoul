@@ -231,7 +231,7 @@ twice!
 
 Create and turn in tests to show that Harl complains a lot. You can use the examples
 of comments listed above in the subject or choose to use comments of your own.
->
+>"Harl이 자주 불평하는 것을 보여주는 시험지를 만들어서 제출하세요. 주제로 나열된 댓글 예시를 사용하거나 직접 댓글을 만드셔도 됩니다."
 
 # ex06 :  Harl filter
 * Turn-in directory : ex06/
@@ -240,11 +240,11 @@ of comments listed above in the subject or choose to use comments of your own.
 
 Sometimes you don’t want to pay attention to everything Harl says. Implement a
 system to filter what Harl says depending on the log levels you want to listen to.
->
+>가끔은 Harl이 하는 말에 모두 관심을 기울이고 싶지 않을 때도 있습니다. 듣고 싶은 로그 레벨에 따라 Harl의 말을 필터링하는 시스템을 구현하세요.
 
 Create a program that takes as parameter one of the four levels. It will display all
 messages from this level and above. For example:
->
+>프로그램을 만들어서 네 가지 레벨 중 하나를 매개변수로 받습니다. 이 프로그램은 해당 레벨 및 그 이상의 모든 메시지를 표시합니다. 예를 들어:
 
 ```
 $> ./harlFilter "WARNING"
@@ -259,60 +259,13 @@ $> ./harlFilter "I am not sure how tired I am today..."
 
 Although there are several ways to deal with Harl, one of the most effective is to
 SWITCH it off.
->
+>Harl과 대응하는 여러 방법이 있지만 가장 효과적인 하나는 그것을 끄는 것입니다.
 
 Give the name harlFilter to your executable.
->
+>프로그램을 "harlFilter"라고 지정하겠습니다.
 
 You must use, and maybe discover, the switch statement in this exercise.
->
+>이 연습에서 스위치 문을 사용할 것입니다. 가능한 새로운 것을 발견할지도 모르겠네요!
 
 You can pass this module without doing exercise 06.
->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+>이 모듈은 연습 06을 건너뛰고 진행할 수 있습니다.
