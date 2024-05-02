@@ -110,16 +110,21 @@ Implement a Weapon class that has:
   >type에 대한 const 참조를 반환하는 getType() 멤버 함수를 추가하세요.
 * A setType() member function that sets type using the new one passed as parameter.
   >setType() 멤버 함수를 추가하세요. 이 함수는 매개 변수로 전달된 새로운 값을 사용하여 type을 설정합니다.
+
 Now, create two classes: __HumanA__ and __HumanB.__ They both have a Weapon and a
 name. They also have a member function attack() that displays (of course, without the
 angle brackets):
   >이제 두 개의 클래스 __HumanA__와 __HumanB__를 생성합니다. 이들은 둘 다 무기와 이름을 갖고 있습니다. 또한 attack()라는 멤버 함수가 있으며 (물론, 꺽쇠 괄호 없이) 다음을 표시합니다:
+
 * \<name\> attacks with their \<weapon type\>
   ><name>은(는) 자신의 <weapon type>으로 공격합니다.
+
 HumanA and HumanB are almost the same except for these two tiny details:
 >HumanA와 HumanB는 이 두 가지 아주 작은 차이를 제외하고 거의 동일합니다:
+
 * While HumanA takes the Weapon in its constructor, HumanB doesn’t.
   >HumanA는 생성자에서 무기를 가져오지만, HumanB는 그렇지 않습니다.
+
 * HumanB may __not always__ have a Weapon, whereas HumanA will __always__ be armed.
   >HumanB는 항상 무기를 가지고 있지 않을 수 있지만, HumanA는 항상 무장되어 있습니다.
 
