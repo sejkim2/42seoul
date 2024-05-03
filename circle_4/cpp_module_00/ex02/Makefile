@@ -1,6 +1,6 @@
 NAME = account
 CC = c++
-C_FLAGS = -Wall -Werror -Wextra
+C_FLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic
 
 SRC = Account.cpp \
 	tests.cpp
