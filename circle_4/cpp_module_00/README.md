@@ -277,7 +277,7 @@ names of your files to ensure they are correct.
 3. 잘못된 입력으로 인해 비워지지 않은 버퍼 비워주기 -> cin.ignore(buf_size, delim)
 delim에 도착할 때까지 버퍼를 지워준다.
 만약 버퍼를 비우지 않는다면 다음 입력 시 이전 잘못된 버퍼를 가져오므로 원하는 결과를 얻을 수 없음
-₩₩₩
+```
 int num;
 
     std::cout << "정수를 입력하세요: ";
@@ -288,7 +288,7 @@ int num;
 
     std::cin >> num;
     std::cout << "입력된 정수: " << num << std::endl;
-₩₩₩
+```
 
 *find_first_not_of(string)
 -> string 중 첫번째로 나오는 문자의 위치 반환
