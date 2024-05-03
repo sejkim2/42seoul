@@ -7,6 +7,6 @@ void    MyIostream::ioError()
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "cin error!" << '\n';
-        exit(1);
+        std::exit(1);
     }
 }

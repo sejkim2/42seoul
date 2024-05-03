@@ -85,7 +85,7 @@ bool	PhoneBook::phonebook_search()
 	}
 	ss_index << string_index;
 	ss_index >> int_index;
-	if (int_index < 0 || int_index > 7)
+	if (ss_index.fail() || int_index < 0 || int_index > 7)
 		std::cout << "invalid index" << '\n';
 	else
 	{
