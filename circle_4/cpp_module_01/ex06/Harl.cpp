@@ -40,7 +40,7 @@ void Harl::complain(std::string level)
 {
     int index = -1;
 
-    for(size_t i = 0; i < levels->length(); i++)
+    for(size_t i = 0; i < 4; i++)
     {
         if (level == levels[i])
         {
@@ -61,7 +61,7 @@ void Harl::complain(std::string level)
         case 1:
             Harl::info();
             std::cout << '\n';
-            //fall through 
+            //fall through
         case 2:
             Harl::warning();
             std::cout << '\n';
