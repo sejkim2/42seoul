@@ -1,7 +1,7 @@
 NAME = ex03
-CC = g++
+CC = c++
 HEADER = HumanA.hpp HumanB.hpp Weapon.hpp
-C_FLAGS = -Wall -Werror -Wextra -std=c++98
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRC = HumanA.cpp \
 	HumanB.cpp \
@@ -11,7 +11,7 @@ SRC = HumanA.cpp \
 OBJ = $(SRC:.cpp=.o)
 
 $(NAME) : $(OBJ) $(HEADER)
-	$(CC) $(C_FLAGS) $(SRC) -o $@
+	$(CC) $(CXXFLAGS) $(SRC) -o $@
 
 all : $(NAME)
 

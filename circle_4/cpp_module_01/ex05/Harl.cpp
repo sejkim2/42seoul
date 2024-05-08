@@ -30,12 +30,11 @@ void Harl::error( void )
 
 void Harl::complain(std::string level)
 {
-    typedef void (Harl::*funcArr)();
-    funcArr arr[4] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
-
-    for(size_t i = 0; i < levels->length(); i++)
+    void (Harl::*arr[4])() = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
+    
+    for(size_t i = 0; i < 4; i++)
     {
-        if (level == levels[i])
+        if (level.compare(levels[i]) == 0)
         {
             (*this.*arr[i])();
             return;

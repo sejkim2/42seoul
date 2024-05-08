@@ -1,7 +1,7 @@
 NAME = ex05
 CC = c++
 HEADER = Harl.hpp
-C_FLAGS = -Wall -Werror -Wextra -std=c++98
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRC = main.cpp \
 	Harl.cpp
@@ -9,7 +9,7 @@ SRC = main.cpp \
 OBJ = $(SRC:.cpp=.o)
 
 $(NAME) : $(OBJ) $(HEADER)
-	$(CC) $(C_FLAGS) $(SRC) -o $@
+	$(CC) $(CXXFLAGS) $(SRC) -o $@
 
 all : $(NAME)
 
