@@ -1,6 +1,6 @@
 #include "MyStream.hpp"
 
-MyStream::MyStream(char **argv) : in(argv[1]), out(std::string(argv[1]).append(".replace"))
+MyStream::MyStream(char **argv) : in(argv[1]), out((std::string(argv[1]) + ".replace").c_str())
 {
     this->argv = argv;
     openSuccess = in.is_open();
