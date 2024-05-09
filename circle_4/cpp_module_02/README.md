@@ -47,25 +47,37 @@ section](https://en.wikipedia.org/wiki/University_of_California,_Berkeley#Notabl
 Create a class in Orthodox Canonical Form that represents a fixed-point number:
 >고정소수점 숫자를 나타내는 정규식 형식의 클래스를 생성하겠습니다.
 * Private members:
+  
   *An integer to store the fixed-point number value.
   >고정소수점 숫자 값을 저장하기 위한 정수형 변수.
+  
   *A static constant integer to store the number of fractional bits. Its value will always be the integer literal 8.
   >소수 비트 수를 저장하는 정적 상수 정수입니다. 그 값은 항상 정수 리터럴 8입니다.
+
 * Public members:
+
   *A default constructor that initializes the fixed-point number value to 0.
   >기본 생성자는 고정 소수점 숫자 값을 0으로 초기화합니다.
+  
   *A copy constructor.
   >복사 생성자
+  
   *A copy assignment operator overload.
   >복사 대입 연산자
+  
   *A destructor.
   >소멸자
+  
   *A member function int getRawBits( void ) const;
+
   *that returns the raw value of the fixed-point value.
   >고정 소수점 값의 원시 값을 반환하는 함수입니다.
+  
   *A member function void setRawBits( int const raw );
+
   *that sets the raw value of the fixed-point number.
   >고정 소수점 숫자의 원시 값을 설정하는 함수입니다.
+
 Running this code:
 >이 코드를 실행하세요:
 
@@ -114,25 +126,34 @@ $>
 The previous exercise was a good start but our class is pretty useless. It can only
 represent the value 0.0.
 >이전 예제는 좋은 출발이었지만 우리 클래스는 꽤 쓸모없습니다. 단지 0.0 값을 나타낼 뿐이에요.
+
 Add the following public constructors and public member functions to your class:
 >당신의 클래스에 다음과 같은 공개 생성자 및 공개 멤버 함수를 추가하세요:
+
 * A constructor that takes a constant integer as a parameter.
 >상수 정수를 매개변수로 사용하는 생성자입니다.
+
 It converts it to the corresponding fixed-point value. The fractional bits value is
 initialized to 8 like in exercise 00.
 >그것을 해당 고정소수점 값으로 변환합니다. 소수 비트 값은 연습 00과 마찬가지로 8로 초기화됩니다.
+
 * A constructor that takes a constant floating-point number as a parameter.
 >그것을 해당 고정소수점 값으로 변환합니다. 소수 비트 값은 연습 00과 마찬가지로 8로 초기화됩니다.
+
 * A member function float toFloat( void ) const;
 that converts the fixed-point value to a floating-point value.
 >고정 소수점 값을 부동 소수점 값으로 변환합니다.
+
 * A member function int toInt( void ) const;
 that converts the fixed-point value to an integer value.
 >고정 소수점 값을 정수 값으로 변환합니다.
+
 And add the following function to the Fixed class files:
 >그리고 다음 함수를 Fixed 클래스 파일에 추가하세요:
+
 * An overload of the insertion («) operator that inserts a floating-point representation of the fixed-point number into the output stream object passed as parameter.
 >매개변수로 전달된 출력 스트림 객체에 고정 소수점 숫자의 부동 소수점 표현을 삽입하는 삽입(«) 연산자의 오버로드입니다.
+
 Running this code:
 >이 코드를 실행하세요:
 ```
@@ -192,8 +213,10 @@ Add public member functions to your class to overload the following operators:
 
 * The 6 comparison operators: >, <, >=, <=, == and !=.
   >6개의 비교 연산자를 오버로드하는 공개 멤버 함수를 추가하세요: >, <, >=, <=, ==, 그리고 !=.
+
 * The 4 arithmetic operators: +, -, *, and /.
   >사칙 연산자인 +, -, *, 그리고 /를 오버로드하는 공개 멤버 함수를 추가하세요.
+
 * The 4 increment/decrement (pre-increment and post-increment, pre-decrement and
 post-decrement) operators, that will increase or decrease the fixed-point value from
 the smallest representable ϵ such as 1 + ϵ > 1.
@@ -202,15 +225,19 @@ increment, post-increment, pre-decrement, post-decrement)를 추가하세요.
 
 Add these four public overloaded member functions to your class:
 >당신의 클래스에 다음 네 가지 공개된 오버로드된 멤버 함수를 추가하세요:
+
 * A static member function min that takes as parameters two references on fixed-point
 numbers, and returns a reference to the smallest one.
 >두 개의 고정소수점 숫자에 대한 참조를 매개변수로 취하고, 더 작은 것에 대한 참조를 반환하는 정적 멤버 함수 min을 추가하세요.
+
 * A static member function min that takes as parameters two references to constant
 fixed-point numbers, and returns a reference to the smallest one.
 >두 개의 상수 고정 소수점 숫자에 대한 참조를 매개변수로 취하고, 더 작은 것에 대한 참조를 반환하는 정적 멤버 함수 min을 추가하세요.
+
 * A static member function max that takes as parameters two references on fixed-point
 numbers, and returns a reference to the greatest one.
 >두 개의 고정 소수점 숫자에 대한 참조를 매개변수로 취하고, 가장 큰 것에 대한 참조를 반환하는 정적 멤버 함수 max를 추가하세요.
+
 * A static member function max that takes as parameters two references to constant
 fixed-point numbers, and returns a reference to the greatest one.
 >두 개의 상수 고정 소수점 숫자에 대한 참조를 매개변수로 취하고, 가장 큰 것에 대한 참조를 반환하는 정적 멤버 함수 max를 추가하세요.
@@ -267,34 +294,50 @@ You can pass this module without doing exercise 03.
 Let’s start by creating the class Point in Orthodox Canonical Form that represents a 2D point:
 >오케이, 2차원 점을 나타내는 정규식 형식의 Point 클래스를 만들어보죠.
 * Private members:
+
   *A Fixed const attribute x.
   >고정된 const 속성 x.
+  
   *A Fixed const attribute y.
   >고정된 const 속성 y.
+  
   *Anything else useful.
   >다른 유용한 것이 있을까요?
+
 * Public members:
+
   *A default constructor that initializes x and y to 0.
   >x와 y를 0으로 초기화하는 기본 생성자입니다.
+  
   *A constructor that takes as parameters two constant floating-point numbers. It initializes x and y with those parameters.
   >두 개의 상수 부동 소수점 숫자를 매개변수로 사용하는 생성자입니다. 이 생성자는 해당 매개변수로 x와 y를 초기화합니다.
+
   * A copy constructor.
     >복사 생성자
+
   * A copy assignment operator overload.
     >복사 대입 연산자 오버로드입니다.
+
   * A destructor.
     >소멸자
+
   * Anything else useful.
     >다른 유용한 것이 있을까요?
+
 To conclude, implement the following function in the appropriate file:
 >마무리로, 적절한 파일에 다음 함수를 구현하세요:
+
 * bool bsp( Point const a, Point const b, Point const c, Point const point);
+
 * a, b, c: The vertices of our beloved triangle.
   >a, b, c : 우리가 사랑하는 삼각형의 꼭지점입니다.
+
 * point: The point to check.
   >point: 확인할 점입니다.
+
 * Returns: True if the point is inside the triangle. False otherwise.
   >반환값: 점이 삼각형 내부에 있으면 True를 반환하고, 그렇지 않으면 False를 반환합니다.
+
 Thus, if the point is a vertex or on edge, it will return False.
 Implement and turn in your own tests to ensure that your class behaves as expected.
 >따라서, 점이 꼭지점이거나 변 위에 있는 경우에는 False를 반환합니다. 클래스가 예상대로 동작하는지 확인하기 위해 직접 테스트를 구현하고 제출하세요.
