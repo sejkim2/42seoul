@@ -48,34 +48,34 @@ Create a class in Orthodox Canonical Form that represents a fixed-point number:
 >고정소수점 숫자를 나타내는 정규식 형식의 클래스를 생성하겠습니다.
 * Private members:
   
-  *An integer to store the fixed-point number value.
+  * An integer to store the fixed-point number value.
   >고정소수점 숫자 값을 저장하기 위한 정수형 변수.
   
-  *A static constant integer to store the number of fractional bits. Its value will always be the integer literal 8.
+  * A static constant integer to store the number of fractional bits. Its value will always be the integer literal 8.
   >소수 비트 수를 저장하는 정적 상수 정수입니다. 그 값은 항상 정수 리터럴 8입니다.
 
 * Public members:
 
-  *A default constructor that initializes the fixed-point number value to 0.
+  * A default constructor that initializes the fixed-point number value to 0.
   >기본 생성자는 고정 소수점 숫자 값을 0으로 초기화합니다.
   
-  *A copy constructor.
+  * A copy constructor.
   >복사 생성자
   
-  *A copy assignment operator overload.
+  * A copy assignment operator overload.
   >복사 대입 연산자
   
-  *A destructor.
+  * A destructor.
   >소멸자
   
-  *A member function int getRawBits( void ) const;
+  * A member function int getRawBits( void ) const;
 
-  *that returns the raw value of the fixed-point value.
+  * that returns the raw value of the fixed-point value.
   >고정 소수점 값의 원시 값을 반환하는 함수입니다.
   
-  *A member function void setRawBits( int const raw );
+  * A member function void setRawBits( int const raw );
 
-  *that sets the raw value of the fixed-point number.
+  * that sets the raw value of the fixed-point number.
   >고정 소수점 숫자의 원시 값을 설정하는 함수입니다.
 
 Running this code:
@@ -295,21 +295,21 @@ Let’s start by creating the class Point in Orthodox Canonical Form that repres
 >오케이, 2차원 점을 나타내는 정규식 형식의 Point 클래스를 만들어보죠.
 * Private members:
 
-  *A Fixed const attribute x.
+  * A Fixed const attribute x.
   >고정된 const 속성 x.
   
-  *A Fixed const attribute y.
+  * A Fixed const attribute y.
   >고정된 const 속성 y.
   
-  *Anything else useful.
+  * Anything else useful.
   >다른 유용한 것이 있을까요?
 
 * Public members:
 
-  *A default constructor that initializes x and y to 0.
+  * A default constructor that initializes x and y to 0.
   >x와 y를 0으로 초기화하는 기본 생성자입니다.
   
-  *A constructor that takes as parameters two constant floating-point numbers. It initializes x and y with those parameters.
+  * A constructor that takes as parameters two constant floating-point numbers. It initializes x and y with those parameters.
   >두 개의 상수 부동 소수점 숫자를 매개변수로 사용하는 생성자입니다. 이 생성자는 해당 매개변수로 x와 y를 초기화합니다.
 
   * A copy constructor.
