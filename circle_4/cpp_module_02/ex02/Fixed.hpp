@@ -28,6 +28,17 @@ class Fixed
         Fixed operator*(const Fixed& fixed);
         Fixed operator/(const Fixed& fixed);
 
+        Fixed&   Fixed::operator++(void);
+        Fixed   Fixed::operator++(int);
+        Fixed& Fixed::operator--(void);
+        Fixed Fixed::operator--(int); 
+
+        Fixed& Fixed::min(Fixed &a, Fixed &b);
+        const Fixed& Fixed::min(const Fixed &a, const Fixed &b);
+        Fixed& Fixed::max(Fixed &a, Fixed &b);
+        const Fixed& Fixed::max(const Fixed &a, const Fixed &b);
+
+        
         /*getter and setter*/
         int getRawBits(void) const;
         void setRawBits(int const raw);
