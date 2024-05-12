@@ -4,7 +4,7 @@
 # include "FragTrap.hpp"
 # include "ScavTrap.hpp"
 
-class DiamondTrap : public FragTrap, public ScavTrap
+class DiamondTrap : virtual public FragTrap, virtual public ScavTrap
 {
     /*canonical form*/
     public:
