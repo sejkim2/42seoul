@@ -43,7 +43,7 @@ void DiamondTrap::attack(const std::string& target)
     ScavTrap::attack(target);
 }
 
-void DiamondTrap::whoAmI(void)
+void DiamondTrap::whoAmI(void) const
 {
     std::cout << "DiamondTrap name is " << DiamondTrap::name << ", and ClapTrap name is " << ClapTrap::name << '\n';
 }

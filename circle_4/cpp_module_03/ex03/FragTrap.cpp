@@ -45,7 +45,7 @@ void FragTrap::attack(const std::string& target)
     this->energyPoint--;
 }
 
-void FragTrap::highFivesGuys(void)
+void FragTrap::highFivesGuys(void) const
 {
     std::cout << "FragTrap is highFive!!" << '\n';
 }

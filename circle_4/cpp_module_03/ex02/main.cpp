@@ -21,10 +21,10 @@ class TrapHandler
 
 int main(void)
 {
-    // FragTrap ft1("ft1");
-    // FragTrap ft2("ft2");
-    ClapTrap ct1("ct1");
-    ClapTrap ct2("ct2");
+    FragTrap ft1("ft1");
+    FragTrap ft2("ft2");
+    // ClapTrap ct1("ct1");
+    // ClapTrap ct2("ct2");
 
     // ft1.attack(ft2.getName());
     // ft2.takeDamage(ft1.getAttackDamage());
@@ -32,7 +32,7 @@ int main(void)
 
     // std::cout << "_____________________________________________________" << '\n';
 
-    // TrapHandler trapHandler(&ft1, &ft2);
-    TrapHandler trapHandler(&ct1, &ct2);
+    TrapHandler trapHandler(&ft1, &ft2);
+    // TrapHandler trapHandler(&ct1, &ct2);
     trapHandler.trapAction();
 }

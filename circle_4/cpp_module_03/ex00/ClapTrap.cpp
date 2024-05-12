@@ -1,6 +1,6 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(void) : name("(no name)"), hitPoint(10), energyPoint(10), attackDamage(0)
+ClapTrap::ClapTrap(void) : name("(no name)"), hitPoint(HITPOINT), energyPoint(ENERGYPOINT), attackDamage(ATTACKDAMAGE)
 {
     std::cout << "ClapTrap " << this->name << " Default constructor called" << '\n';
 }
@@ -26,7 +26,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& clapTrap)
     return (*this);
 }
 
-ClapTrap::ClapTrap(std::string name) : name(name), hitPoint(10), energyPoint(10), attackDamage(0)
+ClapTrap::ClapTrap(std::string name) : name(name), hitPoint(HITPOINT), energyPoint(ENERGYPOINT), attackDamage(ATTACKDAMAGE)
 {
     std::cout << "ClapTrap " << this->name << " constructor called" << '\n';
 }
@@ -59,27 +59,27 @@ void ClapTrap::beRepaired(unsigned int amount)
     this->hitPoint += amount;
 }
 
-std::string     ClapTrap::getName(void)
+std::string     ClapTrap::getName(void) const
 {
     return (this->name);
 }
 
-unsigned int    ClapTrap::getHitPoint(void)
+unsigned int    ClapTrap::getHitPoint(void) const
 {
     return (this->hitPoint);
 }
 
-unsigned int    ClapTrap::getEnergyPoint(void)
+unsigned int    ClapTrap::getEnergyPoint(void) const
 {
     return (this->energyPoint);
 }
 
-unsigned int    ClapTrap::getAttackDamage(void)
+unsigned int    ClapTrap::getAttackDamage(void) const
 {
     return (this->attackDamage);
 }
 
-bool            ClapTrap::isDisabled()
+bool            ClapTrap::isDisabled() const
 {
     if (this->hitPoint == 0 || this->energyPoint == 0)
     {

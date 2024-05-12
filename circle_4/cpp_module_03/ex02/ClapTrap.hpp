@@ -3,6 +3,9 @@
 
 # include <iostream>
 # include <string>
+# define HITPOINT 10
+# define ENERGYPOINT 10
+# define ATTACKDAMAGE 0
 
 class ClapTrap
 {
@@ -18,14 +21,13 @@ class ClapTrap
         void takeDamage(unsigned int amount);
         void beRepaired(unsigned int amount);
 
-        std::string     getName(void);
-        unsigned int    getHitPoint(void);
-        unsigned int    getEnergyPoint(void);
-        unsigned int    getAttackDamage(void);
+        std::string     getName(void) const;
+        unsigned int    getHitPoint(void) const;
+        unsigned int    getEnergyPoint(void) const;
+        unsigned int    getAttackDamage(void) const;
 
-    // private:
     protected:
-        bool            isDisabled();
+        bool            isDisabled() const;
         std::string          name;
         unsigned int         hitPoint;
         unsigned int         energyPoint;

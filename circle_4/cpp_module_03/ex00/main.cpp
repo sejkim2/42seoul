@@ -13,5 +13,6 @@ int main(void)
             break ;
         }
         ct1.attack(ct2.getName());
+        ct2.takeDamage(ct1.getAttackDamage());
     }
 }

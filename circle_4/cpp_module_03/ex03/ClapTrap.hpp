@@ -18,10 +18,10 @@ class ClapTrap
         void takeDamage(unsigned int amount);
         void beRepaired(unsigned int amount);
 
-        std::string     getName(void);
-        unsigned int    getHitPoint(void);
-        unsigned int    getEnergyPoint(void);
-        unsigned int    getAttackDamage(void);
+        std::string     getName(void) const;
+        unsigned int    getHitPoint(void) const;
+        unsigned int    getEnergyPoint(void) const;
+        unsigned int    getAttackDamage(void) const;
 
     protected:
         bool            isDisabled();

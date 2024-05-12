@@ -14,7 +14,7 @@ class ScavTrap : virtual public ClapTrap
 
         ScavTrap(std::string name);
         virtual void attack(const std::string& target);
-        void guardGate(void);
+        void guardGate(void) const;
 
     protected:
         static const unsigned int   HITPOINT = 100;

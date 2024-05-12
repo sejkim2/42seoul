@@ -45,7 +45,7 @@ void ScavTrap::attack(const std::string& target)
     this->energyPoint--;
 }
 
-void ScavTrap::guardGate(void)
+void ScavTrap::guardGate(void) const
 {
     std::cout << "ScavTrap is now in Gate keeper mode." << '\n';
 }
