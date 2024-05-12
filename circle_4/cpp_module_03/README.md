@@ -172,3 +172,14 @@ repository will be evaluated during the defense. Don’t hesitate to double chec
 names of your folders and files to ensure they are correct.
 >평소처럼 귀하의 Git 저장소에 과제를 제출하십시오. 평가는 저장소 내의 작업만 고려됩니다. 폴더 및 파일 이름이 올바른지 확인하기 위해 두 번 확인하는 것이 좋습니다.
 
+
+
+
+
+
+
+
+
+# 상속을 사용하는 이유
+* 객체 지향적 개발을 할 때는 모든 클래스가 대부분 하나만의 기능을 가진다. 보통 클래스 간의 관계는 또 다른 클래스(handler)로 정의된다.
+* 이때 핸들러가 같은 부모로부터 파생된 여러 자식 객체를 다룰 수 있기 하기 위해(다형성 보장) 상속을 사용한다. (다형성으로 인자를 받으면 핸들러 함수를 수정하는 일 없이 프로그램을 유지할 수 있다.)
