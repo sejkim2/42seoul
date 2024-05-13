@@ -5,7 +5,6 @@
 # include <string>
 # include "ICharacter.hpp"
 
-/* this is interface */
 class AMateria
 {
     public:

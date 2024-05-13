@@ -19,7 +19,9 @@ Dog& Dog::operator=(const Dog& dog)
 {
     if (&dog == this)
         return (*this);
-    Animal::type = dog.type;
+    
+    Animal::operator=(dog);
+
     return (*this);
 }
 

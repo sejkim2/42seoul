@@ -19,6 +19,9 @@ AMateria& AMateria::operator=(const AMateria& amateria)
 {
     if (&amateria == this)
         return (*this);
+
+    this->type = amateria.getType();
+
     return (*this);
 }
 

@@ -1,7 +1,7 @@
 NAME = ex00
 CC = c++
 HEADER = Animal.hpp Cat.hpp Dog.hpp
-C_FLAGS = -Wall -Werror -Wextra -std=c++98
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRC = main.cpp \
 	Animal.cpp \
@@ -11,7 +11,7 @@ SRC = main.cpp \
 OBJ = $(SRC:.cpp=.o)
 
 $(NAME) : $(OBJ) $(HEADER)
-	$(CC) $(C_FLAGS) $(SRC) -o $@
+	$(CC) $(CXXFLAGS) $(SRC) -o $@
 
 all : $(NAME)
 
