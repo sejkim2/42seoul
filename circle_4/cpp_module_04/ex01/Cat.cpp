@@ -2,7 +2,7 @@
 
 Cat::Cat(void) : Animal("Cat")
 {
-    brain = new Brain();
+    brain = new Brain("cat idea...");
     std::cout << "this is Cat constructor" << '\n';
     std::cout << "Cat has Brain" << '\n';
 }
@@ -24,10 +24,10 @@ Cat& Cat::operator=(const Cat& cat)
     if (&cat == this)
         return (*this);
 
-    Brain *del = brain;
-    brain = cat.brain;
-    delete del;
-    
+    delete this->brain;
+    this->brain = new Brain();
+    Animal::operator=(cat);
+
     return (*this);
 }
 

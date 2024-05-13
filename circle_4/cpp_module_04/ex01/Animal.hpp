@@ -14,17 +14,13 @@ class Animal
         Animal(const Animal& animal);
         Animal& operator=(const Animal& animal);
 
-        virtual std::string getType(void) const;        //virtual function
-        // void        setType(std::string type);
-        // virtual void makeSound(void) const = 0; //pure virtual function
-        virtual void makeSound(void) const; //virtual function
+        virtual std::string getType(void) const;
+        virtual void makeSound(void) const;
 
     protected:
-        Animal(std::string type);
-        Brain* brain;
-
-    private:
+        Animal(std::string type);   //call in child contructor
         std::string type;
+        Brain *brain;
 };
 
 #endif

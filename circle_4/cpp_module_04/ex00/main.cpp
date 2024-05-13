@@ -7,6 +7,7 @@
 int main()
 {
     {
+        std::cout << "_______________test case 1_______________" << '\n';
         const Animal *meta = new Animal();
         const Animal *j = new Dog();
         const Animal *i = new Cat();
@@ -20,8 +21,8 @@ int main()
         delete j;
         delete i;
     }
-    std::cout << "___________________WrongAnimal___________________" << '\n';
     {
+        std::cout << "___________________test case 2 : WrongAnimal___________________" << '\n';
         const WrongAnimal *meta = new WrongAnimal();
         const WrongAnimal *i = new WrongCat();
         std::cout << i->getType() << " " << std::endl;
