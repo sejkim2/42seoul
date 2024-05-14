@@ -20,10 +20,15 @@ class ICharacter
         virtual void unequip(int idx) = 0;
         virtual void use(int idx, ICharacter& target) = 0;
 
+        int getCountAMateria(void) const;
+        int getCountFloorAMateria(void) const;
     private:
-        int index;
+        int slot_index;
         int countAMateria;
-        bool getIsFull(void) const;
+        int floor_index;
+        int countFloorAMateria;
+        bool isFullSlot(void) const;
+        bool isFullFloor(void) const;
         std::string name;
         AMateria *slot[4];
         AMateria *floor[FLOOR_SIZE];
