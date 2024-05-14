@@ -10,8 +10,8 @@ Dog::Dog(void) : Animal("Dog")
 Dog::~Dog(void)
 {
     delete brain;
-    std::cout << "this is Dog desstructor" << '\n';
-    std::cout << "Dog delete Brain" << '\n';
+    std::cout << "this is Dog destructor" << '\n';
+    std::cout << "Dog Brain is delete" << '\n';
 }
         
 Dog::Dog(const Dog& dog)
@@ -24,9 +24,10 @@ Dog& Dog::operator=(const Dog& dog)
     if (&dog == this)
         return (*this);
 
+    Animal::operator=(dog);
     delete this->brain;
     this->brain = new Brain();
-    Animal::operator=(dog);
+    this->brain = dog.brain;
 
     return (*this);
 }
@@ -39,4 +40,9 @@ std::string Dog::getType(void) const
 void Dog::makeSound(void) const
 {
     std::cout << "Dog's sound : Bow" << '\n';
+}
+
+std::string Dog::getBrainIdeas(int index) const
+{
+    return (this->brain->getIdeas(index));
 }

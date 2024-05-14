@@ -7,7 +7,7 @@ WrongAnimal::WrongAnimal(void) : type("Empty")
 
 WrongAnimal::~WrongAnimal(void)
 {
-    std::cout << "this is WrongAnimal desstructor" << '\n';
+    std::cout << "this is WrongAnimal destructor" << '\n';
 }
         
 WrongAnimal::WrongAnimal(const WrongAnimal& wrongAnimal)

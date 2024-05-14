@@ -14,6 +14,11 @@ class Cat : public Animal
 
         virtual std::string getType(void) const;
         virtual void makeSound(void) const;
+
+        std::string getBrainIdeas(int index) const;
+
+    private:
+        Brain *brain;
 };
 
 #endif

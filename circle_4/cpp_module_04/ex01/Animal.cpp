@@ -1,15 +1,15 @@
 #include "Animal.hpp"
 
-Animal::Animal(void) : type("Empty"), brain(0)
+Animal::Animal(void) : type("Empty")
 {
     std::cout << "this is Animal constructor" << '\n';
 }
 
 Animal::~Animal(void)
 {
-    std::cout << "this is Animal desstructor" << '\n';
+    std::cout << "this is Animal destructor" << '\n';
 }
-        
+
 Animal::Animal(const Animal& animal)
 {
     *this = animal;
@@ -21,11 +21,11 @@ Animal& Animal::operator=(const Animal& animal)
         return (*this);
 
     this->type = animal.type;
-    
+
     return (*this);
 }
 
-Animal::Animal(std::string type) : type(type), brain(0)
+Animal::Animal(std::string type) : type(type)
 {
 }
 

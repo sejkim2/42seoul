@@ -7,7 +7,7 @@ Dog::Dog(void) : Animal("Dog")
 
 Dog::~Dog(void)
 {
-    std::cout << "this is Dog desstructor" << '\n';
+    std::cout << "this is Dog destructor" << '\n';
 }
         
 Dog::Dog(const Dog& dog)

@@ -7,7 +7,7 @@ Animal::Animal(void) : type("Empty")
 
 Animal::~Animal(void)
 {
-    std::cout << "this is Animal desstructor" << '\n';
+    std::cout << "this is Animal destructor" << '\n';
 }
         
 Animal::Animal(const Animal& animal)

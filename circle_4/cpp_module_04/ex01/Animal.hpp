@@ -12,7 +12,7 @@ class Animal
         Animal(void);
         virtual ~Animal(void);
         Animal(const Animal& animal);
-        Animal& operator=(const Animal& animal);
+        virtual Animal& operator=(const Animal& animal);
 
         virtual std::string getType(void) const;
         virtual void makeSound(void) const;
@@ -20,7 +20,6 @@ class Animal
     protected:
         Animal(std::string type);   //call in child contructor
         std::string type;
-        Brain *brain;
 };
 
 #endif

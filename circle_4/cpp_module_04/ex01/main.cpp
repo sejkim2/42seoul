@@ -3,8 +3,15 @@
 #include "Cat.hpp"
 #include "Brain.hpp"
 
+void leaks()
+{
+    system("leaks ex01");
+}
+
 int main()
 {
+    atexit(leaks);
+    
     {
         std::cout << "_____________________________test case 1_____________________________" << '\n';
         
@@ -22,9 +29,15 @@ int main()
         for(int i = 3; i < 6; i++)
             animals[i] = new Cat();
 
-        for(int i = 0; i<3; i++)
-            animals[i] = new Dog();
-        for(int i = 3; i < 6; i++)
-            animals[i] = new Cat();
+        for(int i = 0; i<6; i++)
+            delete animals[i];
+    }
+    {
+        std::cout << "_____________________________test case 3_____________________________" << '\n';
+        Animal *p = new Cat();
+        Animal *p2 = new Cat();
+        *p = *p2;
+        delete p;
+        delete p2;
     }
 }

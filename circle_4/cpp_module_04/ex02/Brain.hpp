@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <string>
+# define IDEASIZE 10
 
 class Brain
 {
@@ -14,9 +15,10 @@ class Brain
         Brain& operator=(const Brain& brain);
 
         Brain(std::string idea);
-
+        std::string getIdeas(int index) const;
+        
     private:
-        std::string ideas[100];
+        std::string ideas[IDEASIZE];
 };
 
 #endif
