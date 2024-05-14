@@ -19,15 +19,15 @@ Dog::Dog(const Dog& dog)
     *this = dog;
 }
 
-Dog& Dog::operator=(const Dog& dog)
+Dog& Dog::operator=(const Animal& animal)
 {
-    if (&dog == this)
+    if (&animal == this)
         return (*this);
 
-    Animal::operator=(dog);
+    Animal::operator=(animal);
+    const Dog* dog = dynamic_cast<const Dog*>(&animal);
     delete this->brain;
-    this->brain = new Brain();
-    this->brain = dog.brain;
+    this->brain = new Brain(*dog->brain);
 
     return (*this);
 }

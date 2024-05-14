@@ -1,7 +1,8 @@
 NAME = ex01
 CC = c++
 HEADER = Animal.hpp Cat.hpp Dog.hpp Brain.hpp
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98
+# CXXFLAGS = -Wall -Werror -Wextra -std=c++98
+CXXFLAGS = -std=c++98
 
 SRC = main.cpp \
 	Animal.cpp \

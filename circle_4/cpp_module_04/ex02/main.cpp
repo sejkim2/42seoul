@@ -34,10 +34,14 @@ int main()
     }
     {
         std::cout << "_____________________________test case 3_____________________________" << '\n';
-        Animal *p = new Cat();
-        Animal *p2 = new Cat();
+        Animal *p = new Dog();
+        Animal *p2 = new Dog();
         *p = *p2;
         delete p;
         delete p2;
+    }
+    {
+        std::cout << "_____________________________test case 3_____________________________" << '\n';
+        // Animal *p = new Animal();
     }
 }
