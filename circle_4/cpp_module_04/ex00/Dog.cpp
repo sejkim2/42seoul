@@ -10,7 +10,7 @@ Dog::~Dog(void)
     std::cout << "this is Dog destructor" << '\n';
 }
         
-Dog::Dog(const Dog& dog)
+Dog::Dog(const Dog& dog) : Animal(dog)
 {
     *this = dog;
 }

@@ -3,14 +3,14 @@
 #include "Cat.hpp"
 #include "Brain.hpp"
 
-void leaks()
-{
-    system("leaks ex01");
-}
+// void leaks()
+// {
+//     system("leaks ex01");
+// }
 
 int main()
 {
-    atexit(leaks);
+    // atexit(leaks);
     
     {
         std::cout << "_____________________________test case 1_____________________________" << '\n';

@@ -14,7 +14,7 @@ Dog::~Dog(void)
     std::cout << "Dog Brain is delete" << '\n';
 }
         
-Dog::Dog(const Dog& dog)
+Dog::Dog(const Dog& dog) : Animal(dog)
 {
     *this = dog;
 }
