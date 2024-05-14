@@ -35,6 +35,7 @@ Character& Character::operator=(const Character& character)
         delete slot[i];
     for(int i = 0; i < countFloorAMateria; i++)
         delete floor[i];
+
     for(int i = 0; i < character.getCountAMateria(); i++)
         slot[i] = character.slot[i]->clone();
     for(int i = 0; i < character.getCountFloorAMateria(); i++)
@@ -88,7 +89,7 @@ void Character::unequip(int idx)
     countFloorAMateria++;
 }
 
-void Character::use(int idx, ICharacter& target)
+void Character::use(int idx, Character& target)
 {
     if (slot[idx] == 0)
         return;

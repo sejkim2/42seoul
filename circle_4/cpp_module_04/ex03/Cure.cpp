@@ -23,14 +23,9 @@ Cure& Cure::operator=(const Cure& cure)
     return (*this);
 }
 
-Cure::Cure(std::string const & type)
-{
-}
-
-
 AMateria* Cure::clone() const
 {
-    Cure *c = new Cure();
+    return (new Cure());
 }
 
 void Cure::use(ICharacter& target)

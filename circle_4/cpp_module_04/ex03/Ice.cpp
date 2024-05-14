@@ -23,14 +23,9 @@ Ice& Ice::operator=(const Ice& ice)
     return (*this);
 }
 
-Ice::Ice(std::string const & type)
-{
-}
-
-
 AMateria* Ice::clone() const
 {
-    Ice *c = new Ice();
+    return (new Ice());
 }
 
 void Ice::use(ICharacter& target)

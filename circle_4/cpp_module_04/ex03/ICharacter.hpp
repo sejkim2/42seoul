@@ -1,7 +1,10 @@
 #ifndef _ICHARACTER
 # define _ICHARACTER
 
-# include "AMateria.hpp"
+// # include "AMateria.hpp"
+class AMateria;
+#include <iostream>
+
 # define MAX_SLOT_SIZE 4
 # define FLOOR_SIZE 1000
 
