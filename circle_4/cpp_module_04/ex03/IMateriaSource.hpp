@@ -2,6 +2,7 @@
 # define _IMATERIASOURCE
 
 # include "AMateria.hpp"
+# define MAX_AMA_SIZE 4
 
 class IMateriaSource
 {

@@ -1,14 +1,14 @@
 NAME = ex01
 CC = c++
-HEADER = AMateria.hpp Ice.hpp Cure.hpp ICharacter.hpp IMateriaSource.hpp MateriaSource.hpp
+HEADER = AMateria.hpp Ice.hpp Cure.hpp ICharacter.hpp Character.hpp IMateriaSource.hpp MateriaSource.hpp
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRC = AMateria.cpp \
 		Ice.cpp \
 		Cure.cpp \
-		ICharacter.cpp \
-		IMateriaSource.cpp \ 
-		MateriaSource.cpp
+		MateriaSource.cpp \
+		Character.cpp \
+		main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

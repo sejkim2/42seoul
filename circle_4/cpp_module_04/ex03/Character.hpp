@@ -14,9 +14,9 @@ class Character : public ICharacter
 
         Character(std::string name);
         virtual std::string const & getName() const;
-        virtual void equip(AMateria* m) = 0;
+        virtual void equip(AMateria* m);
         virtual void unequip(int idx);
-        virtual void use(int idx, Character& target) = 0;
+        virtual void use(int idx, ICharacter& target);
 
         int getCountAMateria(void) const;
         int getCountFloorAMateria(void) const;
