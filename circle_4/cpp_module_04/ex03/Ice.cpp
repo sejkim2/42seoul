@@ -1,6 +1,6 @@
 #include "Ice.hpp"
 
-Ice::Ice(void)
+Ice::Ice(void) : AMateria::AMateria("ice")
 {
     std::cout << "this is Ice constructor" << '\n';
 }
@@ -19,14 +19,21 @@ Ice& Ice::operator=(const Ice& ice)
 {
     if (&ice == this)
         return (*this);
+
     return (*this);
 }
 
-AMateria* AMateria::clone() const
+Ice::Ice(std::string const & type)
 {
 }
 
-void AMateria::use(ICharacter& target)
-{
 
+AMateria* Ice::clone() const
+{
+    Ice *c = new Ice();
+}
+
+void Ice::use(ICharacter& target)
+{
+    std::cout << "* shoots an ice bolt at " << target.getName() << " *" << '\n';
 }
