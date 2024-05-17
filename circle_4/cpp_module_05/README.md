@@ -5,10 +5,12 @@
 * Forbidden functions : None
 
 * Please note that exception classes don’t have to be designed in Orthodox Canonical Form. But every other class has to.
+  > 예외 클래스는 정통 정형 형식(Orthodox Canonical Form)으로 설계될 필요는 없습니다. 하지만 다른 모든 클래스는 그렇게 해야 합니다.
 
 Let’s design an artificial nightmare of offices, corridors, forms, and waiting queues.
 Sounds fun? No? Too bad.
->
+>사무실, 복도, 서류 양식, 그리고 대기 줄로 이루어진 인공적인 악몽을 디자인해 봅시다.
+재미있나요? 아니요? 안타깝네요.
 
 First, start by the smallest cog in this vast bureaucratic machine: the Bureaucrat.
 >
