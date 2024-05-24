@@ -203,7 +203,7 @@ kind of things won’t be accepted during the evaluation process. You’re not i
 >if/elseif/else 숲과 같이 가독성이 떨어지고 추한 해결책을 피해야 합니다. 평가 과정에서는 이러한 종류의 해결책을 허용하지 않을 것입니다. 당신은 더 이상 피신에 있지 않습니다. 모든 것이 예상대로 작동하는지 확인하기 위해 테스트해야 합니다.
 
 For example, the code below creates a __RobotomyRequestForm__ targeted on "Bender":
->
+>예를 들어, 아래 코드는 "벤더"를 대상으로 하는 __RobotomyRequestForm__를 만듭니다:
 
 ```
 {
