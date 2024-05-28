@@ -1,13 +1,15 @@
-NAME = megaphone
+NAME = ex00
 CC = c++
-C_FLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic
+HEADER = Bureaucrat.hpp
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRC = megaphone.cpp
+SRC = Bureaucrat.cpp \
+	main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
-$(NAME) : $(OBJ)
-	$(CC) $(C_FLAGS) $(SRC) -o $@
+$(NAME) : $(OBJ) $(HEADER)
+	$(CC) $(CXXFLAGS) $(SRC) -o $@
 
 all : $(NAME)
 
