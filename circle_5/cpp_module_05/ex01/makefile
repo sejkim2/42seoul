@@ -1,9 +1,10 @@
-NAME = ex00
+NAME = ex01
 CC = c++
-HEADER = Bureaucrat.hpp
+HEADER = Bureaucrat.hpp Form.hpp
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRC = Bureaucrat.cpp \
+	Form.cpp \
 	main.cpp
 
 OBJ = $(SRC:.cpp=.o)

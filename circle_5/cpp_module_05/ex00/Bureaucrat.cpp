@@ -1,7 +1,7 @@
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat(void)
-: name("default name"), grade(LOWEST_GRADE)
+: name("default bureaucrat"), grade(LOWEST_GRADE)
 {
     std::cout << "Bureaucrat Default Constructor Called" << '\n';
 }
