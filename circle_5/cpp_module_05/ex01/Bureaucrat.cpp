@@ -19,11 +19,11 @@ Bureaucrat::Bureaucrat(const Bureaucrat& bureaucrat)
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& bureaucrat)
 {
-    if (&bureaucrat == this)
-        return (*this);
-    this->name = bureaucrat.getName();
-    this->grade = bureaucrat.getGrade();
-
+    if (&bureaucrat != this)
+    {
+        this->name = bureaucrat.getName();
+        this->grade = bureaucrat.getGrade();
+    }
     return (*this);
 }
 

@@ -5,7 +5,7 @@
 # define LOWEST_GRADE 150
 # define HIGHEST_GRADE 1
 
-class Form;
+class AForm;
 
 class Bureaucrat
 {
@@ -21,7 +21,8 @@ class Bureaucrat
         void increaseGrade();
         void decreaseGrade();
 
-        void signForm(Form& form);
+        void signForm(AForm& aForm);
+        void executeForm(AForm const & form) const;
 
     class GradeTooHighException : public std::exception
     {

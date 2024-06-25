@@ -19,13 +19,13 @@ AForm::AForm(const AForm& aForm)
 
 AForm& AForm::operator=(const AForm& aForm)
 {
-    if (&aForm == this)
-        return (*this);
-
-    this->name = aForm.getName();
-    this->isSigned = aForm.getIsSigned();
-    this->signGrade = aForm.getSignGrade();
-    this->executeGrade = aForm.getExecuteGrade();
+    if (&aForm != this)
+    {
+        this->name = aForm.getName();
+        this->isSigned = aForm.getIsSigned();
+        this->signGrade = aForm.getSignGrade();
+        this->executeGrade = aForm.getExecuteGrade();
+    }
     return (*this);
 }
 
@@ -45,7 +45,6 @@ AForm::AForm(std::string name, int signGrade, int executeGrade)
     this->signGrade = signGrade;
     this->executeGrade = executeGrade;
 }
-
 
 std::string AForm::getName() const
 {
@@ -75,6 +74,16 @@ void AForm::beSigned(const Bureaucrat& bureaucrat)
         throw AForm::GradeTooLowException();
 }
 
+void AForm::execute(Bureaucrat const & executor) const
+{
+    if (this->getIsSigned() == false)
+        throw AForm::FormNotSignedException();
+    if (executor.getGrade() < this->getSignGrade())
+        throw Bureaucrat::GradeTooLowException();
+    
+    executeAction();
+}
+
 const char* AForm::GradeTooHighException::what() const throw()
 {
     return "Grade Too High";
@@ -83,6 +92,11 @@ const char* AForm::GradeTooHighException::what() const throw()
 const char* AForm::GradeTooLowException::what() const throw()
 {
     return "Grade Too Low";
+}
+
+const char* AForm::FormNotSignedException::what() const throw()
+{
+    return "Form Not Signed";
 }
 
 std::ostream& operator<<(std::ostream& out, const AForm& aForm)

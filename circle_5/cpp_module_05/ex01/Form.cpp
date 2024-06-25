@@ -19,13 +19,13 @@ Form::Form(const Form& form)
 
 Form& Form::operator=(const Form& form)
 {
-    if (&form == this)
-        return (*this);
-
-    this->name = form.getName();
-    this->isSigned = form.getIsSigned();
-    this->signGrade = form.getSignGrade();
-    this->executeGrade = form.getExecuteGrade();
+    if (&form != this)
+    {
+        this->name = form.getName();
+        this->isSigned = form.getIsSigned();
+        this->signGrade = form.getSignGrade();
+        this->executeGrade = form.getExecuteGrade();
+    }
     return (*this);
 }
 

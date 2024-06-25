@@ -1,5 +1,5 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 Bureaucrat::Bureaucrat(void)
 : name("default name"), grade(LOWEST_GRADE)
@@ -19,11 +19,11 @@ Bureaucrat::Bureaucrat(const Bureaucrat& bureaucrat)
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& bureaucrat)
 {
-    if (&bureaucrat == this)
-        return (*this);
-    this->name = bureaucrat.getName();
-    this->grade = bureaucrat.getGrade();
-
+    if (&bureaucrat != this)
+    {
+        this->name = bureaucrat.getName();
+        this->grade = bureaucrat.getGrade();
+    }
     return (*this);
 }
 
@@ -63,16 +63,29 @@ void Bureaucrat::decreaseGrade()
     this->grade++;
 }
 
-void Bureaucrat::signForm(Form& form)
+void Bureaucrat::signForm(AForm& aForm)
 {
     try {
-        form.beSigned(*this);
-        std::cout << this->name << " signed " << form.getName();
+        aForm.beSigned(*this);
+        std::cout << this->name << " signed " << aForm.getName();
     }
     catch (Bureaucrat::GradeTooLowException& e) {
-        std::cout << this->name << " couldn't sign " << form.getName() << " because " << e.what();
+        std::cout << this->name << " couldn't sign " << aForm.getName() << " because " << e.what();
     }
     //finally
+    std::cout << '\n';
+}
+
+void Bureaucrat::executeForm(AForm const & form) const
+{
+    try {
+        form.execute(*this);
+        std::cout << this->getName() << " executed " << form.getName();
+    } catch (AForm::FormNotSignedException &e) {
+        e.what();
+    } catch (Bureaucrat::GradeTooLowException &e) {
+        e.what();
+    }
     std::cout << '\n';
 }
 
