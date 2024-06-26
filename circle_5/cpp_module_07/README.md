@@ -80,11 +80,11 @@ Implement a function template iter that takes 3 parameters and returns nothing.
 
 Turn in a main.cpp file that contains your tests. Provide enough code to generate a
 test executable.
->
+> 당신의 테스트가 포함된 main.cpp 파일을 제출해 주세요. 실행 가능한 테스트용 실행 파일을 생성할 수 있도록 충분한 코드를 제공해주세요.
 
 Your iter function template must work with any type of array. The third parameter
 can be an instantiated function template.
->
+> 당신의 iter 함수 템플릿은 어떤 유형의 배열에도 작동해야 합니다. 세 번째 매개변수는 인스턴스화된 함수 템플릿일 수 있습니다.
 
 # ex02 : Array
 * Turn-in directory : ex02/
@@ -94,10 +94,10 @@ and optional file: Array.tpp
 
 Develop a class template Array that contains elements of type T and that implements
 the following behavior and functions:
->
+> 클래스 템플릿 Array를 개발하여 요소의 유형이 T인 기능과 함수를 구현하세요.
 
 * Construction with no parameter: Creates an empty array.
-  >
+  > Construction with no parameter: 빈 배열을 생성합니다.
 
 * Construction with an unsigned int n as a parameter: Creates an array of n elements
 initialized by default. Tip: Try to compile int * a = new int(); then display *a.
