@@ -3,10 +3,10 @@ pdf : https://cdn.intra.42.fr/pdf/pdf/115345/en.subject.pdf
 # Module-specific rules
 
 It is mandatory to use the standard containers to perform each exercise in this module.
->
+> 이 모듈의 각 연습문제를 수행할 때 표준 컨테이너를 사용하는 것이 필수입니다.
 
 Once a container is used you cannot use it for the rest of the module
->
+> 한 번 컨테이너를 사용하면 이후 모듈에서는 사용할 수 없습니다.
 
 * It is advisable to read the subject in its entirety before doing the
 exercises.
