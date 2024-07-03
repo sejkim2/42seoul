@@ -26,5 +26,48 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& obj)
 void ScalarConverter::convert(std::string literal)
 {
     Literal checkLiteral;
+    char *end;
 
+    
+    // std::string convertChar;
+    // std::string convertInt;
+    // std::string convertFloat;
+    // std::string convertDouble;
+    
+
+    // if (literal.compare("-inff") == 0)
+    // {
+        
+    // }
+    // else if (literal.compare("+inff") == 0)
+    // {
+
+    // }
+    // else if (literal.compare("nanf") == 0)
+    // {
+
+    // }
+    // else if (literal.compare("-inf") == 0)
+    // {
+
+    // }
+    // else if (literal.compare("+inf") == 0)
+    // {
+    //     convertChar = "impossible";
+    //     convertInt = "+inf";
+    //     convertFloat = "+inff";
+    //     convertDouble = "nan";
+    // }
+    // else if (literal.compare("nan") == 0)
+    // {
+    //     convertChar = "impossible";
+    //     convertInt = "impossible";
+    //     convertFloat = "nanf";
+    //     convertDouble = "nan";
+    // }
+    // else
+    // {
+
+    // }
+    
 }
