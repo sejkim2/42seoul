@@ -17,6 +17,13 @@ enum Literal {
     NAN_LITERAL
 };
 
+typedef struct {
+    std::string convertChar;
+    std::string convertInt;
+    std::string convertFloat;
+    std::string convertDouble;
+}convertStruct;
+
 class ScalarConverter
 {
     public:
@@ -28,6 +35,7 @@ class ScalarConverter
     
     private:
         ScalarConverter(void);
+        static convertStruct handleNanInff(std::string literal);
 };
 
 #endif

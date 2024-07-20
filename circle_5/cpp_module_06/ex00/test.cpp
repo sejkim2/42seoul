@@ -6,7 +6,8 @@ using namespace std;
 int main(int argc, char **argv)
 {
     string str = argv[1];
-    cout << static_cast<char>(atof(argv[1]));
+    int tmp = static_cast<int>(str[0]);
+    cout << tmp;
     // size_t findptr = str.find(".");
     // int floatflag = 0;
     

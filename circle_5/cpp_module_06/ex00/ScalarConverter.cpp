@@ -23,6 +23,22 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& obj)
     return (*this);
 }
 
+convertStruct ScalarConverter::handleNanInff(std::string literal)
+{
+    if (literal.compare("-inff") == 0)
+        return convertStruct{"impossible", "impossible", "-inf", "-inff"};
+    else if (literal.compare("+inff") == 0)
+        return convertStruct{"impossible", "impossible", "inf", "inff"};
+    else if (literal.compare("nanf") == 0)
+        return convertStruct{"impossible", "impossible", "nanf", "nan"};
+    else if (literal.compare("-inf") == 0)
+        return convertStruct{"impossible", "impossible", "-inf", "-inff"};
+    else if (literal.compare("+inf") == 0)
+        return convertStruct{"impossible", "impossible", "inff", "inf"};
+    else
+        return convertStruct{"impossible", "impossible", "nanf", "nan"};
+}
+
 //nan : 부동소수점 체계에서 사용
 //지수부 비트가 모두 1, 가수부 비트는 최소 하나는 1
 //수학적으로 정의되지 않은 결과를 나타내기 위해 사용
@@ -32,58 +48,39 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& obj)
 //매우 큰 수를 나타내기 위해 사용
 void ScalarConverter::convert(std::string literal)
 {
-    // Literal checkLiteral;
-    // char *end;
-
+    int flag = 0;
+    convertStruct cs;
     std::string convertChar;
     std::string convertInt;
     std::string convertFloat;
     std::string convertDouble;
     
-    if (literal.compare("-inff") == 0)
+    std::string keyword[6] = {"-inff", "+inff", "nanf", "-inf", "+inf", "nan"};
+
+    for(int i = 0; i<6; i++)
     {
-        convertChar = "impossible";
-        convertInt = "impossible";
-        convertFloat = "-inf";
-        convertDouble = "-inff";
+        if (literal.compare(keyword[i]) == 0)
+        {
+            cs = handleNanInff(literal);
+            flag = 1;
+            break ;
+        }
     }
-    else if (literal.compare("+inff") == 0)
+    
+    if (!flag)
     {
-        convertChar = "impossible";
-        convertInt = "impossible";
-        convertFloat = "inf";
-        convertDouble = "inff";
-    }
-    else if (literal.compare("nanf") == 0)
-    {
-        convertChar = "impossible";
-        convertInt = "impossible";
-        convertFloat = "nanf";
-        convertDouble = "nan";
-    }
-    else if (literal.compare("-inf") == 0)
-    {
-        convertChar = "impossible";
-        convertInt = "impossible";
-        convertFloat = "-inf";
-        convertDouble = "-inff";
-    }
-    else if (literal.compare("+inf") == 0)
-    {
-        convertChar = "impossible";
-        convertInt = "impossible";
-        convertFloat = "inff";
-        convertDouble = "inf";
-    }
-    else if (literal.compare("nan") == 0)
-    {
-        convertChar = "impossible";
-        convertInt = "impossible";
-        convertFloat = "nanf";
-        convertDouble = "nan";
-    }
-    else
-    {
+        if (literal.length() == 1)
+        {
+            char tmp = literal[0];
+            if (tmp >= 32 && tmp <= 126)
+                convertChar = tmp;
+            else
+                convertChar = "Non displayable";
+
+            convertInt = static_cast<int>(tmp);
+            convertFloat = literal + ".0f";
+            convertDouble = literal + ".0";
+        }
         size_t findptr = literal.find(".");
         int floatflag = 0;
 
