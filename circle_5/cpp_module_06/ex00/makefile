@@ -1,9 +1,9 @@
 NAME = ex00
 CC = c++
-HEADER = Bureaucrat.hpp
+HEADER = ScalarConverter.hpp
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRC = Bureaucrat.cpp \
+SRC = ScalarConverter.cpp \
 	main.cpp
 
 OBJ = $(SRC:.cpp=.o)

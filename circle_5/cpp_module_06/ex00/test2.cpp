@@ -3,6 +3,7 @@ using namespace std;
 
 int main(void)
 {
-    double a = -1.0 / 0.0;
-    cout << a;
+    int num = 0x040204; 
+    char* ptr = reinterpret_cast<char*>(&num); 
+    std::cout << static_cast<int>(*(ptr + 2)) << std::endl;
 }
