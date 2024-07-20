@@ -84,45 +84,101 @@ void ScalarConverter::convert(std::string literal)
     }
     else
     {
-        
-        // 1. int
-        // int tmp = atoi(literal.c_str());
-        // if (tmp >= 32 && tmp <= 126)
-        //     convertChar = static_cast<char>(tmp);
-        // else
-        //     convertChar = "Non displayable";
-        
-        // convertInt = literal;
-        // convertFloat = literal + ".0f";
-        // convertDouble = literal + ".0";
+        size_t findptr = literal.find(".");
+        int floatflag = 0;
 
-        // // 2. float
-        // float tmp = atof(literal.c_str());
-        // if (tmp >= 32 && tmp <= 126)
-        //     convertChar = static_cast<char>(tmp);
-        // else
-        //     convertChar = "Non displayable";
-        
-        // convertInt = literal.substr(0, literal.find("."));
-        // convertFloat = literal;
-        // convertDouble = literal.substr(0, literal.find("f"));
-        
-        // 3. double
-        // char *endptr;
-        // double tmp = strtod(literal.c_str(), &endptr);
-        // if (tmp >= 32 && tmp <= 126)
-        //     convertChar = static_cast<char>(tmp);
-        // else
-        //     convertChar = "Non displayable";
-        
-        // convertInt = literal.substr(0, literal.find("."));
-        // convertFloat = literal + "f";
-        // convertDouble = literal;
+        // int
+        if (findptr == std::string::npos)
+        {
+            for (size_t i = 0; i < literal.length(); i++)
+            {
+                if (i == 0 && (literal[i] == '-' || literal[i] == '+') && literal.length() != 1)
+                    continue;
+                if (!std::isdigit(literal[i]))
+                {
+                    std::cout << "is not number\n";
+                    return;
+                }
+            }
+            int tmp = atoi(literal.c_str());
+            if (tmp >= 32 && tmp <= 126)
+                convertChar = static_cast<char>(tmp);
+            else
+                convertChar = "Non displayable";
 
-        // 4. else : string
+            convertInt = literal;
+            convertFloat = literal + ".0f";
+            convertDouble = literal + ".0";
+        }
+        else
+        {
+            for (size_t i = 0; i < findptr; i++)
+            {
+                if (i == 0 && (literal[i] == '-' || literal[i] == '+') && literal.length() != 1)
+                    continue;
+                if (!std::isdigit(literal[i]))
+                {
+                    std::cout << "is not number\n";
+                    return;
+                }
+            }
+            if (!std::isdigit(literal[findptr - 1]))
+            {
+                std::cout << "is not number 2 \n";
+                return;
+            }
+            if (findptr + 1 == literal.length())
+            {
+                std::cout << "is not number 2 \n";
+                return;
+            }
+            if (literal[findptr + 1] == 'f')
+            {
+                std::cout << "is not number 2 \n";
+                return;
+            }
+            for (size_t i = findptr + 1; i < literal.length(); i++)
+            {
+                if (!std::isdigit(literal[i]))
+                {
+                    if (literal[i] == 'f' && i == literal.length() - 1)
+                    {
+                        floatflag = 1;
+                        break;
+                    }
+                    else
+                    {
+                        std::cout << "is not number 3 \n";
+                        return;
+                    }
+                }
+            }
+            if (floatflag == 1)
+            {
+                float tmp = atof(literal.c_str());
+                if (tmp >= 32 && tmp <= 126)
+                    convertChar = static_cast<char>(tmp);
+                else
+                    convertChar = "Non displayable";
 
-            // std::cout << "erorr!!" << '\n';
-            // return;
+                convertInt = literal.substr(0, literal.find("."));
+                convertFloat = literal;
+                convertDouble = literal.substr(0, literal.find("f"));
+            }
+            else
+            {
+                char *endptr;
+                double tmp = strtod(literal.c_str(), &endptr);
+                if (tmp >= 32 && tmp <= 126)
+                    convertChar = static_cast<char>(tmp);
+                else
+                    convertChar = "Non displayable";
+
+                convertInt = literal.substr(0, literal.find("."));
+                convertFloat = literal + "f";
+                convertDouble = literal;
+            }
+        }
     }
     std::cout << "char: " << convertChar << '\n';
     std::cout << "int: " << convertInt << '\n';

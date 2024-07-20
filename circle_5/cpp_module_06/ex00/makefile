@@ -1,4 +1,4 @@
-NAME = ex00
+NAME = convert
 CC = c++
 HEADER = ScalarConverter.hpp
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
