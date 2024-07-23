@@ -3,95 +3,94 @@
 # Introduction
 
 * This project aims to broaden your knowledge of system administration by using Docker. You will virtualize several Docker images, creating them in your new personal virtual machine.
->
+> 이 프로젝트는 Docker를 사용하여 시스템 관리에 대한 당신의 지식을 넓히는 것을 목표로 합니다. 당신은 여러 Docker 이미지를 가상화하여, 새 개인 가상 머신에서 그것들을 생성할 것입니다.
 
 # General guidelines
 * This project needs to be done on a Virtual Machine.
->
+> 이 프로젝트는 가상 머신에서 수행되어야 합니다.
 
-* All the files required for the configuration of your project must be placed in a srcs
-folder.
->
+* All the files required for the configuration of your project must be placed in a srcs folder.
+> 프로젝트 구성에 필요한 모든 파일은 srcs 폴더에 배치해야 합니다.
 
 * A Makefile is also required and must be located at the root of your directory. It must set up your entire application (i.e., it has to build the Docker images using docker-compose.yml).
->
+> Makefile도 필요하며, 디렉터리의 루트에 위치해야 합니다. 그것은 전체 애플리케이션을 설정해야 합니다 (즉, docker-compose.yml을 사용하여 Docker 이미지를 빌드해야 합니다).
 
 * This subject requires putting into practice concepts that, depending on your back- ground, you may not have learned yet. Therefore, we advise you not to hesitate to read a lot of documentation related to Docker usage, as well as anything else you will find helpful in order to complete this assignment.
->
+> 이 주제는 당신의 배경에 따라 아직 배우지 않았을 수도 있는 개념들을 실습하는 것을 요구합니다. 따라서 이 과제를 완수하기 위해 도움이 될 만한 Docker 사용 관련 문서와 기타 자료를 많이 읽는 것을 주저하지 마시길 권장합니다.
 
 # Mandatory part
 
 This project consists in having you set up a small infrastructure composed of different services under specific rules. The whole project has to be done in a virtual machine. You have to use docker compose.
->
+> 이 프로젝트는 특정 규칙에 따라 여러 서비스를 포함하는 작은 인프라를 설정하는 것을 포함합니다. 전체 프로젝트는 가상 머신에서 수행되어야 하며, Docker Compose를 사용해야 합니다.
 
 Each Docker image must have the same name as its corresponding service.
 Each service has to run in a dedicated container.
->
+> 각 Docker 이미지는 해당 서비스와 동일한 이름을 가져야 합니다. 각 서비스는 전용 컨테이너에서 실행되어야 합니다.
 
 For performance matters, the containers must be built either from the penultimate stable version of Alpine or Debian. The choice is yours.
->
+>성능 문제를 위해, 컨테이너는 Alpine 또는 Debian의 마지막에서 두 번째 안정 버전에서 빌드되어야 합니다. 선택은 당신에게 달려 있습니다.
 
 You also have to write your own Dockerfiles, one per service. The Dockerfiles must be called in your docker-compose.yml by your Makefile.
->
+> 각 서비스마다 하나씩, 자신의 Dockerfile을 작성해야 합니다. Dockerfile은 Makefile을 통해 docker-compose.yml에서 호출되어야 합니다.
 
 It means you have to build yourself the Docker images of your project. It is then for- bidden to pull ready-made Docker images, as well as using services such as DockerHub (Alpine/Debian being excluded from this rule).
->
+> 즉, 프로젝트의 Docker 이미지를 직접 빌드해야 한다는 의미입니다. 따라서 준비된 Docker 이미지를 다운로드하거나 DockerHub와 같은 서비스를 사용하는 것은 금지됩니다 (단, Alpine/Debian은 이 규칙에서 제외됩니다).
 
 You then have to set up:
->
+> 다음으로 설정해야 하는 것은:
 
 * A Docker container that contains NGINX with TLSv1.2 or TLSv1.3 only.
->
+> NGINX가 포함된 Docker 컨테이너로, TLSv1.2 또는 TLSv1.3만을 지원해야 합니다.
 
 * A Docker container that contains WordPress + php-fpm (it must be installed and configured) only without nginx.
->
+> NGINX 없이 WordPress와 php-fpm만 포함된 Docker 컨테이너가 필요합니다 (php-fpm은 설치 및 구성되어야 합니다).
 
 * A Docker container that contains MariaDB only without nginx.
->
+> NGINX 없이 MariaDB만 포함된 Docker 컨테이너가 필요합니다.
 
 * A volume that contains your WordPress database.
->
+> WordPress 데이터베이스를 포함하는 볼륨이 필요합니다.
 
 * A second volume that contains your WordPress website files.
->
+> WordPress 웹사이트 파일을 포함하는 두 번째 볼륨이 필요합니다.
 
 * A docker-network that establishes the connection between your containers.
->
+> 컨테이너들 간의 연결을 설정하는 Docker 네트워크가 필요합니다.
 
 Your containers have to restart in case of a crash.
->
+> 컨테이너가 충돌할 경우 재시작되도록 설정해야 합니다.
 
 * A Docker container is not a virtual machine.  Thus, it is not
 recommended to use any hacky patch based on ’tail -f’ and so forth
 when trying to run it.  Read about how daemons work and whether it’s
 a good idea to use them or not.
->
+> Docker 컨테이너는 가상 머신이 아닙니다. 따라서 실행할 때 `tail -f`와 같은 임시방편적인 패치를 사용하는 것은 권장되지 않습니다. 데몬이 어떻게 작동하는지에 대해 읽어보고, 이를 사용하는 것이 좋은 아이디어인지 여부를 확인하세요.
 
 * Of course, using network:  host or --link or links:  is forbidden.
 The network line must be present in your docker-compose.yml file.
 Your containers musn’t be started with a command running an infinite
 loop.  Thus, this also applies to any command used as entrypoint, or
-used in entrypoint scripts.  The following are a few prohibited hacky
+used in entrypoint scripts. The following are a few prohibited hacky
 patches:  tail -f, bash, sleep infinity, while true.
->
+> 물론, `network: host` 또는 `--link` 또는 `links:`의 사용은 금지됩니다. `docker-compose.yml` 파일에 `network` 항목이 반드시 포함되어야 합니다. 컨테이너는 무한 루프를 실행하는 명령어로 시작되어서는 안 됩니다. 따라서, 이 규칙은 entrypoint로 사용되는 모든 명령어나 entrypoint 스크립트에서 사용되는 명령어에도 적용됩니다. 다음은 금지된 임시방편적인 패치 몇 가지입니다: `tail -f`, `bash`, `sleep infinity`, `while true`.
 
 * Read about PID 1 and the best practices for writing Dockerfiles.
->
+> PID 1과 Dockerfile 작성에 대한 모범 사례에 대해 읽어보세요.
 
 * In your WordPress database, there must be two users, one of them being the ad- ministrator. The administrator’s username can’t contain admin/Admin or admin- istrator/Administrator (e.g., admin, administrator, Administrator, admin-123, and so forth).
->
+> WordPress 데이터베이스에는 두 명의 사용자가 있어야 하며, 그 중 하나는 관리자여야 합니다. 관리자의 사용자 이름에는 `admin`/`Admin` 또는 `administrator`/`Administrator`가 포함될 수 없습니다 (예: `admin`, `administrator`, `Administrator`, `admin-123` 등).
 
 * Your volumes will be available in the /home/login/data folder of the
 host machine using Docker.  Of course, you have to replace the login
 with yours.
->
+> 당신의 볼륨은 Docker를 사용하여 호스트 머신의 `/home/login/data` 폴더에서 사용할 수 있습니다. 물론, `login`을 자신의 사용자 이름으로 대체해야 합니다.
 
 To make things simpler, you have to configure your domain name so it points to your local IP address.
->
+> 문제를 간단하게 만들기 위해, 도메인 이름을 로컬 IP 주소를 가리키도록 설정해야 합니다.
 
 This domain name must be login.42.fr. Again, you have to use your own login.
 For example, if your login is wil, wil.42.fr will redirect to the IP address pointing to wil’s website.
->
+> 이 도메인 이름은 `login.42.fr`이어야 하며, 여기서 `login`은 자신의 사용자 이름으로 대체해야 합니다. 예를 들어, 사용자 이름이 `wil`이라면, `wil.42.fr`은 `wil`의 웹사이트를 가리키는 IP 주소로 리디렉션되어야 합니다.
 
 * The latest tag is prohibited.
 No password must be present in your Dockerfiles.
@@ -102,15 +101,15 @@ of the srcs directory.
 Your NGINX container must be the only entrypoint into your
 infrastructure via the port 443 only, using the TLSv1.2 or TLSv1.3
 protocol.
->
+> 최신 태그(`latest`)의 사용은 금지됩니다. Dockerfile에는 비밀번호가 포함되어서는 안 됩니다. 환경 변수를 사용하는 것이 필수입니다. 환경 변수를 저장하기 위해 `.env` 파일을 사용하는 것이 강력히 권장됩니다. `.env` 파일은 `srcs` 디렉터리의 루트에 위치해야 합니다. NGINX 컨테이너는 TLSv1.2 또는 TLSv1.3 프로토콜을 사용하여 포트 443을 통해서만 인프라에 접근할 수 있는 유일한 엔트리포인트여야 합니다.
 
 Here is an example diagram of the expected result:
->
+> 다음은 기대하는 결과의 예시 다이어그램입니다:
 
 <img width="552" alt="스크린샷 2024-07-23 오후 3 04 02" src="https://github.com/user-attachments/assets/0ef7165f-8ec8-4f92-8039-772321252907">
 
 Below is an example of the expected directory structure:
->
+> 아래는 기대되는 디렉터리 구조의 예시입니다:
 
 ```
 $> ls -alR
@@ -169,7 +168,7 @@ $>
 variables etc...  must be saved locally in a .env file and ignored by
 git.  Publicly stored credentials will lead you directly to a failure
 of the project.
->
+> 명백한 보안 이유로, 모든 자격 증명, API 키, 환경 변수 등은 로컬의 `.env` 파일에 저장하고 git에 의해 무시되어야 합니다. 공개적으로 저장된 자격 증명은 프로젝트의 실패로 이어질 수 있습니다.
 
 # Bonus part
 
