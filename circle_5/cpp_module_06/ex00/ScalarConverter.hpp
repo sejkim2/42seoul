@@ -17,12 +17,16 @@ enum Literal {
     NAN_LITERAL
 };
 
-typedef struct {
-    std::string convertChar;
-    std::string convertInt;
-    std::string convertFloat;
-    std::string convertDouble;
-}convertStruct;
+struct convertStruct {
+    std::string charValue;
+    std::string intValue;
+    std::string floatValue;
+    std::string doubleValue;
+
+    convertStruct(std::string charVal, std::string intVal, std::string floatVal, std::string doubleVal)
+        : charValue(charVal), intValue(intVal), floatValue(floatVal), doubleValue(doubleVal) {}
+};
+
 
 class ScalarConverter
 {

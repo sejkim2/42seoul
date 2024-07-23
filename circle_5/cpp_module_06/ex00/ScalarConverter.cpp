@@ -26,17 +26,17 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& obj)
 convertStruct ScalarConverter::handleNanInff(std::string literal)
 {
     if (literal.compare("-inff") == 0)
-        return convertStruct{"impossible", "impossible", "-inf", "-inff"};
+        return convertStruct("impossible", "impossible", "-inf", "-inff");
     else if (literal.compare("+inff") == 0)
-        return convertStruct{"impossible", "impossible", "inf", "inff"};
+        return convertStruct("impossible", "impossible", "inf", "inff");
     else if (literal.compare("nanf") == 0)
-        return convertStruct{"impossible", "impossible", "nanf", "nan"};
+        return convertStruct("impossible", "impossible", "nanf", "nan");
     else if (literal.compare("-inf") == 0)
-        return convertStruct{"impossible", "impossible", "-inf", "-inff"};
+        return convertStruct("impossible", "impossible", "-inf", "-inff");
     else if (literal.compare("+inf") == 0)
-        return convertStruct{"impossible", "impossible", "inff", "inf"};
+        return convertStruct("impossible", "impossible", "inff", "inf");
     else
-        return convertStruct{"impossible", "impossible", "nanf", "nan"};
+        return convertStruct("impossible", "impossible", "nanf", "nan");
 }
 
 //nan : 부동소수점 체계에서 사용
@@ -49,7 +49,7 @@ convertStruct ScalarConverter::handleNanInff(std::string literal)
 void ScalarConverter::convert(std::string literal)
 {
     int flag = 0;
-    convertStruct cs;
+    convertStruct cs("", "", "", "");
     std::string convertChar;
     std::string convertInt;
     std::string convertFloat;
