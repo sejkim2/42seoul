@@ -213,3 +213,125 @@ Turn in your assignment in your Git repository as usual. Only the work inside yo
 >
 
 
+
+__________________________________________________
+
+
+
+# debian에서 docker 설치
+Debian 12에서 Docker를 설치하는 방법을 단계별로 안내드리겠습니다. 다음 지침을 따라 Docker와 Docker Compose를 시스템에 설치할 수 있습니다.
+
+1. 기존 Docker 관련 패키지 제거
+먼저, 시스템에 이전에 설치된 Docker 패키지가 있는 경우 제거합니다.
+
+bash
+코드 복사
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+2. 필요 패키지 업데이트 및 설치
+Docker를 설치하기 전에 시스템의 패키지 목록을 업데이트하고 Docker 설치에 필요한 패키지를 설치합니다.
+
+bash
+코드 복사
+sudo apt-get update
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+    
+3. Docker의 공식 GPG 키 추가
+Docker의 공식 GPG 키를 추가합니다.
+
+bash
+코드 복사
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+4. Docker 저장소 설정
+Docker 패키지를 설치할 수 있도록 Docker의 안정적인 저장소를 추가합니다.
+
+bash
+코드 복사
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  
+5. Docker 엔진 설치
+Docker 패키지 목록을 업데이트하고 Docker 엔진을 설치합니다.
+
+bash
+코드 복사
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+6. Docker 설치 확인
+Docker가 정상적으로 설치되었는지 확인합니다.
+
+bash
+코드 복사
+sudo docker run hello-world
+위 명령어를 실행하면 Docker가 제대로 설치되었는지 확인하는 메시지가 출력됩니다.
+
+7. Docker Compose 설치
+Docker Compose는 최신 버전을 설치합니다. Docker Compose를 독립적으로 설치하는 경우:
+
+최신 버전의 Docker Compose를 다운로드합니다.
+bash
+코드 복사
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.10.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+Docker Compose 바이너리 파일에 실행 권한을 부여합니다.
+bash
+코드 복사
+sudo chmod +x /usr/local/bin/docker-compose
+Docker Compose 설치를 확인합니다.
+bash
+코드 복사
+docker-compose --version
+
+8. Docker 서비스 시작 및 자동 시작 설정
+Docker 서비스를 시작하고 부팅 시 자동으로 시작되도록 설정합니다.
+
+bash
+코드 복사
+sudo systemctl start docker
+sudo systemctl enable docker
+
+9. 사용자 권한 설정 (선택 사항)
+Docker 명령어를 실행할 때마다 sudo를 입력하지 않으려면 현재 사용자를 docker 그룹에 추가합니다.
+
+bash
+코드 복사
+sudo usermod -aG docker $USER
+변경 사항을 적용하려면 로그아웃 후 다시 로그인합니다.
+
+요약
+기존 Docker 패키지 제거
+필요 패키지 업데이트 및 설치
+Docker의 공식 GPG 키 추가
+Docker 저장소 설정
+Docker 엔진 설치
+Docker 설치 확인
+Docker Compose 설치
+Docker 서비스 시작 및 자동 시작 설정
+사용자 권한 설정 (선택 사항)
+위 단계를 따르면 Debian 12 시스템에서 Docker 및 Docker Compose를 성공적으로 설치하고 사용할 수 있습니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
