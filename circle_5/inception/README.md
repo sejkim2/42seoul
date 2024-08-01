@@ -318,6 +318,40 @@ Docker 서비스 시작 및 자동 시작 설정
 위 단계를 따르면 Debian 12 시스템에서 Docker 및 Docker Compose를 성공적으로 설치하고 사용할 수 있습니다.
 
 
+# docker-compose
+
+# 도커-컴포즈 버전
+version: '3'
+
+# 볼륨 설정 ({} : 빈 설정)
+volumes:
+    data: {}
+
+# 서비스 : 컨테이너에서 사용되는 서비스 (컨테이너 정의)
+services:
+    # 서비스 이름 정의 (image를 가지고 컨테이너 생성)
+    nginx:
+        # 사용될 이미지
+        image: debian:buster
+        # 컨테이너가 종료되면 항상 재시작 여부
+        restart: always
+        # 호스트 포트 : 컨테이너 포트로 매핑
+        ports:
+            - "443:443"
+        # 호스트의 볼륨 : 컨테이너의 디렉토리로 마운팅
+        volumes:
+            - data:/var/www/html
+        # 컨테이너가 연결될 네트워크 이름
+        networks:
+            - intra
+        # 터미널 세션 연결 여부
+        tty: true
+# 도커 네트워크 이름
+networks:
+    intra:
+        # 네트워크 드라이버 설정 (브릿지 : 컨테이너 간 통신 허용)
+        driver: bridge
+
 
 
 
