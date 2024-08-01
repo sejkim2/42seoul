@@ -320,6 +320,7 @@ Docker 서비스 시작 및 자동 시작 설정
 
 # docker-compose
 
+```
 # 도커-컴포즈 버전
 version: '3'
 
@@ -351,7 +352,7 @@ networks:
     intra:
         # 네트워크 드라이버 설정 (브릿지 : 컨테이너 간 통신 허용)
         driver: bridge
-
+```
 
 
 
