@@ -368,7 +368,10 @@ networks:
         driver: bridge
 ```
 
+# open ssl 인증
+openssl req -newkey rsa:2048 -nodes -keyout /home/sejkim2/inception/srcs/nginx/ssl/nginx.key -x509 -days 365 -out /home/sejkim2/inception/srcs/nginx/ssl/nginx.crt
 
+/home/sejkim2/ssl 안에 인증 파일들을 저장
 
 
 
