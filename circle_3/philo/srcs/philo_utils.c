@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/19 15:32:57 by sejkim2           #+#    #+#             */
+/*   Updated: 2024/01/23 15:01:33 by sejkim2          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
 int	ft_strlen(char *s)
@@ -20,9 +32,9 @@ int	ft_isdigit(int c)
 
 int	ft_atoi(char *str)
 {
-	int	i;
-	int	flag_minus;
-	int	num;
+	int			i;
+	int			flag_minus;
+	long long	num;
 
 	flag_minus = 1;
 	i = 0;
@@ -38,39 +50,41 @@ int	ft_atoi(char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 		num = (num * 10) + (str[i++] - '0');
 	if (flag_minus == -1)
-		return (-1 * num);
-	else
-		return (num);
+		num = num * -1;
+	if (num > INTEGER_MAX || num < INTEGER_MIN)
+		return (-1);
+	return ((int)num);
 }
 
-long long get_current_time(void)
+long long	get_current_time(void)
 {
-    struct timeval time;
-    long long result;
+	struct timeval		time;
+	long long			result;
 
-    if (gettimeofday(&time, NULL) == -1)
+	if (gettimeofday(&time, NULL) == -1)
 		return (FALSE);
-    //1초 : 0.001ms, 1초 : 0.000001us
-    result = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-    return result;
+	result = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	return (result);
 }
 
-void	ft_putstr_fd(char *s, int fd)
+void	run_time(t_philo *philo, long long required_time)
 {
-	write(fd, s, ft_strlen(s));
-}
-
-void run_time(t_philo *philo, long long required_time)
-{
-	long long start_time;
-    long long cur_time;
+	long long	start_time;
+	long long	cur_time;
 
 	start_time = get_current_time();
-    while (philo->arg->is_finish == FALSE)
-    {
-        cur_time = get_current_time();
-        if (cur_time - start_time >= required_time)
-            break ;
+	while (1)
+	{
+		pthread_mutex_lock(&(philo->shared->check_finish));
+		if (philo->shared->is_finish == TRUE)
+		{
+			pthread_mutex_unlock(&(philo->shared->check_finish));
+			return ;
+		}
+		pthread_mutex_unlock(&(philo->shared->check_finish));
+		cur_time = get_current_time();
+		if (cur_time - start_time >= required_time)
+			break ;
 		usleep(100);
-    }
+	}
 }
