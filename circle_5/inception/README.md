@@ -321,51 +321,20 @@ Docker 서비스 시작 및 자동 시작 설정
 # docker-compose
 
 ```
-# 도커 컴포즈 버전
-version: '3'
+version: '3.8'  # Docker Compose 파일의 버전. Docker Compose의 기능에 따라 호환되는 파일 형식 버전을 지정합니다.
 
-# 볼륨 이름 ({} : 빈 설정)
-volumes:
-    data: {}
-# 서비스 : 컨테이너에서 사용되는 서비스 (컨테이너 정의)
-services:
-    # 서비스 이름
-    mariadb:
-        image: debian:buster
-        restart: always
-        expose:
-            - "3306"
-        networks:
-            - intra
-        tty: true
-    nginx:
-        image: debian:buster
-        restart: always
-        # 호스트 포트 : 컨테이너 포트로 매핑
-        ports:
-            - "443:443"
-        # 호스트 볼륨 : 컨테이너 디렉토리로 마운팅
-        volumes:
-            - data:/var/www/html
-        # 컨테이너가 연결된 네트워크 이름
-        networks:
-            - intra
-        tty: true
-    wordpress:
-        image: debian:buster
-        restart: always
-        volumes:
-            - data:/var/www/html
-        expose: 
-            - "9000"
-        networks:
-            - intra
-        tty: true
-# 도커 네트워크 이름
-networks:
-    intra:
-        # 네트워크 드라이버 설정 (브릿지 : 컨테이너끼리 통신 허용)
-        driver: bridge
+services:  # Docker Compose에서 정의하는 서비스 목록
+  nginx:  # 서비스 이름. 이 이름으로 컨테이너를 참조합니다.
+    build:
+      context: ./requirements/nginx  # Dockerfile과 관련 파일들이 위치한 디렉토리. 빌드 컨텍스트를 설정합니다.
+      dockerfile: Dockerfile  # 사용할 Dockerfile의 이름. 기본값은 'Dockerfile'입니다.
+    image: 42_nginx_image  # 빌드된 이미지를 '42_nginx_image'라는 이름으로 태깅합니다.
+    ports:
+      - "443:443"  # 호스트의 443 포트를 컨테이너의 443 포트에 매핑합니다. HTTPS 트래픽을 처리합니다.
+    volumes:
+      - /home/sejkim2/data/nginx:/var/log/nginx  # 호스트의 /home/sejkim2/data/nginx 디렉토리를 컨테이너의 /var/log/nginx 디렉토리에 마운트합니다. 로그 파일을 호스트와 공유합니다.
+    container_name: 42_nginx_container  # 컨테이너의 이름을 '42_nginx_container'로 설정합니다. 컨테이너를 식별하는 데 사용됩니다.
+
 ```
 
 # open ssl 인증
