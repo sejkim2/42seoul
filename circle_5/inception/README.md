@@ -376,6 +376,28 @@ openssl req -newkey rsa:2048 -nodes -keyout /home/sejkim2/inception/srcs/nginx/s
 
 https://docs.docker.com/build/building/best-practices/#add-or-copy
 
+```
+# 베이스 이미지로 Debian 12 사용
+FROM debian:12
+
+# 패키지 업데이트 및 MariaDB 서버 설치
+RUN apt-get update && \
+    apt-get install -y mariadb-server && \
+    rm -rf /var/lib/apt/lists/*
+
+# 환경 변수 설정 (필요에 따라 수정)
+ENV MYSQL_ROOT_PASSWORD=rootpassword
+ENV MYSQL_DATABASE=mydatabase
+ENV MYSQL_USER=myuser
+ENV MYSQL_PASSWORD=mypassword
+
+# 포트 3306 열기
+EXPOSE 3306
+
+# MariaDB 서버 시작
+CMD ["sh", "-c", "service mysql start && tail -f /dev/null"]
+```
+
 
 
 
