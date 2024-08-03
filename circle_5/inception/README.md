@@ -374,6 +374,8 @@ openssl req -newkey rsa:2048 -nodes -keyout /home/sejkim2/inception/srcs/nginx/s
 /home/sejkim2/ssl 안에 인증 파일들을 저장
 
 
+https://docs.docker.com/build/building/best-practices/#add-or-copy
+
 
 
 
