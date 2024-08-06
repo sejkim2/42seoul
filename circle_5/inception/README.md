@@ -437,7 +437,7 @@ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 
 nginx.conf
 ```
-user nginx;
+user www-data;
 worker_processes auto;
 pid /run/nginx.pid;
 error_log /var/log/nginx/error.log;
@@ -478,7 +478,7 @@ http {
     ##
     server {
         listen 443 ssl;
-        server_name yourdomain.com;
+        server_name sejkim2.42.fr;
 
         ssl_certificate /etc/nginx/ssl/server.crt;
         ssl_certificate_key /etc/nginx/ssl/server.key;
@@ -492,16 +492,17 @@ http {
         }
     }
 
-    # HTTP에서 HTTPS로 리다이렉션 (선택 사항)
-    server {
-        listen 80;
-        server_name yourdomain.com;
+    # HTTP에서 HTTPS로 리다이렉션
+    # server {
+    #     listen 80;
+    #     server_name yourdomain.com;
 
-        location / {
-            return 301 https://$host$request_uri;
-        }
-    }
+    #     location / {
+    #         return 301 https://$host$request_uri;
+    #     }
+    # }
 }
+
 ```
 
 DNS 추가
