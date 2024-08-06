@@ -397,6 +397,11 @@ EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
+도커 설치
+```
+sudo apt-get update
+sudo apt-get install docker.io
+```
 
 
 
