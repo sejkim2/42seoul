@@ -429,7 +429,80 @@ docker run -d -p [host의 포트]:[개방된 guest의 호트] [사용될 이미�
 docker exec -it [컨테이너 넘버] bash
 ```
 
+openssl 인증
+```
+openssl req -newkey rsa:2048 -nodes -keyout server.key -out server.csr
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+```
 
+nginx.conf
+```
+user nginx;
+worker_processes auto;
+pid /run/nginx.pid;
+error_log /var/log/nginx/error.log;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+    worker_connections 768;
+}
+
+http {
+    ##
+    # Basic Settings
+    ##
+    sendfile on;
+    tcp_nopush on;
+    types_hash_max_size 2048;
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    ##
+    # SSL Settings
+    ##
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    ##
+    # Logging Settings
+    ##
+    access_log /var/log/nginx/access.log;
+
+    ##
+    # Gzip Settings
+    ##
+    gzip on;
+
+    ##
+    # Virtual Host Configs
+    ##
+    server {
+        listen 443 ssl;
+        server_name yourdomain.com;
+
+        ssl_certificate /etc/nginx/ssl/server.crt;
+        ssl_certificate_key /etc/nginx/ssl/server.key;
+
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_ciphers HIGH:!aNULL:!MD5;
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
+    }
+
+    # HTTP에서 HTTPS로 리다이렉션 (선택 사항)
+    server {
+        listen 80;
+        server_name yourdomain.com;
+
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }
+}
+```
 
 
 
