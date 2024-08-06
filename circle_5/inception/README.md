@@ -321,7 +321,7 @@ Docker 서비스 시작 및 자동 시작 설정
 # docker-compose
 
 ```
-version: '3.8'  # Docker Compose 파일의 버전. Docker Compose의 기능에 따라 호환되는 파일 형식 버전을 지정합니다.
+version: '3.7'  # Docker Compose 파일의 버전. Docker Compose의 기능에 따라 호환되는 파일 형식 버전을 지정합니다.
 
 services:  # Docker Compose에서 정의하는 서비스 목록
   nginx:  # 서비스 이름. 이 이름으로 컨테이너를 참조합니다.
