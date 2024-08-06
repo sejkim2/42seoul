@@ -368,7 +368,34 @@ CMD ["sh", "-c", "service mysql start && tail -f /dev/null"]
 ```
 
 
+```
+FROM debian:12
 
+# 설치 및 클린업
+RUN apt-get update && apt-get install -y \
+    nginx \
+    openssl \
+    && rm -rf /var/lib/apt/lists/*
+
+# 인증서와 키 파일을 포함시킬 디렉토리 생성
+RUN mkdir -p /etc/nginx/ssl
+
+# SSL 인증서와 키 파일 복사
+COPY server.crt /etc/nginx/ssl/server.crt
+COPY server.key /etc/nginx/ssl/server.key
+
+# Nginx 설정 파일 복사
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+
+# 로그 디렉토리 설정
+VOLUME ["/var/log/nginx"]
+
+# 443 포트 개방
+EXPOSE 443
+
+# Nginx 실행
+CMD ["nginx", "-g", "daemon off;"]
+```
 
 
 
