@@ -511,5 +511,8 @@ nano /etc/hosts
 [add] 127.0.0.1 sejkim2.42.fr
 ```
 
-
+docker-compose 빌드
+```
+docker-compose up -d --build
+```
 
