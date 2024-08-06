@@ -403,6 +403,12 @@ sudo apt-get update
 sudo apt-get install docker.io
 ```
 
+도커 컴포즈 설치
+```
+sudo apt-get update
+sudo apt-get install docker-compose
+```
+
 
 
 
