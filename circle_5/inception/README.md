@@ -409,9 +409,25 @@ sudo apt-get update
 sudo apt-get install docker-compose
 ```
 
+dockerfile 로 이미지 빌드
+```
+docker build -t [image_name] [path]
+```
 
+도커 이미지 목록 확인
+```
+docker images
+```
 
+도커 이미지로 컨테이너 생성
+```
+docker run -d -p [host의 포트]:[개방된 guest의 호트] [사용될 이미지]
+```
 
+도커 컨테이너 내부로 접속
+```
+docker exec -it [컨테이너 넘버] bash
+```
 
 
 
