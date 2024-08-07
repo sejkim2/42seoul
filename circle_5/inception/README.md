@@ -531,9 +531,11 @@ ENTRYPOINT command param1 param2 : 셸 형식
 ```
 FROM debian:11
 
-# 패키지 관리자를 업데이트하고 MariaDB 서버를 설치
+# 패키지 관리자를 업데이트하고 MariaDB 서버와 dumb-init을 설치
 RUN apt-get update -y && \
-    apt-get install -y mariadb-server && \
+    apt-get install -y mariadb-server curl && \
+    curl -Lo /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64 && \
+    chmod +x /usr/local/bin/dumb-init && \
     rm -rf /var/lib/apt/lists/*
 
 # MariaDB 설정: 모든 네트워크에서 MariaDB에 접근할 수 있도록 bind-address 설정
@@ -552,14 +554,11 @@ RUN chmod +x /docker-entrypoint-initdb.d/db_setup.sh
 # 3306 포트 개방
 EXPOSE 3306
 
-# MariaDB를 안전 모드로 실행
-CMD ["/usr/bin/mysqld_safe"]
+# dumb-init을 엔트리포인트로 설정
+ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 
-# docker run -d -p 3306:3306 \
-#     -e db_name=mydatabase \
-#     -e db_user=myuser \
-#     -e db_pwd=mypassword \
-#     my-mariadb
+# MariaDB를 안전 모드로 실행하고 초기화 스크립트를 실행
+CMD ["/bin/bash", "-c", "/usr/bin/mysqld_safe & /docker-entrypoint-initdb.d/db_setup.sh && wait"]
 ```
 
 ```
@@ -570,10 +569,10 @@ set -e
 # docker-entrypoint-initdb.d의 파일들은
 # 데이터베이스가 초기화되는 과정에서 실행되므로, 
 # 데이터베이스가 준비되기 전에 스크립트를 실행하면 문제가 발생할 수 있음.
-# echo "Waiting for MariaDB server to start..."
-# while ! mysqladmin ping --silent; do
-#     sleep 1
-# done
+echo "Waiting for MariaDB server to start..."
+while ! mysqladmin ping --silent; do
+    sleep 1
+done
 
 # SQL 명령어를 포함할 SQL 파일을 생성합니다.
 echo "CREATE DATABASE IF NOT EXISTS $db_name ;" > /docker-entrypoint-initdb.d/db1.sql
@@ -584,4 +583,12 @@ echo "FLUSH PRIVILEGES;" >> /docker-entrypoint-initdb.d/db1.sql
 
 # 생성된 SQL 파일을 MariaDB에 적용합니다.
 mysql < /docker-entrypoint-initdb.d/db1.sql
+```
+
+```
+docker run -d -p 3306:3306 \
+    -e db_name=mydatabase \
+    -e db_user=myuser \
+    -e db_pwd=mypassword \
+    my-mariadb
 ```
