@@ -369,13 +369,18 @@ CMD ["sh", "-c", "service mysql start && tail -f /dev/null"]
 
 
 ```
-FROM debian:12
+FROM debian:11
 
 # 설치 및 클린업
 RUN apt-get update && apt-get install -y \
     nginx \
     openssl \
+    curl \
     && rm -rf /var/lib/apt/lists/*
+
+# dump_init 설치
+RUN curl -Lo /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64 && \
+    chmod +x /usr/local/bin/dumb-init
 
 # 인증서와 키 파일을 포함시킬 디렉토리 생성
 RUN mkdir -p /etc/nginx/ssl
@@ -392,6 +397,9 @@ VOLUME ["/var/log/nginx"]
 
 # 443 포트 개방
 EXPOSE 443
+
+# dumb-init을 엔트리포인트로 설정
+ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 
 # Nginx 실행
 CMD ["nginx", "-g", "daemon off;"]
