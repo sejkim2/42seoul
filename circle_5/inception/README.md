@@ -566,6 +566,15 @@ CMD ["/usr/bin/mysqld_safe"]
 #!/bin/bash
 set -e
 
+# 서버가 시작될 때까지 대기
+# docker-entrypoint-initdb.d의 파일들은
+# 데이터베이스가 초기화되는 과정에서 실행되므로, 
+# 데이터베이스가 준비되기 전에 스크립트를 실행하면 문제가 발생할 수 있음.
+# echo "Waiting for MariaDB server to start..."
+# while ! mysqladmin ping --silent; do
+#     sleep 1
+# done
+
 # SQL 명령어를 포함할 SQL 파일을 생성합니다.
 echo "CREATE DATABASE IF NOT EXISTS $db_name ;" > /docker-entrypoint-initdb.d/db1.sql
 echo "CREATE USER IF NOT EXISTS '$db_user'@'%' IDENTIFIED BY '$db_pwd' ;" >> /docker-entrypoint-initdb.d/db1.sql
