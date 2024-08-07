@@ -516,3 +516,11 @@ docker-compose 빌드
 docker-compose up -d --build
 ```
 
+```
+CMD ["executable","param1","param2"](실행 양식, 이 양식이 기본 양식)
+CMD ["param1","param2"](ENTRYPOINT의 기본 파라미터로 사용)
+CMD command param1 param2(쉘 형태) -> pid1이 shell 프로세스
+
+ENTRYPOINT ["executable", "param1", "param2"] : 기본 형식
+ENTRYPOINT command param1 param2 : 셸 형식
+```
