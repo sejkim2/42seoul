@@ -594,9 +594,5 @@ mysql < /docker-entrypoint-initdb.d/db1.sql
 ```
 
 ```
-docker run -d -p 3306:3306 \
-    -e db_name=mydatabase \
-    -e db_user=myuser \
-    -e db_pwd=mypassword \
-    my-mariadb
+docker run -d -p 3306:3306 -e MYSQL_DATABASE=sejkim2db -e MYSQL_ROOT_PASSWORD=12345 -e MYSQL_USER=sejkim2 -e MYSQL_PASSWORD=111 myriadb
 ```
