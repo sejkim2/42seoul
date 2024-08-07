@@ -524,3 +524,5 @@ CMD command param1 param2(쉘 형태) -> pid1이 shell 프로세스
 ENTRYPOINT ["executable", "param1", "param2"] : 기본 형식
 ENTRYPOINT command param1 param2 : 셸 형식
 ```
+
+<img width="1023" alt="Screen Shot 2024-08-07 at 4 05 47 PM" src="https://github.com/user-attachments/assets/f36893bb-63f7-401c-81a5-92f58ac12072">
