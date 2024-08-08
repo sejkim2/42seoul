@@ -596,3 +596,36 @@ mysql < /docker-entrypoint-initdb.d/db1.sql
 ```
 docker run -d -p 3306:3306 -e MYSQL_DATABASE=sejkim2db -e MYSQL_ROOT_PASSWORD=12345 -e MYSQL_USER=sejkim2 -e MYSQL_PASSWORD=111 myriadb
 ```
+
+
+```
+version: '3.7'  # Docker Compose 파일의 버전. Docker Compose의 기능에 따라 호환되는 파일 형식 버전을 지정합니다.
+
+services:  # Docker Compose에서 정의하는 서비스 목록
+  nginx:  # 서비스 이름. 이 이름으로 컨테이너를 참조합니다.
+    build:
+      context: ./requirements/nginx  # Dockerfile과 관련 파일들이 위치한 디렉토리. 빌드 컨텍스트를 설정합니다.
+      dockerfile: Dockerfile  # 사용할 Dockerfile의 이름. 기본값은 'Dockerfile'입니다.
+    image: 42_nginx_image:1.0  # 빌드된 이미지를 '42_nginx_image'라는 이름으로 태깅합니다.
+    ports:
+      - "443:443"  # 호스트의 443 포트를 컨테이너의 443 포트에 매핑합니다. HTTPS 트래픽을 처리합니다.
+    volumes:
+      - /home/sejkim2/data/nginx:/var/log/nginx  # 호스트의 /home/sejkim2/data/nginx 디렉토리를 컨테이너의 /var/log/nginx 디렉토리에 마운트합니다. 로그 파일을 호스트와 공유합니다.
+    container_name: 42_nginx_container  # 컨테이너의 이름을 '42_nginx_container'로 설정합니다. 컨테이너를 식별하는 데 사용됩니다.
+  
+  mariadb:
+    build:
+      context: ./requirements/mariadb  # MariaDB Dockerfile과 관련 파일들이 위치한 디렉토리
+      dockerfile: Dockerfile  # MariaDB Dockerfile의 이름
+    image: 42_mariadb_image:1.0  # MariaDB 이미지를 'my-mariadb'라는 이름으로 태깅
+    expose:
+      - "3306"  # 호스트의 3306 포트를 컨테이너의 3306 포트에 매핑
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345  # MariaDB의 루트 비밀번호 설정
+      MYSQL_DATABASE: sejkim2_database  # 초기 데이터베이스 이름 설정
+      MYSQL_USER: sejkim2  # MariaDB 사용자 이름 설정
+      MYSQL_PASSWORD: 111  # MariaDB 사용자 비밀번호 설정
+    volumes:
+      - /home/sejkim2/data/mariadb:/var/lib/mysql  # MariaDB의 데이터 디렉토리를 호스트와 공유
+    container_name: 42_mariadb_container
+```
