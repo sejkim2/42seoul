@@ -582,6 +582,10 @@ while ! mysqladmin ping --silent; do
     sleep 1
 done
 
+db_name="sejdb"
+db_user="sejkim2"
+db_pwd="111"
+
 # SQL 명령어를 포함할 SQL 파일을 생성합니다.
 echo "CREATE DATABASE IF NOT EXISTS $db_name ;" > /docker-entrypoint-initdb.d/db1.sql
 echo "CREATE USER IF NOT EXISTS '$db_user'@'%' IDENTIFIED BY '$db_pwd' ;" >> /docker-entrypoint-initdb.d/db1.sql
