@@ -574,27 +574,21 @@ CMD ["/bin/bash", "-c", "/usr/bin/mysqld_safe & /docker-entrypoint-initdb.d/db_s
 set -e
 
 # 서버가 시작될 때까지 대기
-# docker-entrypoint-initdb.d의 파일들은
-# 데이터베이스가 초기화되는 과정에서 실행되므로, 
-# 데이터베이스가 준비되기 전에 스크립트를 실행하면 문제가 발생할 수 있음.
 echo "Waiting for MariaDB server to start..."
-while ! mysqladmin ping --silent; do
+while ! mysqladmin ping --silent -u root -p"$MYSQL_ROOT_PASSWORD"; do
     sleep 1
 done
 
-db_name="sejdb"
-db_user="sejkim2"
-db_pwd="111"
-
 # SQL 명령어를 포함할 SQL 파일을 생성합니다.
-echo "CREATE DATABASE IF NOT EXISTS $db_name ;" > /docker-entrypoint-initdb.d/db1.sql
-echo "CREATE USER IF NOT EXISTS '$db_user'@'%' IDENTIFIED BY '$db_pwd' ;" >> /docker-entrypoint-initdb.d/db1.sql
-echo "GRANT ALL PRIVILEGES ON $db_name.* TO '$db_user'@'%' ;" >> /docker-entrypoint-initdb.d/db1.sql
-echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '12345' ;" >> /docker-entrypoint-initdb.d/db1.sql
+echo "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;" > /docker-entrypoint-initdb.d/db1.sql
+echo "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> /docker-entrypoint-initdb.d/db1.sql
+echo "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO \`${MYSQL_USER}\`@'%';" >> /docker-entrypoint-initdb.d/db1.sql
+echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" >> /docker-entrypoint-initdb.d/db1.sql
 echo "FLUSH PRIVILEGES;" >> /docker-entrypoint-initdb.d/db1.sql
 
 # 생성된 SQL 파일을 MariaDB에 적용합니다.
-mysql < /docker-entrypoint-initdb.d/db1.sql
+mysql -u root -p"$MYSQL_ROOT_PASSWORD" < /docker-entrypoint-initdb.d/db1.sql
+
 ```
 
 ```
@@ -613,23 +607,27 @@ services:  # Docker Compose에서 정의하는 서비스 목록
     image: 42_nginx_image:1.0  # 빌드된 이미지를 '42_nginx_image'라는 이름으로 태깅합니다.
     ports:
       - "443:443"  # 호스트의 443 포트를 컨테이너의 443 포트에 매핑합니다. HTTPS 트래픽을 처리합니다.
-    volumes:
-      - /home/sejkim2/data/nginx:/var/log/nginx  # 호스트의 /home/sejkim2/data/nginx 디렉토리를 컨테이너의 /var/log/nginx 디렉토리에 마운트합니다. 로그 파일을 호스트와 공유합니다.
     container_name: 42_nginx_container  # 컨테이너의 이름을 '42_nginx_container'로 설정합니다. 컨테이너를 식별하는 데 사용됩니다.
   
   mariadb:
     build:
-      context: ./requirements/mariadb  # MariaDB Dockerfile과 관련 파일들이 위치한 디렉토리
-      dockerfile: Dockerfile  # MariaDB Dockerfile의 이름
-    image: 42_mariadb_image:1.0  # MariaDB 이미지를 'my-mariadb'라는 이름으로 태깅
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile  
+    image: 42_mariadb_image:1.0 
     expose:
-      - "3306"  # 호스트의 3306 포트를 컨테이너의 3306 포트에 매핑
-    environment:
-      MYSQL_ROOT_PASSWORD: 12345  # MariaDB의 루트 비밀번호 설정
-      MYSQL_DATABASE: sejkim2_database  # 초기 데이터베이스 이름 설정
-      MYSQL_USER: sejkim2  # MariaDB 사용자 이름 설정
-      MYSQL_PASSWORD: 111  # MariaDB 사용자 비밀번호 설정
+      - "3306"
+    env_file:
+      - .env
     volumes:
-      - /home/sejkim2/data/mariadb:/var/lib/mysql  # MariaDB의 데이터 디렉토리를 호스트와 공유
+      - mariadb_data:/var/lib/mysql
     container_name: 42_mariadb_container
+
+volumes:
+  mariadb_data:
+    driver: local
+    external: false
+    driver_opts:
+      type: 'bind'
+      device: /home/sejkim2/data/mariadb
+      o: 'bind'
 ```
