@@ -631,3 +631,81 @@ volumes:
       device: /home/sejkim2/data/mariadb
       o: 'bind'
 ```
+
+```
+# 기본 Debian 11 이미지를 사용
+FROM debian:11-slim
+
+# 환경 변수 설정
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 패키지 업데이트 및 설치
+RUN apt-get update && \
+    apt-get install -y \
+    gnupg \
+    lsb-release \
+    curl \
+    php-fpm \
+    php-mysql \
+    php-mbstring \
+    php-xml \
+    php-curl \
+    mariadb-client \
+    wget \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# /var/www/html 디렉토리 생성
+RUN mkdir -p /var/www/html
+
+# WordPress 다운로드 및 설정
+RUN curl -o /tmp/wordpress.tar.gz -SL https://wordpress.org/latest.tar.gz && \
+    tar -xzf /tmp/wordpress.tar.gz -C /var/www/html && \
+    chown -R www-data:www-data /var/www/html/wordpress && \
+    rm /tmp/wordpress.tar.gz
+
+# PHP-FPM 설정 파일 복사
+COPY conf/php-fpm.conf /etc/php/7.4/fpm/php-fpm.conf
+
+# WordPress와 PHP-FPM 설정
+# COPY ./wp-config.php /var/www/html/wordpress/wp-config.php
+
+# 기본 포트 설정
+EXPOSE 9000
+
+# PHP-FPM 실행
+CMD ["php-fpm"]
+```
+
+```
+[global]
+error_log = /var/log/php-fpm/error.log
+pid = /run/php/php-fpm.pid
+
+[www]
+user = www-data
+group = www-data
+listen = /run/php/php-fpm/www.sock
+listen.mode = 0660
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+```
+
+```
+[www]
+listen = /run/php/php-fpm/www.sock
+listen.owner = www-data
+listen.group = www-data
+listen.mode = 0660
+user = www-data
+group = www-data
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+
+```
