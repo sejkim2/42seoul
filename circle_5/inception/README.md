@@ -695,40 +695,6 @@ EXPOSE 9000
 
 # PHP-FPM을 기본 명령으로 설정
 CMD ["php-fpm7.4", "-F"]
-
-
-# FROM debian:bullseye
-
-# RUN	apt update -y && apt upgrade -y
-
-# RUN	apt-get -y install 
-#   php-curl
-# php 
-# php-fpm
-#  php-cli 
-#  php-mysql
-#    php-gd
-#     php-intl
-#      mariadb-client 
-#      wget
-
-# COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
-
-# RUN mkdir /run/php
-# RUN chmod +x /run/php
-
-# COPY ./tool/start.sh /usr/local/bin/start.sh
-# RUN	chmod +x /usr/local/bin/start.sh
-# RUN apt install dumb-init
-# ENTRYPOINT ["/usr/bin/dumb-init", "--", "bash", "/usr/local/bin/start.sh"]
-
-# RUN mkdir -p /var/www/html/wordpress
-# RUN chown -R www-data:www-data /var/www/html/wordpress
-# WORKDIR	/var/www/html/wordpress/
-
-# EXPOSE 9000
-
-# CMD ["/usr/sbin/php-fpm7.4", "-F"]
 ```
 
 https://ksbgenius.github.io/wordpress/2020/08/15/wordpress-installation-part2-php-fpm-install-and-configure.html
