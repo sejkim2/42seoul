@@ -633,81 +633,102 @@ volumes:
 ```
 
 ```
-# 기본 Debian 11 이미지를 사용
-FROM debian:11-slim
+; /etc/php/7.4/fpm/php-fpm.conf
+
+[global]
+daemonize = no
+include=/etc/php/7.4/fpm/pool.d/*.conf
+```
+
+```
+; /etc/php/7.4/fpm/pool.d/www.conf
+
+[www]
+user = www-data
+group = www-data
+listen = 0.0.0.0:9000
+listen.owner = www-data
+listen.group = www-data
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+pm.max_requests = 500
+chdir = /
+
+```
+
+```
+# Dockerfile
+
+FROM debian:11
 
 # 환경 변수 설정
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 패키지 업데이트 및 설치
+# 패키지 목록을 업데이트하고 PHP-FPM 및 필요한 패키지를 설치
 RUN apt-get update && \
     apt-get install -y \
-    gnupg \
-    lsb-release \
-    curl \
     php-fpm \
     php-mysql \
-    php-mbstring \
-    php-xml \
-    php-curl \
-    mariadb-client \
     wget \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    unzip \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# /var/www/html 디렉토리 생성
-RUN mkdir -p /var/www/html
-
-# WordPress 다운로드 및 설정
-RUN curl -o /tmp/wordpress.tar.gz -SL https://wordpress.org/latest.tar.gz && \
-    tar -xzf /tmp/wordpress.tar.gz -C /var/www/html && \
-    chown -R www-data:www-data /var/www/html/wordpress && \
-    rm /tmp/wordpress.tar.gz
-
-# PHP-FPM 설정 파일 복사
+# PHP-FPM의 기본 설정을 복사
 COPY conf/php-fpm.conf /etc/php/7.4/fpm/php-fpm.conf
 
-# WordPress와 PHP-FPM 설정
-# COPY ./wp-config.php /var/www/html/wordpress/wp-config.php
+# PHP-FPM의 pool 설정을 복사
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
-# 기본 포트 설정
+# WordPress 다운로드 및 설치
+RUN mkdir -p /var/www/html && \
+    wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
+    unzip /tmp/wordpress.zip -d /var/www/html/ && \
+    chown -R www-data:www-data /var/www/html/wordpress && \
+    rm /tmp/wordpress.zip
+
+# PHP-FPM이 포트 9000에서 리스닝하도록 설정
 EXPOSE 9000
 
-# PHP-FPM 실행
-CMD ["php-fpm"]
-```
+# PHP-FPM을 기본 명령으로 설정
+CMD ["php-fpm7.4", "-F"]
 
-```
-[global]
-error_log = /var/log/php-fpm/error.log
-pid = /run/php/php-fpm.pid
 
-[www]
-user = www-data
-group = www-data
-listen = /run/php/php-fpm/www.sock
-listen.mode = 0660
-pm = dynamic
-pm.max_children = 5
-pm.start_servers = 2
-pm.min_spare_servers = 1
-pm.max_spare_servers = 3
-```
+# FROM debian:bullseye
 
-```
-[www]
-listen = /run/php/php-fpm/www.sock
-listen.owner = www-data
-listen.group = www-data
-listen.mode = 0660
-user = www-data
-group = www-data
-pm = dynamic
-pm.max_children = 5
-pm.start_servers = 2
-pm.min_spare_servers = 1
-pm.max_spare_servers = 3
+# RUN	apt update -y && apt upgrade -y
 
+# RUN	apt-get -y install 
+#   php-curl
+# php 
+# php-fpm
+#  php-cli 
+#  php-mysql
+#    php-gd
+#     php-intl
+#      mariadb-client 
+#      wget
+
+# COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+# RUN mkdir /run/php
+# RUN chmod +x /run/php
+
+# COPY ./tool/start.sh /usr/local/bin/start.sh
+# RUN	chmod +x /usr/local/bin/start.sh
+# RUN apt install dumb-init
+# ENTRYPOINT ["/usr/bin/dumb-init", "--", "bash", "/usr/local/bin/start.sh"]
+
+# RUN mkdir -p /var/www/html/wordpress
+# RUN chown -R www-data:www-data /var/www/html/wordpress
+# WORKDIR	/var/www/html/wordpress/
+
+# EXPOSE 9000
+
+# CMD ["/usr/sbin/php-fpm7.4", "-F"]
 ```
 
 https://ksbgenius.github.io/wordpress/2020/08/15/wordpress-installation-part2-php-fpm-install-and-configure.html
