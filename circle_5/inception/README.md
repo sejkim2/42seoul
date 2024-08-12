@@ -709,3 +709,5 @@ pm.min_spare_servers = 1
 pm.max_spare_servers = 3
 
 ```
+
+https://ksbgenius.github.io/wordpress/2020/08/15/wordpress-installation-part2-php-fpm-install-and-configure.html
