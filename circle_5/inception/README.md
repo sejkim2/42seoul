@@ -321,20 +321,77 @@ Docker 서비스 시작 및 자동 시작 설정
 # docker-compose
 
 ```
-version: '3.7'  # Docker Compose 파일의 버전. Docker Compose의 기능에 따라 호환되는 파일 형식 버전을 지정합니다.
+version: '3.7'
 
-services:  # Docker Compose에서 정의하는 서비스 목록
-  nginx:  # 서비스 이름. 이 이름으로 컨테이너를 참조합니다.
+services:
+  nginx:
     build:
-      context: ./requirements/nginx  # Dockerfile과 관련 파일들이 위치한 디렉토리. 빌드 컨텍스트를 설정합니다.
-      dockerfile: Dockerfile  # 사용할 Dockerfile의 이름. 기본값은 'Dockerfile'입니다.
-    image: 42_nginx_image  # 빌드된 이미지를 '42_nginx_image'라는 이름으로 태깅합니다.
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    image: 42_nginx_image:1.0
+    depends_on:
+      - wordpress
     ports:
-      - "443:443"  # 호스트의 443 포트를 컨테이너의 443 포트에 매핑합니다. HTTPS 트래픽을 처리합니다.
+      - "443:443"
+    container_name: 42_nginx_container
+    restart:
+      on-failure
+    networks:
+      - 42_network
+  
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile  
+    image: 42_mariadb_image:1.0 
+    expose:
+      - "3306"
+    env_file:
+      - .env
     volumes:
-      - /home/sejkim2/data/nginx:/var/log/nginx  # 호스트의 /home/sejkim2/data/nginx 디렉토리를 컨테이너의 /var/log/nginx 디렉토리에 마운트합니다. 로그 파일을 호스트와 공유합니다.
-    container_name: 42_nginx_container  # 컨테이너의 이름을 '42_nginx_container'로 설정합니다. 컨테이너를 식별하는 데 사용됩니다.
+      - mariadb_data:/var/lib/mysql
+    container_name: 42_mariadb_container
+    networks:
+      - 42_network
+  
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    image: 42_wordpress_image:1.0
+    depends_on:
+      - mariadb
+    expose:
+      - "9000"
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html
+    container_name: 42_wordpress_container
+    restart:
+      on-failure
+    networks:
+      - 42_network
 
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: 'bind'
+      device: /home/sejkim2/data/mariadb
+      o: 'bind'
+  
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: 'bind'
+      device: /home/sejkim2/data/wordpress
+      o: 'bind'
+
+networks:
+  42_network:
+    name: 42_network
+    driver: bridge
 ```
 
 # open ssl 인증
@@ -593,43 +650,6 @@ mysql -u root -p"$MYSQL_ROOT_PASSWORD" < /docker-entrypoint-initdb.d/db1.sql
 
 ```
 docker run -d -p 3306:3306 -e MYSQL_DATABASE=sejkim2db -e MYSQL_ROOT_PASSWORD=12345 -e MYSQL_USER=sejkim2 -e MYSQL_PASSWORD=111 myriadb
-```
-
-
-```
-version: '3.7'  # Docker Compose 파일의 버전. Docker Compose의 기능에 따라 호환되는 파일 형식 버전을 지정합니다.
-
-services:  # Docker Compose에서 정의하는 서비스 목록
-  nginx:  # 서비스 이름. 이 이름으로 컨테이너를 참조합니다.
-    build:
-      context: ./requirements/nginx  # Dockerfile과 관련 파일들이 위치한 디렉토리. 빌드 컨텍스트를 설정합니다.
-      dockerfile: Dockerfile  # 사용할 Dockerfile의 이름. 기본값은 'Dockerfile'입니다.
-    image: 42_nginx_image:1.0  # 빌드된 이미지를 '42_nginx_image'라는 이름으로 태깅합니다.
-    ports:
-      - "443:443"  # 호스트의 443 포트를 컨테이너의 443 포트에 매핑합니다. HTTPS 트래픽을 처리합니다.
-    container_name: 42_nginx_container  # 컨테이너의 이름을 '42_nginx_container'로 설정합니다. 컨테이너를 식별하는 데 사용됩니다.
-  
-  mariadb:
-    build:
-      context: ./requirements/mariadb
-      dockerfile: Dockerfile  
-    image: 42_mariadb_image:1.0 
-    expose:
-      - "3306"
-    env_file:
-      - .env
-    volumes:
-      - mariadb_data:/var/lib/mysql
-    container_name: 42_mariadb_container
-
-volumes:
-  mariadb_data:
-    driver: local
-    external: false
-    driver_opts:
-      type: 'bind'
-      device: /home/sejkim2/data/mariadb
-      o: 'bind'
 ```
 
 ```
