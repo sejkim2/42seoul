@@ -328,48 +328,48 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
-    image: 42_nginx_image:1.0
+    image: nginx:1.0
     depends_on:
       - wordpress
     ports:
       - "443:443"
-    container_name: 42_nginx_container
+    container_name: nginx
     restart:
-      on-failure
+      always
     networks:
       - 42_network
   
-  mariadb:
-    build:
-      context: ./requirements/mariadb
-      dockerfile: Dockerfile  
-    image: 42_mariadb_image:1.0 
-    expose:
-      - "3306"
-    env_file:
-      - .env
-    volumes:
-      - mariadb_data:/var/lib/mysql
-    container_name: 42_mariadb_container
-    networks:
-      - 42_network
+  # mariadb:
+  #   build:
+  #     context: ./requirements/mariadb
+  #     dockerfile: Dockerfile  
+  #   image: mariadb:1.0 
+  #   expose:
+  #     - "3306"
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - mariadb_data:/var/lib/mysql
+  #   container_name: mariadb
+  #   networks:
+  #     - 42_network
   
   wordpress:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-    image: 42_wordpress_image:1.0
-    depends_on:
-      - mariadb
+    image: wordpress:1.0
+    # depends_on:
+    #   - mariadb
     expose:
       - "9000"
     env_file:
       - .env
     volumes:
       - wordpress_data:/var/www/html
-    container_name: 42_wordpress_container
+    container_name: wordpress
     restart:
-      on-failure
+      always
     networks:
       - 42_network
 
@@ -718,3 +718,56 @@ CMD ["php-fpm7.4", "-F"]
 ```
 
 https://ksbgenius.github.io/wordpress/2020/08/15/wordpress-installation-part2-php-fpm-install-and-configure.html
+
+
+```
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+error_log /var/log/nginx/error.log;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+    worker_connections 768;
+}
+
+http {
+    ##
+    # Virtual Host Configs
+    ##
+    server {
+        listen 443 ssl;
+        server_name sejkim2.42.fr;
+
+        ssl_certificate /etc/nginx/ssl/server.crt;
+        ssl_certificate_key /etc/nginx/ssl/server.key;
+
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_ciphers HIGH:!aNULL:!MD5;
+
+        # root /usr/share/nginx/html;
+        root /var/www/html/wordpress;
+        index index.php index.html index.htm;
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+
+        # location / {
+        #     root /usr/share/nginx/html;
+        #     index index.html;
+        # }
+
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass wordpress:9000;  # 'php-fpm'은 PHP-FPM 컨테이너의 이름 또는 IP 주소
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
+
+        # location ~ /\.ht {
+        #     deny all;
+        # }
+    }
+}
+```
