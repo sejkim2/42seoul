@@ -775,3 +775,106 @@ http {
 ```
 https://developer.wordpress.org/apis/wp-config-php/
 ```
+
+```
+#!/bin/bash
+
+# 환경변수 파일을 로드합니다
+# set -a
+# source /path/to/.env
+# set +a
+
+# 최대 10번까지 데이터베이스 연결 시도
+MAX_RETRIES=10
+COUNTER=0
+
+# WordPress 디렉토리로 이동
+cd /var/www/html/wordpress
+
+until wp core is-installed --allow-root || [ $COUNTER -eq $MAX_RETRIES ]; do
+    COUNTER=$((COUNTER+1))
+    echo "[$COUNTER/$MAX_RETRIES] Waiting for database connection..."
+    sleep 5
+done
+
+if [ $COUNTER -eq $MAX_RETRIES ]; then
+    echo "Error: Could not connect to the database."
+    exit 1
+fi
+
+# WordPress 설치 (루트 사용자로 실행되도록 --allow-root 옵션 추가)
+wp core install \
+    --url="https://sejkim2.42.fr" \
+    --title="sejkim2_blog" \
+    --admin_user="songpa" \
+    --admin_password="222" \
+    --admin_email="sejkim2@student.42.kr" \
+    --skip-email \
+    --allow-root
+
+# 일반 사용자 계정 생성 (루트 사용자로 실행되도록 --allow-root 옵션 추가)
+wp user create "user1" "user1@example.com" --user_pass="333" --role=subscriber --allow-root
+
+# 필요시 추가적인 설정 및 플러그인/테마 설치
+# wp plugin install wordpress-importer --activate --allow-root
+# wp theme install twentytwentyone --activate --allow-root
+
+# 사용자 목록 확인
+# wp user list --allow-root
+```
+
+```
+FROM debian:11
+
+# 환경 변수 설정
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 패키지 목록을 업데이트하고 PHP-FPM 및 필요한 패키지를 설치
+RUN apt-get update && \
+    apt-get install -y \
+    php-fpm \
+    php-mysql \
+    wget \
+    unzip \
+    curl \
+    less \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# PHP-FPM의 기본 설정을 복사
+COPY conf/php-fpm.conf /etc/php/7.4/fpm/php-fpm.conf
+
+# PHP-FPM의 pool 설정을 복사
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+# WordPress 다운로드 및 설치
+RUN mkdir -p /var/www/html && \
+    wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
+    unzip /tmp/wordpress.zip -d /var/www/html/ && \
+    chown -R www-data:www-data /var/www/html/wordpress && \
+    rm /tmp/wordpress.zip
+
+# wp-cli 설치
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp
+
+# WordPress 설정 스크립트 추가
+COPY tools/setup-wp.sh /usr/local/bin/setup-wp.sh
+RUN chmod +x /usr/local/bin/setup-wp.sh
+
+COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php
+
+# WordPress 설정 스크립트를 www-data 사용자로 실행
+RUN chown -R www-data:www-data /var/www/html/wordpress
+USER www-data
+
+# WordPress 설정 스크립트 실행
+RUN /usr/local/bin/setup-wp.sh --allow-root
+
+# PHP-FPM이 포트 9000에서 리스닝하도록 설정
+EXPOSE 9000
+
+# PHP-FPM을 기본 명령으로 설정
+CMD ["php-fpm7.4", "-F"]
+```
