@@ -213,113 +213,123 @@ Turn in your assignment in your Git repository as usual. Only the work inside yo
 >
 
 
-
 __________________________________________________
 
+# open ssl 인증
+```
+openssl req -newkey rsa:2048 -nodes -keyout /home/sejkim2/inception/srcs/nginx/ssl/nginx.key -x509 -days 365 -out /home/sejkim2/inception/srcs/nginx/ssl/nginx.crt
+
+# /home/sejkim2/ssl 안에 인증 파일들을 저장
+```
+
+https://docs.docker.com/build/building/best-practices/#add-or-copy
 
 
-# debian에서 docker 설치
-Debian 12에서 Docker를 설치하는 방법을 단계별로 안내드리겠습니다. 다음 지침을 따라 Docker와 Docker Compose를 시스템에 설치할 수 있습니다.
 
-1. 기존 Docker 관련 패키지 제거
-먼저, 시스템에 이전에 설치된 Docker 패키지가 있는 경우 제거합니다.
 
-bash
-코드 복사
-sudo apt-get remove docker docker-engine docker.io containerd runc
-
-2. 필요 패키지 업데이트 및 설치
-Docker를 설치하기 전에 시스템의 패키지 목록을 업데이트하고 Docker 설치에 필요한 패키지를 설치합니다.
-
-bash
-코드 복사
+# 도커 설치
+```
 sudo apt-get update
-sudo apt-get install \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-    
-3. Docker의 공식 GPG 키 추가
-Docker의 공식 GPG 키를 추가합니다.
+sudo apt-get install docker.io
+```
 
-bash
-코드 복사
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-4. Docker 저장소 설정
-Docker 패키지를 설치할 수 있도록 Docker의 안정적인 저장소를 추가합니다.
-
-bash
-코드 복사
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-  
-5. Docker 엔진 설치
-Docker 패키지 목록을 업데이트하고 Docker 엔진을 설치합니다.
-
-bash
-코드 복사
+# 도커 컴포즈 설치
+```
 sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get install docker-compose
+```
 
-6. Docker 설치 확인
-Docker가 정상적으로 설치되었는지 확인합니다.
+# dockerfile 로 이미지 빌드
+```
+docker build -t [image_name] [path]
+```
 
-bash
-코드 복사
-sudo docker run hello-world
-위 명령어를 실행하면 Docker가 제대로 설치되었는지 확인하는 메시지가 출력됩니다.
+# 도커 이미지 목록 확인
+```
+docker images
+```
 
-7. Docker Compose 설치
-Docker Compose는 최신 버전을 설치합니다. Docker Compose를 독립적으로 설치하는 경우:
+# 도커 이미지로 컨테이너 생성
+```
+docker run -d -p [host의 포트]:[개방된 guest의 호트] [사용될 이미지]
+```
 
-최신 버전의 Docker Compose를 다운로드합니다.
-bash
-코드 복사
-sudo curl -L "https://github.com/docker/compose/releases/download/v2.10.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-Docker Compose 바이너리 파일에 실행 권한을 부여합니다.
-bash
-코드 복사
-sudo chmod +x /usr/local/bin/docker-compose
-Docker Compose 설치를 확인합니다.
-bash
-코드 복사
-docker-compose --version
+# 도커 컨테이너 내부로 접속
+```
+docker exec -it [컨테이너 넘버] bash
+```
 
-8. Docker 서비스 시작 및 자동 시작 설정
-Docker 서비스를 시작하고 부팅 시 자동으로 시작되도록 설정합니다.
-
-bash
-코드 복사
-sudo systemctl start docker
-sudo systemctl enable docker
-
-9. 사용자 권한 설정 (선택 사항)
-Docker 명령어를 실행할 때마다 sudo를 입력하지 않으려면 현재 사용자를 docker 그룹에 추가합니다.
-
-bash
-코드 복사
-sudo usermod -aG docker $USER
-변경 사항을 적용하려면 로그아웃 후 다시 로그인합니다.
-
-요약
-기존 Docker 패키지 제거
-필요 패키지 업데이트 및 설치
-Docker의 공식 GPG 키 추가
-Docker 저장소 설정
-Docker 엔진 설치
-Docker 설치 확인
-Docker Compose 설치
-Docker 서비스 시작 및 자동 시작 설정
-사용자 권한 설정 (선택 사항)
-위 단계를 따르면 Debian 12 시스템에서 Docker 및 Docker Compose를 성공적으로 설치하고 사용할 수 있습니다.
+# openssl 인증
+```
+openssl req -newkey rsa:2048 -nodes -keyout server.key -out server.csr
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+```
 
 
-# docker-compose
+# DNS 추가
+```
+nano /etc/hosts
+[add] 127.0.0.1 sejkim2.42.fr
+```
 
+# docker-compose 빌드
+```
+docker-compose up -d --build
+```
+
+```
+CMD ["executable","param1","param2"](실행 양식, 이 양식이 기본 양식)
+CMD ["param1","param2"](ENTRYPOINT의 기본 파라미터로 사용)
+CMD command param1 param2(쉘 형태) -> pid1이 shell 프로세스
+
+ENTRYPOINT ["executable", "param1", "param2"] : 기본 형식
+ENTRYPOINT command param1 param2 : 셸 형식
+```
+
+<img width="1023" alt="Screen Shot 2024-08-07 at 4 05 47 PM" src="https://github.com/user-attachments/assets/f36893bb-63f7-401c-81a5-92f58ac12072">
+출처 : https://haward.tistory.com/m/190
+
+```
+docker run -d -p 3306:3306 -e MYSQL_DATABASE=sejkim2db -e MYSQL_ROOT_PASSWORD=12345 -e MYSQL_USER=sejkim2 -e MYSQL_PASSWORD=111 myriadb
+```
+
+https://ksbgenius.github.io/wordpress/2020/08/15/wordpress-installation-part2-php-fpm-install-and-configure.html
+
+```
+https://developer.wordpress.org/apis/wp-config-php/
+```
+
+# .env
+```
+# mariadb
+MYSQL_ROOT_PASSWORD=12345
+MYSQL_DATABASE=sejkim2_database
+MYSQL_USER=sejkim2
+MYSQL_PASSWORD=111
+
+# wordpress_db
+WORDPRESS_DB_HOST=mariadb:3306
+WORDPRESS_DB_NAME=sejkim2_database
+WORDPRESS_DB_USER=sejkim2
+WORDPRESS_DB_PASSWORD=111
+
+# wordpress info
+WORDPRESS_URL=https://sejkim2.42.fr
+WORDPRESS_TITLE=sejkim2_blog
+
+# admin info
+WORDPRESS_ADMIN_USER=songpa
+WORDPRESS_ADMIN_PASSWORD=222
+WORDPRESS_ADMIN_EMAIL=sejkim2@student.42.kr
+
+# user info
+WORDPRESS_USER=user1
+WORDPRESS_USER_EMAIL=user1@example.com
+WORDPRESS_USER_PASSWORD=333
+WORDPRESS_USER_ROLE=subscriber
+```
+
+# docker-compose.yml
 ```
 version: '3.7'
 
@@ -329,47 +339,46 @@ services:
       context: ./requirements/nginx
       dockerfile: Dockerfile
     image: nginx:1.0
-    depends_on:
-      - wordpress
     ports:
       - "443:443"
     container_name: nginx
-    restart:
-      always
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    restart: always
     networks:
       - 42_network
   
-  # mariadb:
-  #   build:
-  #     context: ./requirements/mariadb
-  #     dockerfile: Dockerfile  
-  #   image: mariadb:1.0 
-  #   expose:
-  #     - "3306"
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - mariadb_data:/var/lib/mysql
-  #   container_name: mariadb
-  #   networks:
-  #     - 42_network
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile  
+    image: mariadb:1.0 
+    expose:
+      - "3306"
+    env_file:
+      - .env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    container_name: mariadb
+    restart: always
+    networks:
+      - 42_network
   
   wordpress:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
     image: wordpress:1.0
-    # depends_on:
-    #   - mariadb
+    depends_on:
+      - mariadb
     expose:
       - "9000"
     env_file:
       - .env
     volumes:
-      - wordpress_data:/var/www/html
+      - wordpress_data:/var/www/html/wordpress
     container_name: wordpress
-    restart:
-      always
+    restart: always
     networks:
       - 42_network
 
@@ -394,205 +403,31 @@ networks:
     driver: bridge
 ```
 
-# open ssl 인증
-openssl req -newkey rsa:2048 -nodes -keyout /home/sejkim2/inception/srcs/nginx/ssl/nginx.key -x509 -days 365 -out /home/sejkim2/inception/srcs/nginx/ssl/nginx.crt
+# mariadb
 
-/home/sejkim2/ssl 안에 인증 파일들을 저장
-
-
-https://docs.docker.com/build/building/best-practices/#add-or-copy
-
+## tools
 ```
-# 베이스 이미지로 Debian 12 사용
-FROM debian:12
+#!/bin/bash
+set -e
 
-# 패키지 업데이트 및 MariaDB 서버 설치
-RUN apt-get update && \
-    apt-get install -y mariadb-server && \
-    rm -rf /var/lib/apt/lists/*
+# 서버가 시작될 때까지 대기
+echo "Waiting for MariaDB server to start..."
+while ! mysqladmin ping --silent -u root -p"$MYSQL_ROOT_PASSWORD"; do
+    sleep 1
+done
 
-# 환경 변수 설정 (필요에 따라 수정)
-ENV MYSQL_ROOT_PASSWORD=rootpassword
-ENV MYSQL_DATABASE=mydatabase
-ENV MYSQL_USER=myuser
-ENV MYSQL_PASSWORD=mypassword
+# SQL 명령어를 포함할 SQL 파일을 생성합니다.
+echo "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;" > /docker-entrypoint-initdb.d/db1.sql
+echo "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> /docker-entrypoint-initdb.d/db1.sql
+echo "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO \`${MYSQL_USER}\`@'%';" >> /docker-entrypoint-initdb.d/db1.sql
+echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" >> /docker-entrypoint-initdb.d/db1.sql
+echo "FLUSH PRIVILEGES;" >> /docker-entrypoint-initdb.d/db1.sql
 
-# 포트 3306 열기
-EXPOSE 3306
-
-# MariaDB 서버 시작
-CMD ["sh", "-c", "service mysql start && tail -f /dev/null"]
+# 생성된 SQL 파일을 MariaDB에 적용합니다.
+mysql -u root -p"$MYSQL_ROOT_PASSWORD" < /docker-entrypoint-initdb.d/db1.sql
 ```
 
-
-```
-FROM debian:11
-
-# 설치 및 클린업
-RUN apt-get update && apt-get install -y \
-    nginx \
-    openssl \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-
-# dump_init 설치
-RUN curl -Lo /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64 && \
-    chmod +x /usr/local/bin/dumb-init
-
-# 인증서와 키 파일을 포함시킬 디렉토리 생성
-RUN mkdir -p /etc/nginx/ssl
-
-# SSL 인증서와 키 파일 복사
-COPY server.crt /etc/nginx/ssl/server.crt
-COPY server.key /etc/nginx/ssl/server.key
-
-# Nginx 설정 파일 복사
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-
-# 로그 디렉토리 설정
-VOLUME ["/var/log/nginx"]
-
-# 443 포트 개방
-EXPOSE 443
-
-# dumb-init을 엔트리포인트로 설정
-ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
-
-# Nginx 실행
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-도커 설치
-```
-sudo apt-get update
-sudo apt-get install docker.io
-```
-
-도커 컴포즈 설치
-```
-sudo apt-get update
-sudo apt-get install docker-compose
-```
-
-dockerfile 로 이미지 빌드
-```
-docker build -t [image_name] [path]
-```
-
-도커 이미지 목록 확인
-```
-docker images
-```
-
-도커 이미지로 컨테이너 생성
-```
-docker run -d -p [host의 포트]:[개방된 guest의 호트] [사용될 이미지]
-```
-
-도커 컨테이너 내부로 접속
-```
-docker exec -it [컨테이너 넘버] bash
-```
-
-openssl 인증
-```
-openssl req -newkey rsa:2048 -nodes -keyout server.key -out server.csr
-openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
-```
-
-nginx.conf
-```
-user www-data;
-worker_processes auto;
-pid /run/nginx.pid;
-error_log /var/log/nginx/error.log;
-include /etc/nginx/modules-enabled/*.conf;
-
-events {
-    worker_connections 768;
-}
-
-http {
-    ##
-    # Basic Settings
-    ##
-    sendfile on;
-    tcp_nopush on;
-    types_hash_max_size 2048;
-    include /etc/nginx/mime.types;
-    default_type application/octet-stream;
-
-    ##
-    # SSL Settings
-    ##
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_prefer_server_ciphers on;
-
-    ##
-    # Logging Settings
-    ##
-    access_log /var/log/nginx/access.log;
-
-    ##
-    # Gzip Settings
-    ##
-    gzip on;
-
-    ##
-    # Virtual Host Configs
-    ##
-    server {
-        listen 443 ssl;
-        server_name sejkim2.42.fr;
-
-        ssl_certificate /etc/nginx/ssl/server.crt;
-        ssl_certificate_key /etc/nginx/ssl/server.key;
-
-        ssl_protocols TLSv1.2 TLSv1.3;
-        ssl_ciphers HIGH:!aNULL:!MD5;
-
-        location / {
-            root /usr/share/nginx/html;
-            index index.html;
-        }
-    }
-
-    # HTTP에서 HTTPS로 리다이렉션
-    # server {
-    #     listen 80;
-    #     server_name yourdomain.com;
-
-    #     location / {
-    #         return 301 https://$host$request_uri;
-    #     }
-    # }
-}
-
-```
-
-DNS 추가
-```
-nano /etc/hosts
-[add] 127.0.0.1 sejkim2.42.fr
-```
-
-docker-compose 빌드
-```
-docker-compose up -d --build
-```
-
-```
-CMD ["executable","param1","param2"](실행 양식, 이 양식이 기본 양식)
-CMD ["param1","param2"](ENTRYPOINT의 기본 파라미터로 사용)
-CMD command param1 param2(쉘 형태) -> pid1이 shell 프로세스
-
-ENTRYPOINT ["executable", "param1", "param2"] : 기본 형식
-ENTRYPOINT command param1 param2 : 셸 형식
-```
-
-<img width="1023" alt="Screen Shot 2024-08-07 at 4 05 47 PM" src="https://github.com/user-attachments/assets/f36893bb-63f7-401c-81a5-92f58ac12072">
-출처 : https://haward.tistory.com/m/190
-
+## Dockerfile
 ```
 FROM debian:11
 
@@ -626,32 +461,142 @@ ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 CMD ["/bin/bash", "-c", "/usr/bin/mysqld_safe & /docker-entrypoint-initdb.d/db_setup.sh && wait"]
 ```
 
+# nginx
+
+## nginx.conf
 ```
-#!/bin/bash
-set -e
+user www-data;
+worker_processes auto;  # nginx가 사용하는 워커 프로세스의 수 정의 (auto : cpu 코어 수에 맞게 생성)
+error_log /var/log/nginx/error.log;
+include /etc/nginx/modules-enabled/*.conf;
 
-# 서버가 시작될 때까지 대기
-echo "Waiting for MariaDB server to start..."
-while ! mysqladmin ping --silent -u root -p"$MYSQL_ROOT_PASSWORD"; do
-    sleep 1
-done
+# 워커 프로세스가 처리할 수 있는 최대 연결 개수 지정 : ulimit -n
+events {
+    worker_connections 1024;
+}
 
-# SQL 명령어를 포함할 SQL 파일을 생성합니다.
-echo "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;" > /docker-entrypoint-initdb.d/db1.sql
-echo "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> /docker-entrypoint-initdb.d/db1.sql
-echo "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO \`${MYSQL_USER}\`@'%';" >> /docker-entrypoint-initdb.d/db1.sql
-echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" >> /docker-entrypoint-initdb.d/db1.sql
-echo "FLUSH PRIVILEGES;" >> /docker-entrypoint-initdb.d/db1.sql
+http {
+    ##
+    # SSL Settings
+    ##
+    ssl_protocols TLSv1.2 TLSv1.3;
 
-# 생성된 SQL 파일을 MariaDB에 적용합니다.
-mysql -u root -p"$MYSQL_ROOT_PASSWORD" < /docker-entrypoint-initdb.d/db1.sql
+    ##
+    # Logging Settings
+    ##
+    access_log /var/log/nginx/access.log;
 
+    ##
+    # Virtual Host Configs
+    ##
+    server {
+        listen 443 ssl;
+        server_name sejkim2.42.fr;
+
+        ssl_certificate /etc/nginx/ssl/server.crt;
+        ssl_certificate_key /etc/nginx/ssl/server.key;
+        ssl_ciphers HIGH:!aNULL:!MD5;
+
+        # root /usr/share/nginx/html;
+        root /var/www/html/wordpress;
+        # index myindex.html;
+        index index.php index.html index.htm
+
+        # 기본 페이지 요청 처리
+        location / {
+            try_files $uri $uri/ /index.php?$args;
+        }
+
+        # Favicon location
+        location /favicon.ico {
+            root /usr/share/nginx/html/favicon;
+        }
+
+        # PHP-FPM 처리
+        location ~ \.php$ {
+            try_files $uri =404;
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass wordpress:9000;  # PHP-FPM 컨테이너의 서비스 이름과 포트
+            fastcgi_index index.php;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+        }
+
+        # .htaccess 파일 접근 차단
+        location ~ /\.ht {
+            deny all;
+        }
+    }
+}
 ```
 
+## tools (favicon.ico, myindex.html)
 ```
-docker run -d -p 3306:3306 -e MYSQL_DATABASE=sejkim2db -e MYSQL_ROOT_PASSWORD=12345 -e MYSQL_USER=sejkim2 -e MYSQL_PASSWORD=111 myriadb
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to nginx!</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- 파비콘 링크 추가 -->
+    <style>
+        body {
+            width: 35em;
+            margin: 0 auto;
+            font-family: Tahoma, Verdana, Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to nginx!</h1>
+    <p>If you see this page, the nginx web server is successfully installed and
+    working. Further configuration is required.</p>
+
+    <p>For online documentation and support please refer to
+    <a href="http://nginx.org/">nginx.org</a>.<br/>
+    Commercial support is available at
+    <a href="http://nginx.com/">nginx.com</a>.</p>
+
+    <p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
 ```
 
+## Dockerfile
+```
+FROM debian:11
+
+# 설치 및 클린업
+RUN apt-get update && apt-get install -y \
+    nginx \
+    openssl \
+    && rm -rf /var/lib/apt/lists/*
+
+# 인증서와 키 파일을 포함시킬 디렉토리 생성
+RUN mkdir -p /etc/nginx/ssl
+
+# SSL 인증서와 키 파일 복사
+COPY server.crt /etc/nginx/ssl/server.crt
+COPY server.key /etc/nginx/ssl/server.key
+
+COPY tools/favicon.ico /usr/share/nginx/html/favicon/favicon.ico
+COPY tools/myindex.html /usr/share/nginx/html/myindex.html
+
+# Nginx 설정 파일 복사
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+
+# 로그 디렉토리 설정
+VOLUME ["/var/log/nginx"]
+
+# 443 포트 개방
+EXPOSE 443
+
+# Nginx 실행
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+# wordpress
+
+## php-fpm.conf
 ```
 ; /etc/php/7.4/fpm/php-fpm.conf
 
@@ -659,7 +604,106 @@ docker run -d -p 3306:3306 -e MYSQL_DATABASE=sejkim2db -e MYSQL_ROOT_PASSWORD=12
 daemonize = no
 include=/etc/php/7.4/fpm/pool.d/*.conf
 ```
+## wp-config.php
+```
+<?php
+/**
+* The base configuration for WordPress
+*
+* The wp-config.php creation script uses this file during the installation.
+* You don't have to use the website, you can copy this file to "wp-config.php"
+* and fill in the values.
+*
+* This file contains the following configurations:
+*
+* * Database settings
+* * Secret keys
+* * Database table prefix
+* * ABSPATH
+*
+* @link https://developer.wordpress.org/advanced-administration/wordpress/wp-config/
+*
+* @package WordPress
+*/
+// ** Database settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
+	
+/** Database username */
+define( 'DB_USER', getenv('WORDPRESS_DB_USER') );
+	
+/** Database password */
+define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') );
+	
+/** Database hostname */
+define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
+	
+/** Database charset to use in creating database tables. */
+define( 'DB_CHARSET', 'utf8' );
+	
+/** The database collate type. Don't change this if in doubt. */
+define( 'DB_COLLATE', '' );
+	
+/**#@+
+* Authentication unique keys and salts.
+*
+* Change these to different unique phrases! You can generate these using
+* the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}.
+*
+* You can change these at any point in time to invalidate all existing cookies.
+* This will force all users to have to log in again.
+*
+* @since 2.6.0
+*/
+define( 'AUTH_KEY',         'put your unique phrase here' );
+define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );
+define( 'LOGGED_IN_KEY',    'put your unique phrase here' );
+define( 'NONCE_KEY',        'put your unique phrase here' );
+define( 'AUTH_SALT',        'put your unique phrase here' );
+define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
+define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
+define( 'NONCE_SALT',       'put your unique phrase here' );
+	
+/**#@-*/
+	
+/**
+* WordPress database table prefix.
+*
+* You can have multiple installations in one database if you give each
+* a unique prefix. Only numbers, letters, and underscores please!
+*/
+$table_prefix = 'wp_';
+	
+/**
+* For developers: WordPress debugging mode.
+*
+* Change this to true to enable the display of notices during development.
+* It is strongly recommended that plugin and theme developers use WP_DEBUG
+* in their development environments.
+*
+* For information on other constants that can be used for debugging,
+* visit the documentation.
+*
+* @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
+*/
+define( 'WP_DEBUG', false );
+	
+/* Add any custom values between this line and the "stop editing" line. */
+	
+	
+	
+/* That's all, stop editing! Happy publishing. */
+	
+/** Absolute path to the WordPress directory. */
+if ( ! defined( 'ABSPATH' ) ) {
+        define( 'ABSPATH', __DIR__ . '/' );
+}
+	
+/** Sets up WordPress vars and included files. */
+require_once ABSPATH . 'wp-settings.php';
+```
 
+## www.conf
 ```
 ; /etc/php/7.4/fpm/pool.d/www.conf
 
@@ -676,153 +720,30 @@ pm.min_spare_servers = 1
 pm.max_spare_servers = 3
 pm.max_requests = 500
 chdir = /
-
 ```
 
-```
-# Dockerfile
-
-FROM debian:11
-
-# 환경 변수 설정
-ENV DEBIAN_FRONTEND=noninteractive
-
-# 패키지 목록을 업데이트하고 PHP-FPM 및 필요한 패키지를 설치
-RUN apt-get update && \
-    apt-get install -y \
-    php-fpm \
-    php-mysql \
-    wget \
-    unzip \
-    && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# PHP-FPM의 기본 설정을 복사
-COPY conf/php-fpm.conf /etc/php/7.4/fpm/php-fpm.conf
-
-# PHP-FPM의 pool 설정을 복사
-COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
-
-# WordPress 다운로드 및 설치
-RUN mkdir -p /var/www/html && \
-    wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
-    unzip /tmp/wordpress.zip -d /var/www/html/ && \
-    chown -R www-data:www-data /var/www/html/wordpress && \
-    rm /tmp/wordpress.zip
-
-# PHP-FPM이 포트 9000에서 리스닝하도록 설정
-EXPOSE 9000
-
-# PHP-FPM을 기본 명령으로 설정
-CMD ["php-fpm7.4", "-F"]
-```
-
-https://ksbgenius.github.io/wordpress/2020/08/15/wordpress-installation-part2-php-fpm-install-and-configure.html
-
-
-```
-user www-data;
-worker_processes auto;
-pid /run/nginx.pid;
-error_log /var/log/nginx/error.log;
-include /etc/nginx/modules-enabled/*.conf;
-
-events {
-    worker_connections 768;
-}
-
-http {
-    ##
-    # Virtual Host Configs
-    ##
-    server {
-        listen 443 ssl;
-        server_name sejkim2.42.fr;
-
-        ssl_certificate /etc/nginx/ssl/server.crt;
-        ssl_certificate_key /etc/nginx/ssl/server.key;
-
-        ssl_protocols TLSv1.2 TLSv1.3;
-        ssl_ciphers HIGH:!aNULL:!MD5;
-
-        # root /usr/share/nginx/html;
-        root /var/www/html/wordpress;
-        index index.php index.html index.htm;
-
-        location / {
-            try_files $uri $uri/ =404;
-        }
-
-        # location / {
-        #     root /usr/share/nginx/html;
-        #     index index.html;
-        # }
-
-        location ~ \.php$ {
-            include snippets/fastcgi-php.conf;
-            fastcgi_pass wordpress:9000;  # 'php-fpm'은 PHP-FPM 컨테이너의 이름 또는 IP 주소
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            include fastcgi_params;
-        }
-
-        # location ~ /\.ht {
-        #     deny all;
-        # }
-    }
-}
-```
-
-```
-https://developer.wordpress.org/apis/wp-config-php/
-```
-
+## tools
 ```
 #!/bin/bash
-
-# 환경변수 파일을 로드합니다
-# set -a
-# source /path/to/.env
-# set +a
-
-# 최대 10번까지 데이터베이스 연결 시도
-MAX_RETRIES=10
-COUNTER=0
 
 # WordPress 디렉토리로 이동
 cd /var/www/html/wordpress
 
-until wp core is-installed --allow-root || [ $COUNTER -eq $MAX_RETRIES ]; do
-    COUNTER=$((COUNTER+1))
-    echo "[$COUNTER/$MAX_RETRIES] Waiting for database connection..."
-    sleep 5
-done
-
-if [ $COUNTER -eq $MAX_RETRIES ]; then
-    echo "Error: Could not connect to the database."
-    exit 1
-fi
-
 # WordPress 설치 (루트 사용자로 실행되도록 --allow-root 옵션 추가)
 wp core install \
-    --url="https://sejkim2.42.fr" \
-    --title="sejkim2_blog" \
-    --admin_user="songpa" \
-    --admin_password="222" \
-    --admin_email="sejkim2@student.42.kr" \
+    --url="$WORDPRESS_URL" \
+    --title="$WORDPRESS_TITLE" \
+    --admin_user="$WORDPRESS_ADMIN_USER" \
+    --admin_password="$WORDPRESS_ADMIN_PASSWORD" \
+    --admin_email="$WORDPRESS_ADMIN_EMAIL" \
     --skip-email \
     --allow-root
 
 # 일반 사용자 계정 생성 (루트 사용자로 실행되도록 --allow-root 옵션 추가)
-wp user create "user1" "user1@example.com" --user_pass="333" --role=subscriber --allow-root
-
-# 필요시 추가적인 설정 및 플러그인/테마 설치
-# wp plugin install wordpress-importer --activate --allow-root
-# wp theme install twentytwentyone --activate --allow-root
-
-# 사용자 목록 확인
-# wp user list --allow-root
+wp user create "$WORDPRESS_USER" "$WORDPRESS_USER_EMAIL" --user_pass="$WORDPRESS_USER_PASSWORD" --role=subscriber --allow-root
 ```
 
+## Dockerfile
 ```
 FROM debian:11
 
@@ -860,21 +781,15 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     mv wp-cli.phar /usr/local/bin/wp
 
 # WordPress 설정 스크립트 추가
-COPY tools/setup-wp.sh /usr/local/bin/setup-wp.sh
-RUN chmod +x /usr/local/bin/setup-wp.sh
+COPY tools/wp_setup.sh /usr/local/bin/wp_setup.sh
+RUN chmod +x /usr/local/bin/wp_setup.sh
 
+# wp-config.php 파일 복사
 COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php
-
-# WordPress 설정 스크립트를 www-data 사용자로 실행
-RUN chown -R www-data:www-data /var/www/html/wordpress
-USER www-data
-
-# WordPress 설정 스크립트 실행
-RUN /usr/local/bin/setup-wp.sh --allow-root
 
 # PHP-FPM이 포트 9000에서 리스닝하도록 설정
 EXPOSE 9000
 
-# PHP-FPM을 기본 명령으로 설정
-CMD ["php-fpm7.4", "-F"]
+# PHP-FPM을 시작하기 전에 setup-wp.sh 스크립트를 실행하도록 CMD 명령 수정
+CMD ["sh", "-c", "/usr/local/bin/wp_setup.sh && php-fpm7.4 -F"]
 ```
