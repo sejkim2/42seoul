@@ -569,7 +569,12 @@ FROM debian:11
 RUN apt-get update && apt-get install -y \
     nginx \
     openssl \
+    curl \
     && rm -rf /var/lib/apt/lists/*
+
+# dumb-init 설치
+RUN curl -Lo /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64 && \
+    chmod +x /usr/local/bin/dumb-init
 
 # 인증서와 키 파일을 포함시킬 디렉토리 생성
 RUN mkdir -p /etc/nginx/ssl
@@ -584,13 +589,13 @@ COPY tools/myindex.html /usr/share/nginx/html/myindex.html
 # Nginx 설정 파일 복사
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-# 로그 디렉토리 설정
-VOLUME ["/var/log/nginx"]
-
 # 443 포트 개방
 EXPOSE 443
 
-# Nginx 실행
+# dumb-init을 엔트리포인트로 설정하고 Nginx를 실행
+ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+
+# Nginx를 포그라운드 모드로 실행
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
@@ -729,18 +734,37 @@ chdir = /
 # WordPress 디렉토리로 이동
 cd /var/www/html/wordpress
 
-# WordPress 설치 (루트 사용자로 실행되도록 --allow-root 옵션 추가)
-wp core install \
-    --url="$WORDPRESS_URL" \
-    --title="$WORDPRESS_TITLE" \
-    --admin_user="$WORDPRESS_ADMIN_USER" \
-    --admin_password="$WORDPRESS_ADMIN_PASSWORD" \
-    --admin_email="$WORDPRESS_ADMIN_EMAIL" \
-    --skip-email \
-    --allow-root
+# wp-config.php 파일이 이미 존재하는 경우, WordPress가 이미 설치된 것으로 간주
+if [ -f wp-config.php ]; then
+  echo "WordPress is already installed."
+else
+  # wp-config.php 파일 생성
+  wp config create \
+      --dbname="$WORDPRESS_DB_NAME" \
+      --dbuser="$WORDPRESS_DB_USER" \
+      --dbpass="$WORDPRESS_DB_PASSWORD" \
+      --dbhost="$WORDPRESS_DB_HOST" \
+      --dbcharset="utf8" \
+      --dbcollate="" \
+      --allow-root
 
-# 일반 사용자 계정 생성 (루트 사용자로 실행되도록 --allow-root 옵션 추가)
-wp user create "$WORDPRESS_USER" "$WORDPRESS_USER_EMAIL" --user_pass="$WORDPRESS_USER_PASSWORD" --role=subscriber --allow-root
+  # WordPress 설치 (루트 사용자로 실행되도록 --allow-root 옵션 추가)
+  wp core install \
+      --url="$WORDPRESS_URL" \
+      --title="$WORDPRESS_TITLE" \
+      --admin_user="$WORDPRESS_ADMIN_USER" \
+      --admin_password="$WORDPRESS_ADMIN_PASSWORD" \
+      --admin_email="$WORDPRESS_ADMIN_EMAIL" \
+      --skip-email \
+      --allow-root
+fi
+
+# 일반 사용자 계정 생성
+if ! wp user get "$WORDPRESS_USER" --allow-root > /dev/null 2>&1; then
+  wp user create "$WORDPRESS_USER" "$WORDPRESS_USER_EMAIL" --user_pass="$WORDPRESS_USER_PASSWORD" --role=subscriber --allow-root
+else
+  echo "User '$WORDPRESS_USER' already exists."
+fi
 ```
 
 ## Dockerfile
@@ -761,6 +785,10 @@ RUN apt-get update && \
     less \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# dumb-init 설치
+RUN curl -Lo /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64 && \
+    chmod +x /usr/local/bin/dumb-init
 
 # PHP-FPM의 기본 설정을 복사
 COPY conf/php-fpm.conf /etc/php/7.4/fpm/php-fpm.conf
@@ -784,12 +812,13 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 COPY tools/wp_setup.sh /usr/local/bin/wp_setup.sh
 RUN chmod +x /usr/local/bin/wp_setup.sh
 
-# wp-config.php 파일 복사
-COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php
-
 # PHP-FPM이 포트 9000에서 리스닝하도록 설정
 EXPOSE 9000
 
-# PHP-FPM을 시작하기 전에 setup-wp.sh 스크립트를 실행하도록 CMD 명령 수정
-CMD ["sh", "-c", "/usr/local/bin/wp_setup.sh && php-fpm7.4 -F"]
+# dumb-init을 엔트리포인트로 설정하고 PHP-FPM을 실행
+ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+
+# setup-wp.sh 스크립트를 실행한 후 PHP-FPM을 포그라운드 모드로 실행
+CMD ["/bin/sh", "-c", "/usr/local/bin/wp_setup.sh && php-fpm7.4 -F"]
+
 ```
