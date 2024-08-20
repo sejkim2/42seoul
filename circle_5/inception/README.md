@@ -299,6 +299,112 @@ https://ksbgenius.github.io/wordpress/2020/08/15/wordpress-installation-part2-ph
 https://developer.wordpress.org/apis/wp-config-php/
 ```
 
+# Makefile
+```
+# Makefile
+
+# 설정할 변수
+COMPOSE_FILE = srcs/docker-compose.yml
+ENV_FILE = srcs/.env  # .env 파일 경로를 명시적으로 설정
+
+# 호스트 볼륨 디렉토리
+MARIADB_VOLUME_DIR = /home/sejkim2/data/mariadb
+WORDPRESS_VOLUME_DIR = /home/sejkim2/data/wordpress
+
+# 컨테이너 이름을 변수로 설정
+NGINX_CONTAINER_NAME = nginx
+MARIADB_CONTAINER_NAME = mariadb
+WORDPRESS_CONTAINER_NAME = wordpress
+
+# 기본 목표
+all: up
+
+# 호스트 볼륨 디렉토리 생성
+create-host-volumes:
+	mkdir -p $(MARIADB_VOLUME_DIR) $(WORDPRESS_VOLUME_DIR)
+
+# Docker Compose 서비스를 빌드하고 시작
+build-up: create-host-volumes
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) up -d --build
+
+# Docker Compose 개별 서비스를 빌드
+build-nginx:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) build $(NGINX_CONTAINER_NAME)
+
+build-mariadb:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) build $(MARIADB_CONTAINER_NAME)
+
+build-wordpress:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) build $(WORDPRESS_CONTAINER_NAME)
+
+# Docker Compose 서비스를 시작
+up:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) up -d
+
+# Docker Compose 개별 서비스를 시작
+start-nginx:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) up -d $(NGINX_CONTAINER_NAME)
+
+start-mariadb:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) up -d $(MARIADB_CONTAINER_NAME)
+
+start-wordpress:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) up -d $(WORDPRESS_CONTAINER_NAME)
+
+# Docker Compose 서비스를 중지
+down:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) down
+
+# Docker Compose 개별 서비스를 중지
+stop-nginx:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) stop $(NGINX_CONTAINER_NAME)
+
+stop-mariadb:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) stop $(MARIADB_CONTAINER_NAME)
+
+stop-wordpress:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) stop $(WORDPRESS_CONTAINER_NAME)
+
+# Docker Compose 개별 서비스 상태 확인
+status-nginx:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) ps $(NGINX_CONTAINER_NAME)
+
+status-mariadb:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) ps $(MARIADB_CONTAINER_NAME)
+
+status-wordpress:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) ps $(WORDPRESS_CONTAINER_NAME)
+
+# Docker Compose 개별 서비스 로그 출력
+logs-nginx:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) logs -f $(NGINX_CONTAINER_NAME)
+
+logs-mariadb:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) logs -f $(MARIADB_CONTAINER_NAME)
+
+logs-wordpress:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) logs -f $(WORDPRESS_CONTAINER_NAME)
+
+# Docker Compose 환경을 완전히 정리
+clean:
+	docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) down --volumes --remove-orphans
+
+# 호스트 볼륨 디렉토리 삭제
+clean-host:
+	sudo rm -rf $(MARIADB_VOLUME_DIR) $(WORDPRESS_VOLUME_DIR)
+
+# 전체 환경 정리
+reset: clean clean-host volume-clean prune
+
+# 컨테이너를 삭제하지 않고, 이미지 삭제
+prune:
+	docker image prune -a -f
+
+# 볼륨을 삭제
+volume-clean:
+	docker volume prune -f
+```
+
 # .env
 ```
 # mariadb
@@ -308,13 +414,13 @@ MYSQL_USER=sejkim2
 MYSQL_PASSWORD=111
 
 # wordpress_db
-WORDPRESS_DB_HOST=mariadb:3306
 WORDPRESS_DB_NAME=sejkim2_database
 WORDPRESS_DB_USER=sejkim2
 WORDPRESS_DB_PASSWORD=111
+WORDPRESS_DB_HOST=mariadb:3306
 
 # wordpress info
-WORDPRESS_URL=https://sejkim2.42.fr
+WORDPRESS_URL=sejkim2.42.fr
 WORDPRESS_TITLE=sejkim2_blog
 
 # admin info
@@ -327,6 +433,9 @@ WORDPRESS_USER=user1
 WORDPRESS_USER_EMAIL=user1@example.com
 WORDPRESS_USER_PASSWORD=333
 WORDPRESS_USER_ROLE=subscriber
+
+# certificates
+CERT_PATH=/etc/nginx/ssl
 ```
 
 # docker-compose.yml
@@ -338,10 +447,18 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
+      args:
+        CERT_PATH: ${CERT_PATH}
+        KEY_PATH: ${CERT_PATH}
+        WORDPRESS_URL: ${WORDPRESS_URL}
     image: nginx:1.0
     ports:
       - "443:443"
     container_name: nginx
+    depends_on:
+      - wordpress
+    env_file:
+      - .env
     volumes:
       - wordpress_data:/var/www/html/wordpress
     restart: always
@@ -463,7 +580,7 @@ CMD ["/bin/bash", "-c", "/usr/bin/mysqld_safe & /docker-entrypoint-initdb.d/db_s
 
 # nginx
 
-## nginx.conf
+## conf/nginx.conf
 ```
 user www-data;
 worker_processes auto;  # nginx가 사용하는 워커 프로세스의 수 정의 (auto : cpu 코어 수에 맞게 생성)
@@ -491,16 +608,14 @@ http {
     ##
     server {
         listen 443 ssl;
-        server_name sejkim2.42.fr;
+        server_name __WORDPRESS_URL__;
 
-        ssl_certificate /etc/nginx/ssl/server.crt;
-        ssl_certificate_key /etc/nginx/ssl/server.key;
+        ssl_certificate __CERT_PATH__/server.crt;
+        ssl_certificate_key __KEY_PATH__/server.key;
         ssl_ciphers HIGH:!aNULL:!MD5;
 
-        # root /usr/share/nginx/html;
         root /var/www/html/wordpress;
-        # index myindex.html;
-        index index.php index.html index.htm
+        index index.php index.html index.htm;
 
         # 기본 페이지 요청 처리
         location / {
@@ -527,43 +642,109 @@ http {
         location ~ /\.ht {
             deny all;
         }
+
+        location /bonus_page {
+            alias /var/www/html/static_site;
+            index index.html;
+
+            try_files $uri $uri/ =404;
+        }
     }
 }
 ```
 
-## tools (favicon.ico, myindex.html)
+## static_site
+
+# index.html
 ```
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Welcome to nginx!</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- 파비콘 링크 추가 -->
-    <style>
-        body {
-            width: 35em;
-            margin: 0 auto;
-            font-family: Tahoma, Verdana, Arial, sans-serif;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonus Page</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Welcome to nginx!</h1>
-    <p>If you see this page, the nginx web server is successfully installed and
-    working. Further configuration is required.</p>
-
-    <p>For online documentation and support please refer to
-    <a href="http://nginx.org/">nginx.org</a>.<br/>
-    Commercial support is available at
-    <a href="http://nginx.com/">nginx.com</a>.</p>
-
-    <p><em>Thank you for using nginx.</em></p>
+    <header>
+        <h1>Welcome to the Bonus Page</h1>
+    </header>
+    <main>
+        <p>This is a simple static page showcasing a bonus feature.</p>
+        <button id="clickMeButton">Click Me!</button>
+        <p>
+            Visit my GitHub profile: 
+            <a href="https://github.com/sejkim2" target="_blank" id="githubLink">GitHub Profile</a>
+        </p>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+# script.js
+```
+document.addEventListener('DOMContentLoaded', function () {
+    const button = document.getElementById('clickMeButton');
+    button.addEventListener('click', function () {
+        alert('Button clicked!');
+    });
+});
+```
+
+# style.css
+```
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
 ```
 
 ## Dockerfile
 ```
 FROM debian:11
+
+ARG CERT_PATH
+ARG KEY_PATH
+ARG WORDPRESS_URL
 
 # 설치 및 클린업
 RUN apt-get update && apt-get install -y \
@@ -577,18 +758,24 @@ RUN curl -Lo /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases
     chmod +x /usr/local/bin/dumb-init
 
 # 인증서와 키 파일을 포함시킬 디렉토리 생성
-RUN mkdir -p /etc/nginx/ssl
+RUN mkdir -p ${CERT_PATH}
 
-# SSL 인증서와 키 파일 복사
-COPY server.crt /etc/nginx/ssl/server.crt
-COPY server.key /etc/nginx/ssl/server.key
+# SSL 인증서와 키 생성
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout ${KEY_PATH}/server.key \
+    -out ${CERT_PATH}/server.crt \
+    -subj "/C=/ST=/L=/O=/OU=/CN="
 
-COPY tools/favicon.ico /usr/share/nginx/html/favicon/favicon.ico
-COPY tools/myindex.html /usr/share/nginx/html/myindex.html
+COPY static/favicon.ico /usr/share/nginx/html/favicon/favicon.ico
+COPY static_site /var/www/html/static_site
 
 # Nginx 설정 파일 복사
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
+# 설정 파일 내의 변수 설정
+RUN sed -i "s|__WORDPRESS_URL__|${WORDPRESS_URL}|g" /etc/nginx/nginx.conf \
+    && sed -i "s|__CERT_PATH__|${CERT_PATH}|g" /etc/nginx/nginx.conf \
+    && sed -i "s|__KEY_PATH__|${KEY_PATH}|g" /etc/nginx/nginx.conf
 # 443 포트 개방
 EXPOSE 443
 
@@ -601,7 +788,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 # wordpress
 
-## php-fpm.conf
+## conf/php-fpm.conf
 ```
 ; /etc/php/7.4/fpm/php-fpm.conf
 
@@ -609,106 +796,8 @@ CMD ["nginx", "-g", "daemon off;"]
 daemonize = no
 include=/etc/php/7.4/fpm/pool.d/*.conf
 ```
-## wp-config.php
-```
-<?php
-/**
-* The base configuration for WordPress
-*
-* The wp-config.php creation script uses this file during the installation.
-* You don't have to use the website, you can copy this file to "wp-config.php"
-* and fill in the values.
-*
-* This file contains the following configurations:
-*
-* * Database settings
-* * Secret keys
-* * Database table prefix
-* * ABSPATH
-*
-* @link https://developer.wordpress.org/advanced-administration/wordpress/wp-config/
-*
-* @package WordPress
-*/
-// ** Database settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define( 'DB_NAME', getenv('WORDPRESS_DB_NAME') );
-	
-/** Database username */
-define( 'DB_USER', getenv('WORDPRESS_DB_USER') );
-	
-/** Database password */
-define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') );
-	
-/** Database hostname */
-define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
-	
-/** Database charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8' );
-	
-/** The database collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '' );
-	
-/**#@+
-* Authentication unique keys and salts.
-*
-* Change these to different unique phrases! You can generate these using
-* the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}.
-*
-* You can change these at any point in time to invalidate all existing cookies.
-* This will force all users to have to log in again.
-*
-* @since 2.6.0
-*/
-define( 'AUTH_KEY',         'put your unique phrase here' );
-define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );
-define( 'LOGGED_IN_KEY',    'put your unique phrase here' );
-define( 'NONCE_KEY',        'put your unique phrase here' );
-define( 'AUTH_SALT',        'put your unique phrase here' );
-define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
-define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
-define( 'NONCE_SALT',       'put your unique phrase here' );
-	
-/**#@-*/
-	
-/**
-* WordPress database table prefix.
-*
-* You can have multiple installations in one database if you give each
-* a unique prefix. Only numbers, letters, and underscores please!
-*/
-$table_prefix = 'wp_';
-	
-/**
-* For developers: WordPress debugging mode.
-*
-* Change this to true to enable the display of notices during development.
-* It is strongly recommended that plugin and theme developers use WP_DEBUG
-* in their development environments.
-*
-* For information on other constants that can be used for debugging,
-* visit the documentation.
-*
-* @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
-*/
-define( 'WP_DEBUG', false );
-	
-/* Add any custom values between this line and the "stop editing" line. */
-	
-	
-	
-/* That's all, stop editing! Happy publishing. */
-	
-/** Absolute path to the WordPress directory. */
-if ( ! defined( 'ABSPATH' ) ) {
-        define( 'ABSPATH', __DIR__ . '/' );
-}
-	
-/** Sets up WordPress vars and included files. */
-require_once ABSPATH . 'wp-settings.php';
-```
 
-## www.conf
+## conf/www.conf
 ```
 ; /etc/php/7.4/fpm/pool.d/www.conf
 
@@ -727,7 +816,7 @@ pm.max_requests = 500
 chdir = /
 ```
 
-## tools
+## tools/wp_setup.sh
 ```
 #!/bin/bash
 
@@ -820,5 +909,4 @@ ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 
 # setup-wp.sh 스크립트를 실행한 후 PHP-FPM을 포그라운드 모드로 실행
 CMD ["/bin/sh", "-c", "/usr/local/bin/wp_setup.sh && php-fpm7.4 -F"]
-
 ```
