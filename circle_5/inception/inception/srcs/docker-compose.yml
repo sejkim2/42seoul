@@ -1,0 +1,78 @@
+version: '3.7'
+
+services:
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+      args:
+        CERT_PATH: ${CERT_PATH}
+        KEY_PATH: ${CERT_PATH}
+        WORDPRESS_URL: ${WORDPRESS_URL}
+    image: nginx:1.0
+    ports:
+      - "443:443"
+    container_name: nginx
+    depends_on:
+      - wordpress
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    restart: always
+    networks:
+      - 42_network
+  
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile  
+    image: mariadb:1.0 
+    expose:
+      - "3306"
+    env_file:
+      - .env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    container_name: mariadb
+    restart: always
+    networks:
+      - 42_network
+  
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    image: wordpress:1.0
+    depends_on:
+      - mariadb
+    expose:
+      - "9000"
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    container_name: wordpress
+    restart: always
+    networks:
+      - 42_network
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: 'bind'
+      device: /home/sejkim2/data/mariadb
+      o: 'bind'
+  
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: 'bind'
+      device: /home/sejkim2/data/wordpress
+      o: 'bind'
+
+networks:
+  42_network:
+    name: 42_network
+    driver: bridge
