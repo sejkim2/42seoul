@@ -2,7 +2,8 @@
 
 int main(int argc, char **argv)
 {
-    (void)argc;
-    ScalarConverter::convert(argv[1]);
-    
+    if (argc == 2)
+        ScalarConverter::convert(argv[1]);
+    else
+        std::cout << "not invalid argument";
 }

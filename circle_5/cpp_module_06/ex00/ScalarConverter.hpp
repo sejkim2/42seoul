@@ -2,31 +2,17 @@
 # define _SCALARCONVERTER_HPP__
 
 # include <iostream>
-
-enum Literal {
-    NON_LITERAL,
-    CHAR_LITERAL,
-    INT_LITERAL,
-    FLOAT_LITERAL,
-    MINUS_INFF_LITERAL,
-    PLIS_INFF_LITERAL,
-    NANF_LITERAL,
-    DOUBLE_LITERAL,
-    MINUS_INF_LITERAL,
-    PLUS_INF_LITERAL,
-    NAN_LITERAL
-};
+# include <sstream>
 
 struct convertStruct {
-    std::string charValue;
-    std::string intValue;
-    std::string floatValue;
-    std::string doubleValue;
+    std::string convertChar;
+    std::string convertInt;
+    std::string convertFloat;
+    std::string convertDouble;
 
     convertStruct(std::string charVal, std::string intVal, std::string floatVal, std::string doubleVal)
-        : charValue(charVal), intValue(intVal), floatValue(floatVal), doubleValue(doubleVal) {}
+        : convertChar(charVal), convertInt(intVal), convertFloat(floatVal), convertDouble(doubleVal) {}
 };
-
 
 class ScalarConverter
 {
@@ -40,6 +26,13 @@ class ScalarConverter
     private:
         ScalarConverter(void);
         static convertStruct handleNanInff(std::string literal);
+        static bool isNumber(std::string literal, size_t len);
+        static void printValue(convertStruct cs);
+        static bool handleChar(std::string literal, convertStruct& cs);
+        static bool handleInt(std::string literal, convertStruct& cs);
+        static bool handleFloat(std::string literal, convertStruct& cs);
+        static bool handleDouble(std::string literal, convertStruct& cs);
+        static bool isDecimal(std::string literal, size_t findptr, int& floatFlag);
 };
 
 #endif
