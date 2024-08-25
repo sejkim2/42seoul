@@ -54,17 +54,8 @@ bool ScalarConverter::isNumber(std::string literal, size_t len)
     return (true);
 }
 
-//nan : 부동소수점 체계에서 사용
-//지수부 비트가 모두 1, 가수부 비트는 최소 하나는 1
-//수학적으로 정의되지 않은 결과를 나타내기 위해 사용
-//자기 자신과의 비교가 항상 false
-
-//inf : 부동소수점 체계에서 사용
-//지수부 비트는 모두 1, 가수부 비트는 모두 0
-//매우 큰 수를 나타내기 위해 사용
-void ScalarConverter::convert(std::string literal)
+bool ScalarConverter::validateNanInf(std::string literal)
 {
-    convertStruct cs("", "", "", "");
     std::string keyword[8] = {"-inff", "+inff", "inff", "nanf", "-inf", "+inf", "inf", "nan"};
 
     //inf, nan
@@ -73,12 +64,34 @@ void ScalarConverter::convert(std::string literal)
         if (literal.compare(keyword[i]) == 0)
         {
             printValue(handleNanInff(literal));
-            return;
+            return (true);
         }
     }
+    return (false);
+}
+        
+//nan : 부동소수점 체계에서 사용
+//지수부 비트가 모두 1, 가수부 비트는 최소 하나는 1
+//수학적으로 정의되지 않은 결과를 나타내기 위해 사용
+//자기 자신과의 비교가 항상 false
 
+//inf : 부동소수점 체계에서 사용
+//지수부 비트는 모두 1, 가수부 비트는 모두 0
+//매우 큰 수를 나타내기 위해 사용
+void ScalarConverter::convert(std::string literal, int argc)
+{
+    convertStruct cs("", "", "", "");
+
+    if (argc != 2)
+    {
+        std::cout << "not invalid argument" << '\n';
+        return;
+    }
+    //inf, nan
+    if (validateNanInf(literal) == true)
+        return;
     // char
-    if (literal.length() == 1)
+    if (literal.length() == 1 && !(literal[0] >= '0' && literal[0] <= '9'))
         handleChar(literal, cs);
     else
     {
@@ -139,7 +152,7 @@ bool ScalarConverter::handleInt(std::string literal, convertStruct& cs)
 
     num = atoi(literal.c_str());
     if (num >= 32 && num <= 126)
-        cs.convertChar = std::string(1, static_cast<char>(num));
+        cs.convertChar = "'" + std::string(1, static_cast<char>(num)) + "'";
     else
         cs.convertChar = "Non displayable";
 
@@ -155,7 +168,7 @@ bool ScalarConverter::handleFloat(std::string literal, convertStruct &cs)
     float tmp = atof(literal.c_str());
 
     if (tmp >= 32 && tmp <= 126)
-        cs.convertChar = static_cast<char>(tmp);
+        cs.convertChar = "'" + std::string(1, static_cast<char>(tmp)) + "'";
     else
         cs.convertChar = "Non displayable";
 
@@ -172,7 +185,7 @@ bool ScalarConverter::handleDouble(std::string literal, convertStruct &cs)
     double tmp = strtod(literal.c_str(), &endptr);
 
     if (tmp >= 32 && tmp <= 126)
-        cs.convertChar = static_cast<char>(tmp);
+        cs.convertChar = "'" + std::string(1, static_cast<char>(tmp)) + "'";
     else
         cs.convertChar = "Non displayable";
 
@@ -188,7 +201,6 @@ bool ScalarConverter::isDecimal(std::string literal, size_t findptr, int& floatF
     // is number?
     if (isNumber(literal, findptr) == false)
         return (false);
-    // if (!std::isdigit(literal[findptr - 1]))
     if (literal[0] == '.') //.42
     {
         std::cout << "is not number 2 \n";

@@ -21,7 +21,7 @@ class ScalarConverter
         ScalarConverter(const ScalarConverter& copy);
         ScalarConverter& operator=(const ScalarConverter& obj);
 
-        static void convert(std::string literal);
+        static void convert(std::string literal, int argc);
     
     private:
         ScalarConverter(void);
@@ -33,6 +33,7 @@ class ScalarConverter
         static bool handleFloat(std::string literal, convertStruct& cs);
         static bool handleDouble(std::string literal, convertStruct& cs);
         static bool isDecimal(std::string literal, size_t findptr, int& floatFlag);
+        static bool validateNanInf(std::string literal);
 };
 
 #endif
