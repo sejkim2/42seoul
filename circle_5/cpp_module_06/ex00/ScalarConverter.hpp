@@ -3,8 +3,13 @@
 
 # include <iostream>
 # include <sstream>
+# include <limits>
 
 struct convertStruct {
+    char ch;
+    int n;
+    float f;
+    double d;
     std::string convertChar;
     std::string convertInt;
     std::string convertFloat;
@@ -21,7 +26,7 @@ class ScalarConverter
         ScalarConverter(const ScalarConverter& copy);
         ScalarConverter& operator=(const ScalarConverter& obj);
 
-        static void convert(std::string literal, int argc);
+        static void convert(std::string literal);
     
     private:
         ScalarConverter(void);
@@ -34,6 +39,10 @@ class ScalarConverter
         static bool handleDouble(std::string literal, convertStruct& cs);
         static bool isDecimal(std::string literal, size_t findptr, int& floatFlag);
         static bool validateNanInf(std::string literal);
+
+        static bool validateDoubleOverflow(std::string literal);
+        static bool setAllImpossible(convertStruct &cs);
+
 };
 
 #endif
