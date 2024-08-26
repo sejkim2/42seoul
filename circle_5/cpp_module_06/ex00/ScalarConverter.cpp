@@ -55,7 +55,6 @@ bool ScalarConverter::validateNanInf(std::string literal)
 {
     std::string keyword[8] = {"-inff", "+inff", "inff", "nanf", "-inf", "+inf", "inf", "nan"};
 
-    //inf, nan
     for(int i = 0; i<8; i++)
     {
         if (literal.compare(keyword[i]) == 0)
@@ -150,10 +149,12 @@ bool ScalarConverter::handleInt(std::string literal, convertStruct& cs)
     cs.n = static_cast<int>(cs.d);
     cs.ch = static_cast<char>(cs.d);
 
-    if (cs.d >= 32 && cs.d <= 126)
+    if ((cs.d >= 0 && cs.d <= 31) || cs.d == 127)
+        cs.convertChar = "Non displayable";
+    else if (cs.d >= 32 && cs.d <= 126)
         cs.convertChar = "'" + std::string(1, cs.ch) + "'";
     else
-        cs.convertChar = "Non displayable";
+        cs.convertChar = "impossible";
 
     if (cs.d > std::numeric_limits<int>::max() || cs.d < std::numeric_limits<int>::lowest())
         cs.convertInt = "impossible";
@@ -179,10 +180,12 @@ bool ScalarConverter::handleFloat(std::string literal, convertStruct &cs)
     cs.n = static_cast<int>(cs.d);
     cs.ch = static_cast<char>(cs.d);
 
-    if (cs.d >= 32 && cs.d <= 126)
+    if ((cs.d >= 0 && cs.d <= 31) || cs.d == 127)
+        cs.convertChar = "Non displayable";
+    else if (cs.d >= 32 && cs.d <= 126)
         cs.convertChar = "'" + std::string(1, cs.ch) + "'";
     else
-        cs.convertChar = "Non displayable";
+        cs.convertChar = "impossible";
 
     if (cs.d > std::numeric_limits<int>::max() || cs.d < std::numeric_limits<int>::lowest())
         cs.convertInt = "impossible";
@@ -195,6 +198,8 @@ bool ScalarConverter::handleFloat(std::string literal, convertStruct &cs)
         cs.convertFloat = literal;    //diff
 
     cs.convertDouble = literal.substr(0, literal.find("f"));    //diff
+    if (cs.convertDouble[(cs.convertDouble).length() - 1] == '.')
+        cs.convertDouble.append("0");
     return (true);
 }
 
@@ -208,10 +213,12 @@ bool ScalarConverter::handleDouble(std::string literal, convertStruct &cs)
     cs.n = static_cast<int>(cs.d);
     cs.ch = static_cast<char>(cs.d);
 
-    if (cs.d >= 32 && cs.d <= 126)
+    if ((cs.d >= 0 && cs.d <= 31) || cs.d == 127)
+        cs.convertChar = "Non displayable";
+    else if (cs.d >= 32 && cs.d <= 126)
         cs.convertChar = "'" + std::string(1, cs.ch) + "'";
     else
-        cs.convertChar = "Non displayable";
+        cs.convertChar = "impossible";
 
     if (cs.d > std::numeric_limits<int>::max() || cs.d < std::numeric_limits<int>::lowest())
         cs.convertInt = "impossible";
@@ -235,8 +242,8 @@ bool ScalarConverter::isDecimal(std::string literal, size_t findptr, int& floatF
         return (false);
     if (findptr + 1 == literal.length()) // 42.
         return (false);
-    if (literal[findptr + 1] == 'f') // 42.f
-        return (false);
+    // if (literal[findptr + 1] == 'f') // 42.f
+    //     return (false);
     for (size_t i = findptr + 1; i < literal.length(); i++)
     {
         if (!std::isdigit(literal[i]))
