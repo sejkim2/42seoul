@@ -3,12 +3,12 @@
 Bureaucrat::Bureaucrat(void)
 : name("default bureaucrat"), grade(LOWEST_GRADE)
 {
-    std::cout << "Bureaucrat Default Constructor Called" << '\n';
+    // std::cout << "Bureaucrat Default Constructor Called" << '\n';
 }
 
 Bureaucrat::~Bureaucrat(void)
 {
-    std::cout << "Bureaucrat Default Destructor Called" << '\n';
+    // std::cout << "Bureaucrat Default Destructor Called" << '\n';
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& bureaucrat)

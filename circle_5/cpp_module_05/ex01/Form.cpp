@@ -4,12 +4,12 @@
 Form::Form(void)
 : name("default form"), isSigned(false), signGrade(LOWEST_GRADE), executeGrade(LOWEST_GRADE)
 {
-    std::cout << "Form Default Constructor Called" << '\n';
+    // std::cout << "Form Default Constructor Called" << '\n';
 }
 
 Form::~Form(void)
 {
-    std::cout << "Form Default Destructor Called" << '\n';
+    // std::cout << "Form Default Destructor Called" << '\n';
 }
 
 Form::Form(const Form& form)

@@ -36,8 +36,27 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string target)
 
 void ShrubberyCreationForm::executeAction(void) const
 {
-    std::ofstream filename(this->getTarget() + "_shrubbery");
-    // write AsciiTree
+    std::ofstream outfile(this->getTarget() + "_shrubbery");
+
+    const std::string tree = 
+        "        /\\\n"
+        "       /  \\\n"
+        "      /____\\\n"
+        "     /\\    /\\\n"
+        "    /  \\  /  \\\n"
+        "   /____\\/____\\\n"
+        "       ||\n"
+        "       ||\n"
+        "       ||\n";
+    
+    
+    if (outfile.is_open()) {
+        outfile << tree;
+        outfile.close();
+        std::cout << "Shrubbery created successfully in " << target << "_shrubbery" << std::endl;
+    } else {
+        std::cerr << "Failed to create the file" << std::endl;
+    }
 }
 
 std::string ShrubberyCreationForm::getTarget(void) const
