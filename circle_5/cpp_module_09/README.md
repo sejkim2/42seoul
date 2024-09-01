@@ -10,21 +10,21 @@ Once a container is used you cannot use it for the rest of the module
 
 * It is advisable to read the subject in its entirety before doing the
 exercises.
-  >
+  > 연습 문제를 하기 전에 주제를 전체적으로 읽는 것이 바람직합니다.
 
 * You must use at least one container for each exercise with the
 exception of exercise 02 which requires the use of two containers.
-  >
+  > 각 연습 문제마다 적어도 하나의 STL 컨테이너를 사용해야 하며, 단, 연습 문제 02는 두 개의 STL 컨테이너를 사용해야 합니다
 
 You must submit a Makefile for each program which will compile your source files
 to the required output with the flags -Wall, -Wextra and -Werror.
->
+> 각 프로그램에 대해 소스 파일을 컴파일하여 요구된 출력 결과를 생성하는 Makefile을 제출해야 하며, 컴파일할 때는 -Wall, -Wextra 및 -Werror 플래그를 사용해야 합니다.
 
 You must use c++, and your Makefile must not relink.
->
+> C++를 사용해야 하며, Makefile은 재링크를 하지 않아야 합니다.
 
 Your Makefile must at least contain the rules $(NAME), all, clean, fclean and re.
->
+> Makefile에는 최소한 $(NAME), all, clean, fclean, re 규칙이 포함되어야 합니다.
 
 # ex00 : Bitcoin Exchange
 
@@ -34,41 +34,41 @@ Your Makefile must at least contain the rules $(NAME), all, clean, fclean and re
 
 You have to create a program which outputs the value of a certain amount of bitcoin
 on a certain date.
->
+> 특정 날짜에 특정 양의 비트코인 가치가 출력되는 프로그램을 만들어야 합니다.
 
 This program must use a database in csv format which will represent bitcoin price
 over time. This database is provided with this subject.
->
+> 이 프로그램은 시간에 따른 비트코인 가격을 나타내는 CSV 형식의 데이터베이스를 사용해야 하며, 이 데이터베이스는 주어진 주제와 함께 제공됩니다.
 
 The program will take as input a second database, storing the different prices/dates
 to evaluate.
->
+> 프로그램은 평가할 다양한 가격/날짜를 저장하는 두 번째 데이터베이스를 입력으로 받습니다.
 
 Your program must respect these rules:
->
+> 프로그램은 다음 규칙을 준수해야 합니다:
 
 * The program name is btc.
-  >
+  > 프로그램 이름은 `btc`입니다.
 
 * Your program must take a file as argument.
-  >
+  > 프로그램은 파일을 인수로 받아야 합니다.
 
 * Each line in this file must use the following format: "date | value".
-  >
+  > 이 파일의 각 줄은 다음 형식을 사용해야 합니다: "날짜 | 값".
 
 * A valid date will always be in the following format: Year-Month-Day.
-  >
+  > 유효한 날짜는 항상 다음 형식이어야 합니다: 연도-월-일.
 
 * A valid value must be either a float or a positive integer, between 0 and 1000.
-  >
+  > 유효한 값은 0과 1000 사이의 양수 정수이거나 실수여야 합니다.
 
 * You must use at least one container in your code to validate this
 exercise. You should handle possible errors with an appropriate
 error message.
-  >
+  > 코드에서 이 연습 문제를 검증하기 위해 최소한 하나의 컨테이너를 사용해야 합니다. 가능한 오류는 적절한 오류 메시지로 처리해야 합니다.
 
 Here is an example of an input.txt file:
->
+> 다음은 `input.txt` 파일의 예입니다:
 
 ```
 $> head input.txt
@@ -86,19 +86,19 @@ $>
 ```
 
 Your program will use the value in your input file.
->
+> 프로그램은 입력 파일의 값을 사용할 것입니다.
 
 Your program should display on the standard output the result of the value multiplied
 by the exchange rate according to the date indicated in your database.
->
+> 프로그램은 데이터베이스에 명시된 날짜에 따른 환율로 값이 곱해진 결과를 표준 출력에 표시해야 합니다.
 
 * If the date used in the input does not exist in your DB then you
 must use the closest date contained in your DB. Be careful to use the
 lower date and not the upper one.
-  >
+  > 입력에 사용된 날짜가 데이터베이스에 존재하지 않으면, 데이터베이스에 포함된 가장 가까운 날짜를 사용해야 합니다. 이때 상한 날짜가 아닌 하한 날짜를 사용해야 합니다.
 
 The following is an example of the program’s use.
->
+> 다음은 프로그램 사용의 예입니다:
 
 ```
 $> ./btc
@@ -118,7 +118,7 @@ $>
 
 * Warning: The container(s) you use to validate this exercise will no
 longer be usable for the rest of this module.
-  >
+  > 경고: 이 연습 문제를 검증하는 데 사용하는 컨테이너는 이 모듈의 나머지 부분에서는 사용할 수 없습니다.
 
 # ex01 : Reverse Polish Notation
 
@@ -127,38 +127,38 @@ longer be usable for the rest of this module.
 * Forbidden functions : None
 
 You must create a program with these constraints:
->
+> 다음 제약 조건을 가진 프로그램을 만들어야 합니다:
 
 * The program name is RPN.
-  >
+  > 프로그램 이름은 `RPN`입니다.
 
 * Your program must take an inverted Polish mathematical expression as an argument.
-  >
+  > 프로그램은 역폴란드 수식(중위 표기법의 반대)을 인수로 받아야 합니다.
 
 * The numbers used in this operation and passed as arguments will always be less
 than 10. The calculation itself but also the result do not take into account this rule.
-  >
+  > 이 연산에 사용되는 숫자와 인수로 전달되는 숫자는 항상 10보다 작습니다. 그러나 계산 자체와 결과는 이 규칙을 따르지 않습니다.
 
 * Your program must process this expression and output the correct result on the
 standard output.
-  >
+  > 프로그램은 이 수식을 처리하고 표준 출력에 올바른 결과를 출력해야 합니다.
 
 * If an error occurs during the execution of the program an error message should be
 displayed on the standard output.
-  >
+  > 프로그램 실행 중 오류가 발생하면, 표준 출력에 오류 메시지를 표시해야 합니다.
 
 * Your program must be able to handle operations with these tokens: "+ - / *".
-  >
+  > 프로그램은 다음 연산자 토큰을 처리할 수 있어야 합니다: "+ - / *".
 
 * You must use at least one container in your code to validate this
 exercise.
-  >
+  > 코드에서 이 연습 문제를 검증하기 위해 최소한 하나의 컨테이너를 사용해야 합니다.
 
 * You don’t need to manage the brackets or decimal numbers.
-  >
+  > 괄호나 소수점 숫자는 처리할 필요가 없습니다.
 
 Here is an example of a standard use:
->
+> 다음은 표준 사용의 예입니다:
 
 ```
 $> ./RPN "8 9 * 9 - 9 - 9 - 4 - 1 +"
@@ -175,7 +175,7 @@ $>
 * Warning: The container(s) you used in the previous exercise are
 forbidden here. The container(s) you used to validate this exercise
 will not be usable for the rest of this module.
-  >
+  > 경고: 이전 연습 문제에서 사용한 컨테이너는 여기에서 사용할 수 없습니다. 이 연습 문제를 검증하는 데 사용한 컨테이너는 이 모듈의 나머지 부분에서 사용할 수 없습니다.
 
 # ex02 : PmergeMe
 
