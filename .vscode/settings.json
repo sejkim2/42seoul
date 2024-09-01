@@ -72,6 +72,8 @@
         "charconv": "cpp",
         "clocale": "cpp",
         "execution": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "__tree": "cpp",
+        "set": "cpp"
     }
 }
