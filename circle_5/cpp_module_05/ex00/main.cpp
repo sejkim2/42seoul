@@ -3,6 +3,7 @@
 int main(void)
 {
     {
+        std::cout << "_____________________test 1_____________________" << '\n';
         try
         {
             Bureaucrat b1;
@@ -21,6 +22,7 @@ int main(void)
     }
 
     {
+        std::cout << "_____________________test 2_____________________" << '\n';
         try {
             Bureaucrat b1("name1", 1);
             b1.increaseGrade();
@@ -28,5 +30,14 @@ int main(void)
             std::cout << e.what();
         }
         std::cout << "\nfinish2\n";
+    }
+
+    {
+        try {
+            Bureaucrat b1("name2", -1);
+        } catch(std::exception& e) {
+            std::cout << e.what();
+        }
+        std::cout << "\nfinish3\n";
     }
 }
