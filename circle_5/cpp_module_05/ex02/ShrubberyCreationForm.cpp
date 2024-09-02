@@ -36,7 +36,8 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string target)
 
 void ShrubberyCreationForm::executeAction(void) const
 {
-    std::ofstream outfile(this->getTarget() + "_shrubbery");
+    std::string filename = getTarget() + "_shrubbery";
+    std::ofstream outfile(filename.c_str());
 
     const std::string tree = 
         "        /\\\n"
