@@ -215,3 +215,7 @@ rrf = someRandomIntern.makeForm("robotomy request", "Bender");
 
 
 
+# ex00
+관료의 등급 설정할 때 1 ~ 150 의 정수가 아니면 예외 처리
+# ex01
+form이 추가됨, 
