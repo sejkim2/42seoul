@@ -20,13 +20,12 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& bureaucrat)
 {
     if (&bureaucrat != this)
     {
-        this->name = bureaucrat.getName();
-        this->grade = bureaucrat.getGrade();
     }
     return (*this);
 }
 
-Bureaucrat::Bureaucrat(std::string name, int grade)
+Bureaucrat::Bureaucrat(const std::string& name, int grade)
+: name(name)
 {
     if (grade > LOWEST_GRADE)
         throw Bureaucrat::GradeTooLowException();
@@ -34,11 +33,9 @@ Bureaucrat::Bureaucrat(std::string name, int grade)
         throw Bureaucrat::GradeTooHighException();
     else
         this->grade = grade;
-
-    this->name = name;
 }
 
-std::string Bureaucrat::getName(void) const
+const std::string& Bureaucrat::getName(void) const
 {
     return (this->name);
 }

@@ -24,7 +24,7 @@ int main(void)
     {
         std::cout << "_____________________test 2_____________________" << '\n';
         try {
-            Bureaucrat b1("name1", 1);
+            Bureaucrat b1("name2", 1);
             b1.increaseGrade();
         } catch(std::exception& e) {
             std::cout << e.what();
@@ -33,8 +33,10 @@ int main(void)
     }
 
     {
+        std::cout << "_____________________test 3_____________________" << '\n';
         try {
-            Bureaucrat b1("name2", -1);
+            Bureaucrat b1("name3", 1);
+            std::cout << b1;
         } catch(std::exception& e) {
             std::cout << e.what();
         }

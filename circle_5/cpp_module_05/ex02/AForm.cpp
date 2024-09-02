@@ -13,6 +13,7 @@ AForm::~AForm(void)
 }
 
 AForm::AForm(const AForm& aForm)
+: name(aForm.getName()), isSigned(aForm.getIsSigned()), requiredSignGrade(aForm.getRequiredSignGrade()), requiredExecuteGrade(aForm.getRequiredExecuteGrade())
 {
     *this = aForm;
 }
@@ -21,15 +22,12 @@ AForm& AForm::operator=(const AForm& aForm)
 {
     if (&aForm != this)
     {
-        this->name = aForm.getName();
-        this->isSigned = aForm.getIsSigned();
-        this->requiredSignGrade = aForm.getRequiredSignGrade();
-        this->requiredExecuteGrade = aForm.getRequiredExecuteGrade();
     }
     return (*this);
 }
 
-AForm::AForm(std::string name, int requiredSignGrade, int requiredExecuteGrade)
+AForm::AForm(const std::string& name, int requiredSignGrade, int requiredExecuteGrade)
+: name(name), requiredSignGrade(requiredSignGrade), requiredExecuteGrade(requiredExecuteGrade)
 {
     if (requiredSignGrade > LOWEST_GRADE)
         throw AForm::GradeTooLowException();
@@ -40,13 +38,11 @@ AForm::AForm(std::string name, int requiredSignGrade, int requiredExecuteGrade)
         throw AForm::GradeTooLowException();
     else if (requiredExecuteGrade < HIGHEST_GRADE)
         throw AForm::GradeTooHighException();
-    
-    this->name = name;
-    this->requiredSignGrade = requiredSignGrade;
-    this->requiredExecuteGrade = requiredExecuteGrade;
+
+    this->isSigned = false;    
 }
 
-std::string AForm::getName() const
+const std::string& AForm::getName() const
 {
     return (this->name);
 }
@@ -74,16 +70,6 @@ void AForm::beSigned(const Bureaucrat& bureaucrat)
         throw AForm::GradeTooLowException();
 }
 
-void AForm::execute(Bureaucrat const & executor) const
-{
-    if (this->getIsSigned() == false)
-        throw AForm::FormNotSignedException();
-    if (executor.getGrade() > this->getRequiredSignGrade())
-        throw Bureaucrat::GradeTooLowException();
-    
-    executeAction();
-}
-
 const char* AForm::GradeTooHighException::what() const throw()
 {
     return "Form Grade Too High";
@@ -99,9 +85,17 @@ const char* AForm::FormNotSignedException::what() const throw()
     return "Form Not Signed";
 }
 
+void AForm::checkExecutable(Bureaucrat const & executor) const
+{
+    if (this->getIsSigned() == false)
+        throw AForm::FormNotSignedException();
+    if (executor.getGrade() > this->getRequiredExecuteGrade())
+        throw Bureaucrat::GradeTooLowException();
+}
+
 std::ostream& operator<<(std::ostream& out, const AForm& aForm)
 {
-    std::string isSigned = aForm.getIsSigned() ? "signed" : "no signed";
+    const std::string& isSigned = aForm.getIsSigned() ? "signed" : "no signed";
     
     out << aForm.getName() << "," << "isSigned :  " << isSigned;
     out << " ,requiredSignGrade : " << aForm.getRequiredSignGrade();

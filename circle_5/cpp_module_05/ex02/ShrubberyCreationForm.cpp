@@ -14,7 +14,6 @@ ShrubberyCreationForm::~ShrubberyCreationForm(void)
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& shrubberyCreationForm)
-: AForm(shrubberyCreationForm)
 {
     *this = shrubberyCreationForm;
 }
@@ -23,8 +22,6 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationF
 {
     if (&shrubberyCreationForm != this)
     {
-        AForm::operator=(shrubberyCreationForm);
-        this->target = shrubberyCreationForm.getTarget();
     }
     return (*this);
 }
@@ -34,8 +31,10 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string target)
 {
 }
 
-void ShrubberyCreationForm::executeAction(void) const
+void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
 {
+    AForm::checkExecutable(executor);
+    
     std::string filename = getTarget() + "_shrubbery";
     std::ofstream outfile(filename.c_str());
 
@@ -60,7 +59,7 @@ void ShrubberyCreationForm::executeAction(void) const
     }
 }
 
-std::string ShrubberyCreationForm::getTarget(void) const
+const std::string& ShrubberyCreationForm::getTarget(void) const
 {
     return (this->target);
 }

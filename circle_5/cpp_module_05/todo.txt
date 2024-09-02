@@ -1,0 +1,8 @@
+private const화
+ex02 execute 비교
+bool 처음 멤버 변수에 초기화
+const string&
+srand() 무한루프 문제
+execute virtual
+
+ex03

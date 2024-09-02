@@ -5,6 +5,7 @@
 RobotomyRequestForm::RobotomyRequestForm(void)
 : AForm("default robotomyRequestForm", 72, 45), target("Nontarget")
 {
+    std::srand(std::time(0));
     // std::cout << "RobotomyRequestForm Default Constructor Called" << '\n';
 }
 
@@ -14,7 +15,6 @@ RobotomyRequestForm::~RobotomyRequestForm(void)
 }
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& robotomyRequestForm)
-: AForm(robotomyRequestForm)
 {
     *this = robotomyRequestForm;
 }
@@ -23,8 +23,6 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& r
 {
     if (&robotomyRequestForm != this)
     {
-        AForm::operator=(robotomyRequestForm);
-        this->target = robotomyRequestForm.getTarget();
     }
     return (*this);
 }
@@ -32,12 +30,13 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& r
 RobotomyRequestForm::RobotomyRequestForm(std::string target)
 : AForm(target + "Form", 72, 45), target(target)
 {
+    std::srand(std::time(0));
 }
 
-void RobotomyRequestForm::executeAction(void) const
+void RobotomyRequestForm::execute(Bureaucrat const & executor) const
 {
-    std::srand(std::time(0));
-
+    AForm::checkExecutable(executor);
+    
     if (std::rand() % 2 == 0)
         std::cout << this->getTarget() << " has been robotomized successful";
     else
@@ -45,7 +44,7 @@ void RobotomyRequestForm::executeAction(void) const
     std::cout << '\n';
 }
 
-std::string RobotomyRequestForm::getTarget(void) const
+const std::string& RobotomyRequestForm::getTarget(void) const
 {
     return (this->target);
 }

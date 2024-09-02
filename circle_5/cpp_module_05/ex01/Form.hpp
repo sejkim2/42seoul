@@ -12,14 +12,12 @@ class Form
     public:
         Form(void);
         ~Form(void);
-        Form(const Form& form);
-        Form& operator=(const Form& form);
 
-        Form(std::string name, int requiredSignGrade, int requiredExecuteGrade);
+        Form(const std::string& name, int requiredSignGrade, int requiredExecuteGrade);
 
-        std::string getName() const;
+        const std::string& getName() const;
         bool getIsSigned() const;
-        int getReauiredSignGrade() const;
+        int getRequiredSignGrade() const;
         int getRequiredExecuteGrade() const;
 
         void beSigned(const Bureaucrat& bureaucrat);
@@ -37,10 +35,12 @@ class Form
         };
 
     private:
-        std::string name;
+        Form(const Form& form);
+        Form& operator=(const Form& form);
+        const std::string name;
         bool isSigned;
-        int requiredSignGrade;
-        int requiredExecuteGrade;
+        const int requiredSignGrade;
+        const int requiredExecuteGrade;
 };
 
 std::ostream& operator<<(std::ostream& out, const Form& form);

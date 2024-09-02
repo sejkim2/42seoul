@@ -13,6 +13,7 @@ Form::~Form(void)
 }
 
 Form::Form(const Form& form)
+: name(form.getName()), isSigned(form.getIsSigned()), requiredSignGrade(form.getRequiredSignGrade()), requiredExecuteGrade(form.getRequiredExecuteGrade())
 {
     *this = form;
 }
@@ -21,15 +22,12 @@ Form& Form::operator=(const Form& form)
 {
     if (&form != this)
     {
-        this->name = form.getName();
-        this->isSigned = form.getIsSigned();
-        this->requiredSignGrade = form.getReauiredSignGrade();
-        this->requiredExecuteGrade = form.getRequiredExecuteGrade();
     }
     return (*this);
 }
 
-Form::Form(std::string name, int requiredSignGrade, int requiredExecuteGrade)
+Form::Form(const std::string& name, int requiredSignGrade, int requiredExecuteGrade)
+: name(name), requiredSignGrade(requiredSignGrade), requiredExecuteGrade(requiredExecuteGrade)
 {
     if (requiredSignGrade > LOWEST_GRADE)
         throw Form::GradeTooLowException();
@@ -41,13 +39,11 @@ Form::Form(std::string name, int requiredSignGrade, int requiredExecuteGrade)
     else if (requiredExecuteGrade < HIGHEST_GRADE)
         throw Form::GradeTooHighException();
     
-    this->name = name;
-    this->requiredSignGrade = requiredSignGrade;
-    this->requiredExecuteGrade = requiredExecuteGrade;
+    this->isSigned = false;
 }
 
 
-std::string Form::getName() const
+const std::string& Form::getName() const
 {
     return (this->name);
 }
@@ -57,7 +53,7 @@ bool Form::getIsSigned() const
     return (this->isSigned);
 }
 
-int Form::getReauiredSignGrade() const
+int Form::getRequiredSignGrade() const
 {
     return (this->requiredSignGrade);
 }
@@ -69,7 +65,7 @@ int Form::getRequiredExecuteGrade() const
 
 void Form::beSigned(const Bureaucrat& bureaucrat)
 {
-    if (bureaucrat.getGrade() <= this->getReauiredSignGrade())
+    if (bureaucrat.getGrade() <= this->getRequiredSignGrade())
         this->isSigned = true;
     else
         throw Form::GradeTooLowException();
@@ -87,10 +83,10 @@ const char* Form::GradeTooLowException::what() const throw()
 
 std::ostream& operator<<(std::ostream& out, const Form& form)
 {
-    std::string isSigned = form.getIsSigned() ? "signed" : "no signed";
+    const std::string& isSigned = form.getIsSigned() ? "signed" : "no signed";
     
     out << form.getName() << "," << "isSigned :  " << isSigned;
-    out << " ,requiredSignGrade : " << form.getReauiredSignGrade();
+    out << " ,requiredSignGrade : " << form.getRequiredSignGrade();
     out << " ,requiredExecuteGrade : " << form.getRequiredExecuteGrade() << '\n';
     return (out);
 }
