@@ -13,7 +13,7 @@ class ShrubberyCreationForm: public AForm
         ShrubberyCreationForm& operator=(const ShrubberyCreationForm& shrubberyCreationForm);
 
         ShrubberyCreationForm(std::string target);
-        virtual void executeAction(void) const = 0;
+        virtual void executeAction(void) const;
 
         std::string getTarget(void) const;
     private:

@@ -1,10 +1,13 @@
 NAME = ex02
 CC = c++
-HEADER = Bureaucrat.hpp AForm.hpp
+HEADER = Bureaucrat.hpp AForm.hpp PresidentialPardonForm.hpp RobotomyRequestForm.hpp ShrubberyCreationForm.hpp
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRC = Bureaucrat.cpp \
 	AForm.cpp \
+	PresidentialPardonForm.cpp \
+	RobotomyRequestForm.cpp \
+	ShrubberyCreationForm.cpp \
 	main.cpp
 
 OBJ = $(SRC:.cpp=.o)

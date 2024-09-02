@@ -5,12 +5,12 @@
 RobotomyRequestForm::RobotomyRequestForm(void)
 : AForm("default robotomyRequestForm", 72, 45), target("Nontarget")
 {
-    std::cout << "RobotomyRequestForm Default Constructor Called" << '\n';
+    // std::cout << "RobotomyRequestForm Default Constructor Called" << '\n';
 }
 
 RobotomyRequestForm::~RobotomyRequestForm(void)
 {
-    std::cout << "RobotomyRequestForm Default Destructor Called" << '\n';
+    // std::cout << "RobotomyRequestForm Default Destructor Called" << '\n';
 }
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& robotomyRequestForm)
@@ -30,7 +30,7 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& r
 }
 
 RobotomyRequestForm::RobotomyRequestForm(std::string target)
-: AForm(), target(target)
+: AForm(target + "Form", 72, 45), target(target)
 {
 }
 
@@ -52,6 +52,7 @@ std::string RobotomyRequestForm::getTarget(void) const
 
 std::ostream& operator<<(std::ostream& out, const RobotomyRequestForm& robotomyRequestForm)
 {
-    std::cout << robotomyRequestForm;
+    out << static_cast<const AForm&>(robotomyRequestForm);
+    out << "target: " << robotomyRequestForm.getTarget() << '\n';
     return (out);
 }

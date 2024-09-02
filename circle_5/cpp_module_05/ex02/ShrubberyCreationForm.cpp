@@ -5,12 +5,12 @@
 ShrubberyCreationForm::ShrubberyCreationForm(void)
 : AForm("default shrubberyCreationForm", 145, 137), target("Nontarget")
 {
-    std::cout << "ShrubberyCreationForm Default Constructor Called" << '\n';
+    // std::cout << "ShrubberyCreationForm Default Constructor Called" << '\n';
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm(void)
 {
-    std::cout << "ShrubberyCreationForm Default Destructor Called" << '\n';
+    // std::cout << "ShrubberyCreationForm Default Destructor Called" << '\n';
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& shrubberyCreationForm)
@@ -30,7 +30,7 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationF
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target)
-: AForm(), target(target)
+: AForm(target + "Form", 145, 137), target(target)
 {
 }
 
@@ -53,9 +53,9 @@ void ShrubberyCreationForm::executeAction(void) const
     if (outfile.is_open()) {
         outfile << tree;
         outfile.close();
-        std::cout << "Shrubbery created successfully in " << target << "_shrubbery" << std::endl;
+        std::cout << "Shrubbery created successfully in " << target << "_shrubbery" << '\n';
     } else {
-        std::cerr << "Failed to create the file" << std::endl;
+        std::cout << "Failed to create the file" << '\n';
     }
 }
 
@@ -66,6 +66,7 @@ std::string ShrubberyCreationForm::getTarget(void) const
 
 std::ostream& operator<<(std::ostream& out, const ShrubberyCreationForm& shrubberyCreationForm)
 {
-    std::cout << shrubberyCreationForm;
+    out << static_cast<const AForm&>(shrubberyCreationForm);
+    out << "target: " << shrubberyCreationForm.getTarget() << '\n';
     return (out);
 }

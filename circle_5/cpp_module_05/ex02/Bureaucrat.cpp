@@ -4,12 +4,12 @@
 Bureaucrat::Bureaucrat(void)
 : name("default name"), grade(LOWEST_GRADE)
 {
-    std::cout << "Bureaucrat Default Constructor Called" << '\n';
+    // std::cout << "Bureaucrat Default Constructor Called" << '\n';
 }
 
 Bureaucrat::~Bureaucrat(void)
 {
-    std::cout << "Bureaucrat Default Destructor Called" << '\n';
+    // std::cout << "Bureaucrat Default Destructor Called" << '\n';
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& bureaucrat)
@@ -69,10 +69,9 @@ void Bureaucrat::signForm(AForm& aForm)
         aForm.beSigned(*this);
         std::cout << this->name << " signed " << aForm.getName();
     }
-    catch (Bureaucrat::GradeTooLowException& e) {
+    catch (AForm::GradeTooLowException& e) {
         std::cout << this->name << " couldn't sign " << aForm.getName() << " because " << e.what();
     }
-    //finally
     std::cout << '\n';
 }
 
@@ -80,23 +79,23 @@ void Bureaucrat::executeForm(AForm const & form) const
 {
     try {
         form.execute(*this);
-        std::cout << this->getName() << " executed " << form.getName();
+        std::cout << this->getName() << " executed " << form.getName() << '\n';
     } catch (AForm::FormNotSignedException &e) {
-        e.what();
+        std::cout << e.what();
     } catch (Bureaucrat::GradeTooLowException &e) {
-        e.what();
+        std::cout << e.what();
     }
     std::cout << '\n';
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
-    return "Grade Too High";
+    return "Bureaucrat Grade Too High";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
-    return "Grade Too Low";
+    return "Bureaucrat Grade Too Low";
 }
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& bureaucrat)

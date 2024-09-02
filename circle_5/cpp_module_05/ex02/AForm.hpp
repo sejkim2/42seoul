@@ -15,12 +15,12 @@ class AForm
         AForm(const AForm& aForm);
         AForm& operator=(const AForm& aForm);
 
-        AForm(std::string name, int signGrade, int executeGrade);
+        AForm(std::string name, int requiredSignGrade, int requiredExecuteGrade);
 
         std::string getName() const;
         bool getIsSigned() const;
-        int getSignGrade() const;
-        int getExecuteGrade() const;
+        int getRequiredSignGrade() const;
+        int getRequiredExecuteGrade() const;
 
         void beSigned(const Bureaucrat& bureaucrat);
 
@@ -48,8 +48,8 @@ class AForm
     private:
         std::string name;
         bool isSigned;
-        int signGrade;
-        int executeGrade;
+        int requiredSignGrade;
+        int requiredExecuteGrade;
 };
 
 std::ostream& operator<<(std::ostream& out, const AForm& aForm);

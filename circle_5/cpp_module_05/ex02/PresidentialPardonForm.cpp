@@ -5,12 +5,12 @@
 PresidentialPardonForm::PresidentialPardonForm(void)
 : AForm("default presidentialPardonForm", 25, 5), target("Nontarget")
 {
-    std::cout << "presidentialPardonForm Default Constructor Called" << '\n';
+    // std::cout << "presidentialPardonForm Default Constructor Called" << '\n';
 }
 
 PresidentialPardonForm::~PresidentialPardonForm(void)
 {
-    std::cout << "presidentialPardonForm Default Destructor Called" << '\n';
+    // std::cout << "presidentialPardonForm Default Destructor Called" << '\n';
 }
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& presidentialPardonForm)
@@ -30,7 +30,7 @@ PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPard
 }
 
 PresidentialPardonForm::PresidentialPardonForm(std::string target)
-: AForm(), target(target)
+: AForm(target + "Form", 25, 5), target(target)
 {
 }
 
@@ -46,6 +46,7 @@ std::string PresidentialPardonForm::getTarget(void) const
 
 std::ostream& operator<<(std::ostream& out, const PresidentialPardonForm& presidentialPardonForm)
 {
-    std::cout << presidentialPardonForm;
+    out << static_cast<const AForm&>(presidentialPardonForm);
+    out << "target: " << presidentialPardonForm.getTarget() << '\n';
     return (out);
 }
