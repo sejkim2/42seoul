@@ -123,28 +123,28 @@ and optional file: MutantStack.tpp
 * Forbidden functions : None
 
 Now, time to move on more serious things. Let’s develop something weird.
->
+> 이제 좀 더 진지한 일로 넘어갈 시간입니다. 뭔가 이상한 것을 개발해 보죠.
 
 The std::stack container is very nice. Unfortunately, it is one of the only STL Containers that is NOT iterable. That’s too bad.
->
+> `std::stack` 컨테이너는 매우 유용하지만, 안타깝게도 STL 컨테이너 중에서 유일하게 반복(iterable)할 수 없는 컨테이너 중 하나입니다. 참 아쉬운 점입니다.
 
 But why would we accept this? Especially if we can take the liberty of butchering the
 original stack to create missing features.
->
+> 그렇다면 왜 이것을 받아들여야 할까요? 특히 원래의 스택을 수정하여 부족한 기능을 추가할 수 있다면 더욱 그렇습니다.
 
 To repair this injustice, you have to make the std::stack container iterable.
->
+> 이 불공정을 해결하기 위해, `std::stack` 컨테이너를 반복(iterable)할 수 있도록 만들어야 합니다.
 
 Write a __MutantStack__ class. It will __be implemented in terms__ of a std::stack.
 It will offer all its member functions, plus an additional feature: __iterators__.
->
+> __MutantStack__ 클래스를 작성하세요. 이 클래스는 std::stack을 __기반으로 구현될 것입니다__. 이 클래스는 모든 멤버 함수와 추가 기능으로 __이터레이터__ 를 제공할 것입니다.
 
 Of course, you will write and turn in your own tests to ensure everything works as
 expected.
->
+> 물론, 모든 것이 예상대로 작동하는지 확인하기 위해 자신만의 테스트를 작성하고 제출해야 합니다.
 
 Find a test example below.
->
+> 아래에 테스트 예시를 찾으세요.
 
 ```
 int main()
@@ -178,4 +178,4 @@ If you run it a first time with your MutantStack, and a second time replacing th
 MutantStack with, for example, a std::list, the two outputs should be the same. Of
 course, when testing another container, update the code below with the corresponding
 member functions (push() can become push_back()).
->
+> 첫 번째로 `MutantStack`을 사용하여 실행한 후, 두 번째로 `std::list`와 같은 다른 컨테이너로 교체하여 실행하면 두 출력 결과가 동일해야 합니다. 물론, 다른 컨테이너를 테스트할 때는 아래 코드를 해당 컨테이너의 멤버 함수에 맞게 업데이트해야 합니다 (예: `push()`는 `push_back()`으로 변경될 수 있습니다).
