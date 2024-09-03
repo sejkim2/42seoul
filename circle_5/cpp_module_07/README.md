@@ -101,59 +101,25 @@ the following behavior and functions:
 
 * Construction with an unsigned int n as a parameter: Creates an array of n elements
 initialized by default. Tip: Try to compile int * a = new int(); then display *a.
-  >
+  > 부호 없는 정수 n을 매개변수로 사용하는 생성자: 기본값으로 초기화된 n개의 요소를 가진 배열을 생성합니다. 팁: int *a = new int();를 컴파일한 다음, *a를 출력해 보세요.
 
 * Construction by copy and assignment operator. In both cases, modifying either the
 original array or its copy after copying musn’t affect the other array.
-  >
+  > 복사 생성자와 대입 연산자를 통한 생성. 두 경우 모두, 복사 후 원본 배열이나 복사본 배열을 수정해도 다른 배열에 영향을 미치지 않아야 합니다.
 
 * You MUST use the operator new[] to allocate memory. Preventive allocation (allocating memory in advance) is forbidden. Your program must never access nonallocated memory.
-  >
+  > 메모리 할당을 위해 `operator new[]`를 반드시 사용해야 합니다. 사전 할당(미리 메모리를 할당하는 것)은 금지되어 있습니다. 프로그램은 할당되지 않은 메모리에 절대 접근해서는 안 됩니다.
 
 * Elements can be accessed through the subscript operator: [ ].
-  >
+  > 요소는 서브스크립트 연산자: [ ]를 통해 접근할 수 있습니다.
 
 * When accessing an element with the [ ] operator, if its index is out of bounds, an
 std::exception is thrown.
-  >
+  > [ ] 연산자를 사용하여 요소에 접근할 때, 인덱스가 범위를 벗어나면 std::exception이 발생합니다.
 * A member function size() that returns the number of elements in the array. This
 member function takes no parameter and musn’t modify the current instance.
-  >
+  > 배열의 요소 개수를 반환하는 멤버 함수 size(). 이 멤버 함수는 매개변수를 받지 않으며 현재 인스턴스를 수정해서는 안 됩니다.
 
 As usual, ensure everything works as expected and turn in a main.cpp file that contains your tests.
->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+> 항상 그렇듯이, 모든 것이 예상대로 작동하는지 확인하고 테스트가 포함된 `main.cpp` 파일을 제출하세요.
 
