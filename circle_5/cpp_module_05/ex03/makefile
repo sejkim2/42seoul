@@ -1,4 +1,4 @@
-NAME = ex02
+NAME = ex03
 CC = c++
 HEADER = Bureaucrat.hpp AForm.hpp PresidentialPardonForm.hpp RobotomyRequestForm.hpp ShrubberyCreationForm.hpp Intern.hpp
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98

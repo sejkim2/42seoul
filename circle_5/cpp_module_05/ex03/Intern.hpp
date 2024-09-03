@@ -3,6 +3,9 @@
 
 # include <iostream>
 # include "AForm.hpp"
+# include "PresidentialPardonForm.hpp"
+# include "RobotomyRequestForm.hpp"
+# include "ShrubberyCreationForm.hpp"
 
 class Bureaucrat;
 
@@ -21,6 +24,11 @@ class Intern
             public:
                 const char* what() const throw();
         };
+    
+    private:
+        AForm* makeNewPresidentialPardon(const std::string& target);
+        AForm* makeNewRobotomyRequest(const std::string& target);
+        AForm* makeNewShrubberyCreation(const std::string& target);
 };
 
 std::ostream& operator<<(std::ostream& out, const AForm& aForm);

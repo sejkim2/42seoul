@@ -7,5 +7,16 @@
 
 int main(void)
 {
+    Intern someRandomIntern;
+    AForm* rrf;
+
+    try {
+        rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+        Bureaucrat b1("kim", 1);
     
+        b1.signForm(*rrf);
+        b1.executeForm(*rrf);
+    } catch (std::exception& e) {
+        std::cout << e.what();
+    }
 }

@@ -22,7 +22,40 @@ Intern& Intern::operator=(const Intern& intern)
     return (*this);
 }
 
-AForm* makeForm(const std::string& formName, const std::string& target)
+AForm* Intern::makeNewRobotomyRequest(const std::string& target)
 {
-    std::string formType[3] = {"robotomy request", "presidential pardon", "shrubbery creation"}
+    return (new RobotomyRequestForm(target));
+}
+
+AForm* Intern::makeNewPresidentialPardon(const std::string& target)
+{
+    return (new PresidentialPardonForm(target));
+}
+
+AForm* Intern::makeNewShrubberyCreation(const std::string& target)
+{
+    return (new ShrubberyCreationForm(target));
+}
+
+const char* Intern::NotExistFormName::what() const throw()
+{
+    return "Form With The Specified Name Does Not Exist!";
+}
+
+AForm* Intern::makeForm(const std::string& formName, const std::string& target)
+{
+    std::string formType[3] = {"robotomy request", "presidential pardon", "shrubbery creation"};
+
+    AForm* (Intern::*arr[3])(const std::string&) = {
+        &Intern::makeNewPresidentialPardon,
+        &Intern::makeNewRobotomyRequest,
+        &Intern::makeNewShrubberyCreation
+    };
+
+    for(int i = 0; i < 3; i++)
+    {
+        if (formType[i].compare(formName) == 0)
+            return (*this.*arr[i])(target);
+    }
+    throw (Intern::NotExistFormName());
 }
