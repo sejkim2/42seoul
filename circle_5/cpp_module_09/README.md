@@ -184,62 +184,62 @@ will not be usable for the rest of this module.
 * Forbidden functions : None
 
 You must create a program with these constraints:
->
+> 이러한 제약 조건을 가진 프로그램을 만들어야 합니다:
 
 * The name of the program is PmergeMe.
-  >
+  > 프로그램의 이름은 `PmergeMe`입니다.
 
 * Your program must be able to use a positive integer sequence as argument.
-  >
+  > 프로그램은 양의 정수 시퀀스를 인수로 사용할 수 있어야 합니다.
 
 * Your program must use the merge-insert sort algorithm to sort the positive integer sequence.
-  >
+  > 프로그램은 양의 정수 시퀀스를 정렬하기 위해 병합 삽입 정렬(merge-insert sort) 알고리즘을 사용해야 합니다.
 
 * To clarify, yes, you need to use the Ford-Johnson algorithm.
-  >
+  > 명확히 말하자면, 네, Ford-Johnson 알고리즘을 사용해야 합니다.
 
 * If an error occurs during program execution, an error message should be displayed
 on the standard output.
-  >
+  > 프로그램 실행 중 오류가 발생하면 표준 출력에 오류 메시지가 표시되어야 합니다.
 
 * You must use at least two different containers in your code to
 validate this exercise. Your program must be able to handle at
 least 3000 different integers.
-  >
+  > 코드에서 이 연습을 검증하기 위해 최소한 두 가지 다른 컨테이너를 사용해야 합니다. 프로그램은 최소 3000개의 서로 다른 정수를 처리할 수 있어야 합니다.
 
 * It is strongly advised to implement your algorithm for each container
 and thus to avoid using a generic function.
-  >
+  > 각 컨테이너에 대해 알고리즘을 구현하고, 따라서 일반적인 함수를 사용하지 않는 것이 강력히 권장됩니다.
 
 Here are some additional guidelines on the information you should display line by line
 on the standard output:
->
+> 다음은 표준 출력에 한 줄씩 표시해야 하는 정보에 대한 추가 가이드라인입니다:
 
 * On the first line you must display an explicit text followed by the unsorted positive
 integer sequence.
-  >
+  > 첫 번째 줄에는 명시적인 텍스트와 함께 정렬되지 않은 양의 정수 시퀀스를 표시해야 합니다.
 
 * On the second line you must display an explicit text followed by the sorted positive
 integer sequence.
-  >
+  > 두 번째 줄에는 명시적인 텍스트와 함께 정렬된 양의 정수 시퀀스를 표시해야 합니다.
 
 * On the third line you must display an explicit text indicating the time used by
 your algorithm by specifying the first container used to sort the positive integer
 sequence.
-  >
+  > 세 번째 줄에는 명시적인 텍스트와 함께 양의 정수 시퀀스를 정렬하는 데 사용된 첫 번째 컨테이너로 인해 소요된 시간을 표시해야 합니다.
 
 * On the last line you must display an explicit text indicating the time used by
 your algorithm by specifying the second container used to sort the positive integer
 sequence.
-  >
+  > 마지막 줄에는 명시적인 텍스트와 함께 양의 정수 시퀀스를 정렬하는 데 사용된 두 번째 컨테이너로 인해 소요된 시간을 표시해야 합니다.
 
 * The format for the display of the time used to carry out your sorting
 is free but the precision chosen must allow to clearly see the
 difference between the two containers used.
-  >
+  > 정렬을 수행하는 데 소요된 시간의 형식은 자유롭게 선택할 수 있지만, 두 개의 컨테이너 간의 차이를 명확하게 볼 수 있을 정도로 정밀도를 유지해야 합니다.
 
 Here is an example of a standard use:
->
+> 다음은 표준 사용 예시입니다:
 
 ```
 $> ./PmergeMe 3 5 9 7 4
@@ -263,12 +263,12 @@ $>
 * The indication of the time is deliberately strange in this example.
 Of course you have to indicate the time used to perform all your
 operations, both the sorting part and the data management part.
-  >
+  > 시간 표시 방법이 일부러 이상하게 되어 있는 예시입니다. 물론, 모든 작업에 소요된 시간을 표시해야 합니다. 여기에는 정렬 부분과 데이터 관리 부분 모두가 포함됩니다.
 
 * Warning: The container(s) you used in the previous exercises are
 forbidden here.
-  >
+  > 경고: 이전 연습에서 사용했던 컨테이너는 여기에서 금지됩니다.
 
 * The management of errors related to duplicates is left to your
 discretion.
-  >
+  > 중복과 관련된 오류 처리 방식은 귀하의 재량에 맡깁니다.
