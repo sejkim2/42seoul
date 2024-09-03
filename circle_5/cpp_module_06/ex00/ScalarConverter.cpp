@@ -132,7 +132,7 @@ bool ScalarConverter::validateDoubleOverflow(std::string literal)
 {
     double d;
 
-    d = strtod(literal.c_str(), nullptr);
+    d = strtod(literal.c_str(), 0);
     if (d > std::numeric_limits<double>::max() || d < std::numeric_limits<double>::lowest() || d == std::numeric_limits<double>::infinity())
         return (true);
     else
@@ -144,7 +144,7 @@ bool ScalarConverter::handleInt(std::string literal, convertStruct& cs)
     if (isNumber(literal, literal.length()) == false || validateDoubleOverflow(literal) == true)
         return (setAllImpossible(cs));
 
-    cs.d = strtod(literal.c_str(), nullptr);
+    cs.d = strtod(literal.c_str(), 0);
     cs.f = static_cast<float>(cs.d);
     cs.n = static_cast<int>(cs.d);
     cs.ch = static_cast<char>(cs.d);
@@ -175,7 +175,7 @@ bool ScalarConverter::handleFloat(std::string literal, convertStruct &cs)
     if (validateDoubleOverflow(literal) == true)
         return (setAllImpossible(cs));
 
-    cs.d = strtod(literal.c_str(), nullptr);
+    cs.d = strtod(literal.c_str(), 0);
     cs.f = static_cast<float>(cs.d);
     cs.n = static_cast<int>(cs.d);
     cs.ch = static_cast<char>(cs.d);
@@ -208,7 +208,7 @@ bool ScalarConverter::handleDouble(std::string literal, convertStruct &cs)
     if (validateDoubleOverflow(literal) == true)
         return (setAllImpossible(cs));
 
-    cs.d = strtod(literal.c_str(), nullptr);
+    cs.d = strtod(literal.c_str(), 0);
     cs.f = static_cast<float>(cs.d);
     cs.n = static_cast<int>(cs.d);
     cs.ch = static_cast<char>(cs.d);
