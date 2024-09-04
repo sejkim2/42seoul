@@ -1,6 +1,8 @@
 #ifndef _ARRAY_HPP__
 # define _ARRAY_HPP__
 
+# include <cstring>
+
 template<typename T>
 class Array
 {
@@ -8,12 +10,18 @@ class Array
         Array(void);
         ~Array(void);
         Array(const Array& copy);
-        Array& operator=(const Array& obj);
+        Array<T>& operator=(const Array& obj);
 
         Array(unsigned int n);
         unsigned int size(void) const;
+        T& operator[](int index);
+        const T& operator[](int index) const;
+
     private:
-        T[] arr;
+        T* arr;
+        unsigned int _size;
 };
+
+# include "Array.tpp"
 
 #endif

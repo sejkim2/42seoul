@@ -16,8 +16,8 @@ int main(void)
     std::cout << "3. make shrubbery : [shrubbery creation]" << '\n';
     std::cout << "other : Throw NotExistFormName Exception" << '\n';
     std::cout << "_________________________________________________________________" << '\n';
-    
-    try { 
+
+    try {
         // rrf = someRandomIntern.makeForm("robotomy request", "Bender");
         // rrf = someRandomIntern.makeForm("presidential pardon", "Bender");
         rrf = someRandomIntern.makeForm("shrubbery creation", "Bender");
