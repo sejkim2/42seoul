@@ -5,17 +5,17 @@
 
 template<typename T>
 Array<T>::Array(void)
-: _size(0), arr(0)
+: _size(0)
 {
     std::cout << "Array Default Constructor Called" << '\n';
+    arr = new int[_size];
 }
 
 template<typename T>
 Array<T>::~Array(void)
 {
     std::cout << "Array Default Destructor Called" << '\n';
-    if (arr != 0)
-        delete[] arr;
+    delete[] arr;
 }
 
 template<typename T>
@@ -29,11 +29,10 @@ Array<T>& Array<T>::operator=(const Array& obj)
 {
     if (&obj != this)
     {
-        if (arr != 0)
-            delete[] arr;
+        // delete[] arr;
 
-        this->_size = obj.size();
-        this->arr = new T[this->size()];
+        // this->_size = obj.size();
+        // this->arr = new T[this->size()];
 
         for(unsigned int i = 0; i < this->size(); i++)
             this->arr[i] = obj.arr[i];
@@ -46,7 +45,7 @@ Array<T>::Array(unsigned int n)
 : _size(n)
 {
     this->arr = new T[n];
-    std::memset(this->arr, 0, n * sizeof(T));
+    // std::memset(this->arr, 0, n * sizeof(T));
 }
 
 template<typename T>
