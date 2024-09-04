@@ -10,7 +10,7 @@ int main(void)
     RobotomyRequestForm form2("office");
     PresidentialPardonForm form3("white house");
 
-    Bureaucrat b1("kim", 1);
+    Bureaucrat b1("kim", 40);
     b1.signForm(form1);
     b1.signForm(form2);
     b1.signForm(form3);
