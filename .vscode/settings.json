@@ -75,6 +75,7 @@
         "variant": "cpp",
         "__tree": "cpp",
         "set": "cpp",
-        "*.tpp": "cpp"
+        "*.tpp": "cpp",
+        "list": "cpp"
     }
 }
