@@ -7,8 +7,8 @@
 # include <deque>
 # include <stack>
 
-template<typename T>
-class MutantStack : public std::stack<T, std::deque<T> >
+template<typename T, typename C = std::deque<T>>
+class MutantStack : public std::stack<T, C>
 {
     public:
         MutantStack(void);
