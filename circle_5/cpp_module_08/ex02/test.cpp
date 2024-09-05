@@ -6,21 +6,17 @@
 using namespace std;
 
 template<typename T>
-class A : public std::stack<T, std::vector<T>>
+class A : public std::stack<T, std::deque<T> >
 {
-public:
-    // 기본 생성자
-    A() : std::stack<T, std::vector<T>>() {}
-
-    // 복사 생성자
-    A(const A& other) : std::stack<T, std::vector<T>>(other) {}
 };
 
 int main(void)
 {
-    A<int> a;
-    a.push(4);
-    cout << a.top();
+    std::deque<int> d;
+    std::vector<int> v;
+    std::list<int> l;
+    std::stack<int> s(v);
 
-    std::stack<int> s(vector<int> );
+    s.push(1); 
+    
 }

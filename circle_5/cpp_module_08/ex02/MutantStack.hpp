@@ -8,30 +8,35 @@
 # include <stack>
 
 template<typename T>
-class MutantStack : public std::stack<T, std::vector<T> >
+class MutantStack : public std::stack<T, std::deque<T> >
 {
     public:
-        // MutantStack(void);
-        // ~MutantStack(void);
-        // MutantStack(const MutantStack& copy);
-        // MutantStack<T>& operator=(const MutantStack& obj);
+        MutantStack(void);
+        ~MutantStack(void);
+        MutantStack(const MutantStack& copy);
+        MutantStack<T>& operator=(const MutantStack& obj);
 
-        // T& top(void);
-        // const T& top(void) const;
+        T& top(void);
+        const T& top(void) const;
 
-        // bool empty() const;
-        // size_t size() const;
+        bool empty() const;
+        size_t size() const;
         
-        // void push(const T& value);
-        // void push(T& value);
+        void push(const T& value);
+        void push(T& value);
 
-        // void pop(void);
+        void pop(void);
 
-        // typename MutantStack<T>::iterator begin(void);
-        // typename MutantStack<T>::iterator end(void);
+        typedef typename std::vector<T>::iterator iterator;
+        typedef typename std::vector<T>::const_iterator const_iterator;
 
-    // private:
-    //     std::vector<T> container;
+        iterator begin(void);
+        iterator end(void);
+        const_iterator begin(void) const;
+        const_iterator end(void) const;
+
+    private:
+        std::vector<T> container;
 };
 
 # include "MutantStack.tpp"

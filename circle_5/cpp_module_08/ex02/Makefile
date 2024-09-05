@@ -1,4 +1,4 @@
-NAME = ex01
+NAME = ex02
 CC = c++
 HEADER = MutantStack.hpp
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
