@@ -8,4 +8,5 @@ int main(int argc, char **argv)
         std::cout << "Error: could not open file." << '\n';
         return (1);
     }
+    BitcoinExchange("data.csv");
 }
