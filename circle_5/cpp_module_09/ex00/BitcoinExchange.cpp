@@ -55,6 +55,7 @@ void BitcoinExchange::fileOpen(void)
         size_t delimeter = line.find("|");
         std::string data = line.substr(0, delimeter);
         std::string value = line.substr(delimeter + 1, line.length());
+        
     }
 
 }
