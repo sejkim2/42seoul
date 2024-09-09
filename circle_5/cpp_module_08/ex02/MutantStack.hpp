@@ -7,36 +7,26 @@
 # include <deque>
 # include <stack>
 
-template<typename T, typename C = std::deque<T>>
+template<typename T, typename C = std::deque<T> >
 class MutantStack : public std::stack<T, C>
 {
     public:
         MutantStack(void);
         ~MutantStack(void);
         MutantStack(const MutantStack& copy);
-        MutantStack<T>& operator=(const MutantStack& obj);
+        MutantStack<T, C>& operator=(const MutantStack& obj);
 
-        T& top(void);
-        const T& top(void) const;
-
-        bool empty() const;
-        size_t size() const;
-        
-        void push(const T& value);
-        void push(T& value);
-
-        void pop(void);
-
-        typedef typename std::vector<T>::iterator iterator;
-        typedef typename std::vector<T>::const_iterator const_iterator;
+        typedef typename C::iterator iterator;
+        // typedef typename C::const_iterator const_iterator;
+        typedef typename C::reverse_iterator reverse_iterator;
+        // typedef typename C::const_reverse_iterator const_reverse_iterator;
 
         iterator begin(void);
         iterator end(void);
-        const_iterator begin(void) const;
-        const_iterator end(void) const;
-
-    private:
-        std::vector<T> container;
+        reverse_iterator rbegin(void);
+        reverse_iterator rend(void);
+        // const_iterator begin(void) const;
+        // const_iterator end(void) const;
 };
 
 # include "MutantStack.tpp"
