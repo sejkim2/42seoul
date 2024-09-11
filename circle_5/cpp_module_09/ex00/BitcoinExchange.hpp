@@ -14,6 +14,18 @@ class BitcoinExchange
 
         BitcoinExchange(const std::string& filename);
     
+    class FileOpenException : public std::exception
+    {
+        public:
+            const char* what() const throw();
+    };
+
+    class GradeTooHighException : public std::exception
+    {
+        public:
+            const char* what() const throw();
+    };
+
     private:
         BitcoinExchange(void);
         const std::string filename;

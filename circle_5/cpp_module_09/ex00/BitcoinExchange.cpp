@@ -35,27 +35,38 @@ void BitcoinExchange::fileOpen(void)
     std::map<std::string, std::string> btcPrice;
 
     if (!file.is_open())
-        std::cout << "file open error"; //throw
+        throw BitcoinExchange::FileOpenException();
 
     while (std::getline(file, line))
     {
         size_t delimeter = line.find(",");
-        std::string key = line.substr(0, delimeter);
+        std::string date = line.substr(0, delimeter);
         std::string value = line.substr(delimeter + 1, line.length());
 
-        btcPrice[key] = value;
+        btcPrice[date] = value;
     }
 
     std::ifstream input(this->filename);
     if (!input.is_open())
-        std::cout << "file open error";
+        throw BitcoinExchange::FileOpenException();
     
     while (std::getline(input, line))
     {
         size_t delimeter = line.find("|");
-        std::string data = line.substr(0, delimeter);
+        std::string date = line.substr(0, delimeter);
         std::string value = line.substr(delimeter + 1, line.length());
-        
-    }
 
+        std::map<std::string, std::string>::iterator it = btcPrice.upper_bound(date);
+        if (it != btcPrice.begin())
+            it--;
+        std::cout << date << " => " << value << " = " << it->second << "*" << value << '\n';
+
+        //todo1 : Error
+        //todo2 : 윤년
+    }
+}
+
+const char* BitcoinExchange::FileOpenException::what() const throw()
+{
+    return "could not open file.";
 }
