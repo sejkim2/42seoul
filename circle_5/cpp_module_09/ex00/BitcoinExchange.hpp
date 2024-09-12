@@ -2,6 +2,7 @@
 # define _BITCOINEXCHANGE_HPP__
 
 # include <iostream>
+# include <sstream>
 # include <fstream>
 # include <map>
 
@@ -20,18 +21,27 @@ class BitcoinExchange
             const char* what() const throw();
     };
 
-    class GradeTooHighException : public std::exception
+    class NotNumberException : public std::exception
     {
         public:
             const char* what() const throw();
     };
 
-    private:
-        BitcoinExchange(void);
-        const std::string filename;
+    class NotInvalidException : public std::exception
+    {
+        public:
+            const char* what() const throw();
+    };
 
         void fileOpen(void);
-        void validateFormat(const std::string& line);
+    private:
+        BitcoinExchange(void);
+        bool isLeapYear(int year);
+        int daysInMonth(int month, int year);
+        bool isValidDate(const std::string &dateStr);
+
+
+        const std::string filename;
 };
 
 #endif
