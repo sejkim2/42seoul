@@ -31,13 +31,13 @@ class ScalarConverter
     private:
         ScalarConverter(void);
         static convertStruct handleNanInff(std::string literal);
-        static bool isNumber(std::string literal, size_t len);
+        static bool isNumber(std::string literal, std::string::size_type len);
         static void printValue(convertStruct cs);
         static bool handleChar(std::string literal, convertStruct& cs);
         static bool handleInt(std::string literal, convertStruct& cs);
         static bool handleFloat(std::string literal, convertStruct& cs);
         static bool handleDouble(std::string literal, convertStruct& cs);
-        static bool isDecimal(std::string literal, size_t findptr, int& floatFlag);
+        static bool isDecimal(std::string literal, std::string::size_type findptr, int& floatFlag);
         static bool validateNanInf(std::string literal);
 
         static bool validateDoubleOverflow(std::string literal);

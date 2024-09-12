@@ -39,9 +39,9 @@ convertStruct ScalarConverter::handleNanInff(std::string literal)
         return convertStruct("impossible", "impossible", "nanf", "nan");
 }
 
-bool ScalarConverter::isNumber(std::string literal, size_t len)
+bool ScalarConverter::isNumber(std::string literal, std::string::size_type len)
 {
-    for (size_t i = 0; i < len; i++)
+    for (std::string::size_type i = 0; i < len; i++)
     {
         if (i == 0 && (literal[i] == '-' || literal[i] == '+') && literal.length() != 1)
             continue;
@@ -78,7 +78,7 @@ void ScalarConverter::convert(std::string literal)
         handleChar(literal, cs);
     else
     {
-        size_t findptr = literal.find(".");
+        std::string::size_type findptr = literal.find(".");
 
         if (findptr == std::string::npos)
         {
@@ -234,7 +234,7 @@ bool ScalarConverter::handleDouble(std::string literal, convertStruct &cs)
     return (true);
 }
 
-bool ScalarConverter::isDecimal(std::string literal, size_t findptr, int& floatFlag)
+bool ScalarConverter::isDecimal(std::string literal, std::string::size_type findptr, int& floatFlag)
 {
     if (isNumber(literal, findptr) == false)
         return (false);
@@ -244,7 +244,7 @@ bool ScalarConverter::isDecimal(std::string literal, size_t findptr, int& floatF
         return (false);
     // if (literal[findptr + 1] == 'f') // 42.f
     //     return (false);
-    for (size_t i = findptr + 1; i < literal.length(); i++)
+    for (std::string::size_type i = findptr + 1; i < literal.length(); i++)
     {
         if (!std::isdigit(literal[i]))
         {

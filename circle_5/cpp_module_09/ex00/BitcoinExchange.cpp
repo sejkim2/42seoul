@@ -23,12 +23,12 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& obj)
     return (*this);
 }
 
-BitcoinExchange::BitcoinExchange(const std::string& filename)
+BitcoinExchange::BitcoinExchange(std::string filename)
 : filename(filename)
 {
 }
 
-void BitcoinExchange::fileOpen(void)
+std::map<std::string, std::string> BitcoinExchange::parseDataFile(void)
 {
     std::ifstream file("data.csv");
     std::string line;
@@ -36,44 +36,61 @@ void BitcoinExchange::fileOpen(void)
 
     if (!file.is_open())
         throw BitcoinExchange::FileOpenException();
+    
     while (std::getline(file, line))
     {
-        size_t delimeter = line.find(",");
+        std::string::size_type delimeter = line.find(",");
         std::string date = line.substr(0, delimeter);
-        std::string value = line.substr(delimeter + 1, line.length());
+        std::string value = line.substr(delimeter + 1);
 
         btcPrice[date] = value;
     }
 
+    return (btcPrice);
+}
+
+bool BitcoinExchange::string2double(std::string value, double& price)
+{
+    std::stringstream ss(value);
+    ss >> price;
+
+    if (price < -2147483648 || price > 2147483647)
+    {
+        std::cout << "Error: too large a number." << '\n';
+        return (false);
+    }
+    if (price < 0)
+    {
+        std::cout << "Error: not a positive number." << '\n';
+        return (false);
+    }
+    return (true);
+}
+
+void BitcoinExchange::parseInput(std::map<std::string, std::string>& btcPrice)
+{
+    std::string line;
     std::ifstream input(this->filename);
+
     if (!input.is_open())
         throw BitcoinExchange::FileOpenException();
     
+    std::getline(input, line);
+    if (line.compare("date | value") != 0)
+        throw BitcoinExchange::InputFileFormatException();
+
     while (std::getline(input, line))
     {
-        size_t delimeter = line.find("|");
-        std::string date = line.substr(0, delimeter);
-        std::string value = line.substr(delimeter + 1, line.length());
+        std::string::size_type delimeter = line.find("|");
+        std::string date = trim(line.substr(0, delimeter));
+        std::string value = trim(line.substr(delimeter + 1));
+        double price;
 
         if (isValidDate(date) == false)
-        {
-            std::cout << "Error: bad input => " << date << '\n';
             continue;
-        }
 
-        std::stringstream ss(value);
-        double price;
-        ss >> price;
-        if (price < -2147483648 || price > 2147483647)
-        {
-            std::cout << "Error: too large a number." << '\n';
+        if (string2double(value, price) == false)
             continue;
-        }
-        else if (price < 0)
-        {
-            std::cout << "Error: not a positive number." << '\n';
-            continue;
-        }
 
         std::map<std::string, std::string>::iterator it = btcPrice.upper_bound(date);
         if (it != btcPrice.begin())
@@ -83,26 +100,37 @@ void BitcoinExchange::fileOpen(void)
         double price2;
         ss2 >> price2;
 
-        std::cout << date << " => " << value << "= " << price * price2 << '\n';
+        std::cout << date << " => " << value << " = " << price * price2 << '\n';
             
         //todo3 : upper_bound가 end일 때
 
     }
 }
 
+void BitcoinExchange::fileOpen(void)
+{
+    std::map<std::string, std::string> btcPrice = parseDataFile();
+    parseInput(btcPrice);
+}
+
 const char* BitcoinExchange::FileOpenException::what() const throw()
 {
-    return "could not open file.";
+    return "could not open file.\n";
 }
 
 const char* BitcoinExchange::NotNumberException::what() const throw()
 {
-    return "not a number.";
+    return "not a number.\n";
 }
 
 const char* BitcoinExchange::NotInvalidException::what() const throw()
 {
-    return "not invalid number.";
+    return "not invalid number.\n";
+}
+
+const char* BitcoinExchange::InputFileFormatException::what() const throw()
+{
+    return "input file wrong format.\n";
 }
 
 bool BitcoinExchange::isLeapYear(int year)
@@ -133,11 +161,32 @@ bool BitcoinExchange::isValidDate(const std::string &dateStr)
     std::istringstream dateStream(dateStr);
     dateStream >> year >> delimiter1 >> month >> delimiter2 >> day;
 
-    if (delimiter1 != '-' || delimiter2 != '-' || dateStream.fail()) 
-        return false;
+    if (delimiter1 != '-' || delimiter2 != '-' || dateStream.fail())
+    {
+        std::cout << "Error: bad input => " << dateStr << '\n';
+        return (false);
+    }
 
-    if (year < 1 || month < 1 || month > 12 || day < 1 || day > daysInMonth(month, year)) 
-        return false;
+    if (year < 1 || month < 1 || month > 12 || day < 1 || day > daysInMonth(month, year))
+    {
+        std::cout << "Error: bad input => " << dateStr << '\n';
+        return (false);
+    }
 
     return true;
+}
+
+std::string BitcoinExchange::trim(const std::string& str) 
+{
+    std::string::size_type start = str.find_first_not_of(" \t\n\r\f\v");
+    if (start == std::string::npos) {
+        // 공백으로만 이루어진 문자열일 경우 빈 문자열 반환
+        return "";
+    }
+    
+    // 우측 공백 제거
+    std::string::size_type end = str.find_last_not_of(" \t\n\r\f\v");
+    
+    // 부분 문자열 반환
+    return str.substr(start, end - start + 1);
 }
