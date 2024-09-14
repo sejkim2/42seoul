@@ -7,16 +7,26 @@ Base* generate(void)
 
     int randomNumber = std::rand() % 3;
     if (randomNumber == 0)
+    {
+        std::cout << "generate : A" << '\n';
         return (new A());
+    }
     else if (randomNumber == 1)
+    {
+        std::cout << "generate : B" << '\n';
         return (new B());
+    }
     else
+    {
+        std::cout << "generate : C" << '\n';
         return (new C());
+    }
 }
 
 void identify(Base* p)
 {
     std::cout << "<pointer>" << '\n';
+
     A* a = dynamic_cast<A*>(p);
     if (a != 0)
     {
@@ -44,6 +54,7 @@ void identify(Base* p)
 void identify(Base& p)
 {
     std::cout << "<reference>" << '\n';
+
     try {
         A& a = dynamic_cast<A&>(p);
         (void)a;

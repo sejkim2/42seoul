@@ -12,6 +12,7 @@ class Data
         Data& operator=(const Data& obj);
         
         Data(std::string str);
+        const std::string& getDataMember(void) const;
     private:
         std::string data_member;
 };

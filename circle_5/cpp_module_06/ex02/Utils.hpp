@@ -5,7 +5,6 @@
 # include "A.hpp"
 # include "B.hpp"
 # include "C.hpp"
-# include <ctime>
 # include <unistd.h>
 
 Base* generate(void);

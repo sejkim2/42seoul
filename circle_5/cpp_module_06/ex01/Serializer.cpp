@@ -7,7 +7,7 @@ Serializer::Serializer(void)
 
 Serializer::~Serializer(void)
 {
-    std::cout << "Serializer Default Destructor Called" << '\n';
+    // std::cout << "Serializer Default Destructor Called" << '\n';
 }
 
 Serializer::Serializer(const Serializer& copy)

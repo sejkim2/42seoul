@@ -41,13 +41,20 @@ convertStruct ScalarConverter::handleNanInff(std::string literal)
 
 bool ScalarConverter::isNumber(std::string literal, std::string::size_type len)
 {
+    if (len == 0)
+        return (false);
+
+    if (len == 1 && !std::isdigit(literal[0]))
+        return (false);
+
     for (std::string::size_type i = 0; i < len; i++)
     {
-        if (i == 0 && (literal[i] == '-' || literal[i] == '+') && literal.length() != 1)
+        if (i == 0 && (literal[i] == '-' || literal[i] == '+'))
             continue;
         if (!std::isdigit(literal[i]))
             return (false);
     }
+
     return (true);
 }
 
@@ -164,7 +171,7 @@ bool ScalarConverter::handleInt(std::string literal, convertStruct& cs)
     if (cs.d > std::numeric_limits<float>::max() || cs.d < std::numeric_limits<float>::lowest())
         cs.convertFloat = "impossible";
     else
-        cs.convertFloat = literal + ".0f";  //diff
+        cs.convertFloat = literal + ".0f";
 
     cs.convertDouble = literal + ".0";
     return (true);
@@ -190,16 +197,18 @@ bool ScalarConverter::handleFloat(std::string literal, convertStruct &cs)
     if (cs.d > std::numeric_limits<int>::max() || cs.d < std::numeric_limits<int>::lowest())
         cs.convertInt = "impossible";
     else
-        cs.convertInt = literal.substr(0, literal.find("."));   //diff
+        cs.convertInt = literal.substr(0, literal.find("."));
 
     if (cs.d > std::numeric_limits<float>::max() || cs.d < std::numeric_limits<float>::lowest())
         cs.convertFloat = "impossible";
     else
-        cs.convertFloat = literal;    //diff
+        cs.convertFloat = literal;
 
-    cs.convertDouble = literal.substr(0, literal.find("f"));    //diff
+    cs.convertDouble = literal.substr(0, literal.find("f"));
+
     if (cs.convertDouble[(cs.convertDouble).length() - 1] == '.')
         cs.convertDouble.append("0");
+
     return (true);
 }
 
@@ -223,12 +232,12 @@ bool ScalarConverter::handleDouble(std::string literal, convertStruct &cs)
     if (cs.d > std::numeric_limits<int>::max() || cs.d < std::numeric_limits<int>::lowest())
         cs.convertInt = "impossible";
     else
-        cs.convertInt = literal.substr(0, literal.find("."));   //diff
+        cs.convertInt = literal.substr(0, literal.find("."));
 
     if (cs.d > std::numeric_limits<float>::max() || cs.d < std::numeric_limits<float>::lowest())
         cs.convertFloat = "impossible";
     else
-        cs.convertFloat = literal + "f";    //diff
+        cs.convertFloat = literal + "f";
 
     cs.convertDouble = literal;
     return (true);
@@ -238,12 +247,8 @@ bool ScalarConverter::isDecimal(std::string literal, std::string::size_type find
 {
     if (isNumber(literal, findptr) == false)
         return (false);
-    if (literal[0] == '.') //.42
+    if (findptr + 1 == literal.length())
         return (false);
-    if (findptr + 1 == literal.length()) // 42.
-        return (false);
-    // if (literal[findptr + 1] == 'f') // 42.f
-    //     return (false);
     for (std::string::size_type i = findptr + 1; i < literal.length(); i++)
     {
         if (!std::isdigit(literal[i]))
