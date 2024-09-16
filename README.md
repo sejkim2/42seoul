@@ -21,7 +21,7 @@
             errors.put("quantity", "수량은 최대 9,999까지 허용합니다.");
         }
 
-        if (item.getQuantity() != null && item.getQuantity() != null) {
+        if (item.getPrice() != null && item.getQuantity() != null) {
             int resultPrice = item.getPrice() * item.getQuantity();
             if (resultPrice < 10000) {
                 errors.put("globalError", "가격 * 수량의 합은  10,000 이상이어야 합니다. 현재 값 = " + resultPrice);
