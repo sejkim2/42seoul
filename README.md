@@ -70,3 +70,50 @@ public String addItemV2(@ModelAttribute Item item, BindingResult bindingResult, 
 ```
 * new FieldError(object, field, rejectValud : 입력했지만 거절된 값, bindingType : 바인딩 성공 여부 : 타입 에러 체크용도, 메시지 코드, 메시지 인자, default message)
 * new ObjectError(object, 메시지 코드, 메시지 인자, default message) 
+
+## bindingResult 3
+> bindingResult는 오류 발생 시 이미 오류 발생 객체를 알고 있으므로 만들어줄 필요 없음 -> rejectValue(), reject() 함수 사용
+```
+    bindingResult.rejectValue("itemName", "required", null, null);
+    bindingResult.rejectValue("price", "range", new Object[]{1000, 1000000}, null);
+    bindingResult.rejectValue("quantity", "max", new Object[]{9999}, null);
+    bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+```
+* rejectValue(field, errorCode(메시지 리졸버에서 사용됨), 메시지 인자, default message)
+* errorCode는 errors.properties에서 맨 처음 단어와 일치해야 메시지 리졸버가 찾을 수 있음
+* rejectValue, reject 함수를 사용하면 내부적으로 MessageCodesResolver를 사용하며 이때 errorCode 기준으로 오류 메시지 객체를 생성
+
+## errors.properties
+> 구체적인 메시지 (errorcode.object.field)를 먼저 만들고 범용적인 메시지(errorcode)를 가장 나중에 만든다.
+```
+#==ObjectError==
+#Level1
+totalPriceMin.item=Level1 상품의 가격 * 수량의 합은 {0}원 이상이어야 합니다. 현재 값 = {1}
+
+#Level2 - 생략
+totalPriceMin=Level2 전체 가격은 {0}원 이상이어야 합니다. 현재 값 = {1}
+
+#==FieldError==
+#Level1
+required.item.itemName=Level1 상품 이름은 필수입니다.
+range.item.price=Level1 가격은 {0} ~ {1} 까지 허용합니다.
+max.item.quantity=Level1 수량은 최대 {0} 까지 허용합니다.
+
+#Level2 - 생략
+
+#Level3
+required.java.lang.String = Level3 필수 문자입니다.
+required.java.lang.Integer = Level3 필수 숫자입니다.
+min.java.lang.String = Level3 {0} 이상의 문자를 입력해주세요.
+min.java.lang.Integer = Level3 {0} 이상의 숫자를 입력해주세요.
+range.java.lang.String = Level3 {0} ~ {1} 까지의 문자를 입력해주세요.
+range.java.lang.Integer = Level3 {0} ~ {1} 까지의 숫자를 입력해주세요.
+max.java.lang.String = Level3 {0} 까지의 문자를 허용합니다.
+max.java.lang.Integer = Level3 {0} 까지의 숫자를 허용합니다.
+
+#Level4
+required = Level4 필수 값 입니다.
+min= Level4 {0} 이상이어야 합니다.
+range= Level4 {0} ~ {1} 범위를 허용합니다.
+max= Level4 {0} 까지 허용합니다.
+```
