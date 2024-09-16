@@ -1,4 +1,4 @@
-NAME = ex01
+NAME = ex00
 CC = c++
 HEADER = func.hpp
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98

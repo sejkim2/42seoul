@@ -1,6 +1,5 @@
 #include <iostream>
 #include "iter.hpp"
-using namespace std;
 
 int main(void)
 {
@@ -8,4 +7,6 @@ int main(void)
 
     ::iter(arr, 20, save<int>);
     ::iter(arr, 20, print<int>);
+
+    delete[] arr;
 }
