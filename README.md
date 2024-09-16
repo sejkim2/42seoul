@@ -116,4 +116,71 @@ required = Level4 필수 값 입니다.
 min= Level4 {0} 이상이어야 합니다.
 range= Level4 {0} ~ {1} 범위를 허용합니다.
 max= Level4 {0} 까지 허용합니다.
+
+#type error (스프링이 직접 검증 오류에 추가한 경우)
+typeMismatch.java.lang.Integer=숫자를 입력해주세요.
+typeMismatch=타입 오류입니다.
 ```
+* 개발자가 직접 설정한 오류 코드 -> rejectValue()를 직접 호출
+* 스프링이 직접 검증 오류에 추가한 경우 -> 주로 타입 에러
+
+## Validator 분리 1
+> 검증 로직이 길어지므로 따로 클래스로 분리
+> 스프링에서 검증을 위해 사용되는 인터페이스인 Validator 사용
+### Validator 구현체
+```
+@Component
+public class ItemValidator implements Validator {
+    
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return Item.class.isAssignableFrom(clazz);
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        Item item = (Item) target;
+
+        if (!StringUtils.hasText(item.getItemName())) {
+            errors.rejectValue("itemName", "required", null, null);
+        }
+
+        if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
+            errors.rejectValue("price", "range", new Object[]{1000, 1000000}, null);
+        }
+
+        if (item.getQuantity() == null || item.getQuantity() >= 10000) {
+            errors.rejectValue("quantity", "max", new Object[]{9999}, null);
+        }
+
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                errors.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
+        }
+    }
+}
+```
+### 수정된 컨트롤러 (검증 로직 분리)
+```
+    private final ItemValidator itemValidator;
+    
+    @PostMapping("/add")
+    public String addItemV5(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        itemValidator.validate(item, bindingResult);    //검증 로직 분리
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "validation/v2/addForm";
+        }
+
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+```
+* supports() : 해당 검증기를 지원하는 여부 확인
+* validate(object, errors) : 검증 대상 객체와 bindingResult (errors의 자식 클래스)
