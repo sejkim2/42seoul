@@ -8,7 +8,7 @@ Array<T>::Array(void)
 : _size(0)
 {
     // std::cout << "Array Default Constructor Called" << '\n';
-    arr = new int[_size];
+    arr = new T[_size];
 }
 
 template<typename T>
@@ -22,7 +22,7 @@ template<typename T>
 Array<T>::Array(const Array& copy)
 : _size(0)
 {
-    arr = new int[_size];
+    arr = new T[_size];
     *this = copy;
 }
 

@@ -3,10 +3,7 @@
 
 int main(void)
 {
-    int *arr = new int[20];
+    int arr[] = {1, 2, 3, 4, 5};
 
-    ::iter(arr, 20, save<int>);
-    ::iter(arr, 20, print<int>);
-
-    delete[] arr;
+    ::iter(arr, 5, print<const int>);
 }

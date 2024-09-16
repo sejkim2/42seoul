@@ -3,23 +3,17 @@
 
 # include <iostream>
 
-template <typename T>
-void save(T* arr, size_t index)
+template <typename T1>
+void print(T1& value)
 {
-    arr[index] = index;
+    std::cout << value << '\n';
 }
 
-template <typename T>
-void print(T* arr, size_t index)
-{
-    std::cout << "arr[" << index << "] : " << arr[index] << '\n';
-}
-
-template <typename T>
-void iter(T *arr, size_t len, void (*func)(T*, size_t))
+template <typename T1, typename T2>
+void iter(T1 *arr, size_t len, T2 func)
 {
     for(size_t i = 0; i < len; i++)
-        func(arr, i);
+        func(arr[i]);
 }
 
 # endif
