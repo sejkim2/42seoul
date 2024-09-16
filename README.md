@@ -184,3 +184,80 @@ public class ItemValidator implements Validator {
 ```
 * supports() : 해당 검증기를 지원하는 여부 확인
 * validate(object, errors) : 검증 대상 객체와 bindingResult (errors의 자식 클래스)
+
+## Bean Validation
+> 실제로 사용하는 검증 로직
+> 검증 로직을 쉽게 사용 가능
+### build.gradle
+```
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+```
+### 에노테이션 형태로 검증 
+```
+@Data
+public class Item {
+
+
+    private Long id;
+
+    @NotBlank
+    private String itemName;
+
+    @NotNull
+    @Range(min = 1000, max = 1000000)
+    private Integer price;
+
+    @NotNull
+    @Max(9999)
+    private Integer quantity;
+
+    public Item() {
+    }
+
+    public Item(String itemName, Integer price, Integer quantity) {
+        this.itemName = itemName;
+        this.price = price;
+        this.quantity = quantity;
+    }
+}
+```
+### 수정된 컨트롤러
+```
+    @PostMapping("/add")
+    public String addItemV7(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
+        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "validation/v2/addForm";
+        }
+
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+```
+### errors.properties
+```
+#type error
+typeMismatch.java.lang.Integer=숫자를 입력해주세요.!!
+typeMismatch=타입 오류입니다.!!
+
+#Bean Validation 추가
+NotBlank={0} 공백 싫어요
+Range={0}, {2} ~ {1} 허용 좋아요
+Max={0}, 최대 {1}
+```
+> 스프링 부트가 자동으로 Validator 등록
+> 검증 시 @Validated, @Valid 중 하나를 검증 객체 선언 앞에 추가
+> 검증 순서는 @ModelAttribute -> 각각의 field 타입 변환 시도 -> 변환 실패 시 typeMismatch로 FieldError 추가 -> 성공한 field만 BeanValidation으로 검증
+> 생성 메시지 코드 로직은 이전과 같다. (NotBlank.item.itemName ...... NotBlank  순서의 우선순위)
+> errors.properties에서 {0}은 필드명(생략 가능), {1} ~ {n}은 인수
+> 필드 오류가 아닌 글로벌 오류는 스프링에서 지원하는 기능이 약하므로 직접 자바 코드로 작성하는 것을 추천
