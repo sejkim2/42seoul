@@ -40,7 +40,7 @@
     }
 ```
 
-## bindingResult
+## bindingResult 1
 > 스프링이 제공하는 오류 검증 보관 객체
 > 타입 에러 발생 시 bindingResult에 오류 객체 (특정 필드에서 발생하기 때문에 필드 에러)를 저장하고 mvc 컨트롤러 정상 호출
 > Model에 넣지 않아도 뷰 템플릿에서 bindingResult 접근 지원해줌
@@ -57,8 +57,16 @@ public String addItemV2(@ModelAttribute Item item, BindingResult bindingResult, 
         }
   '''
 ```
+* 필드 에러 : new FieldError(object, field, default message)
+* 글로벌 에러 : new ObjectError(object, default message) -> 특정 필드에서 발생한 오류가 아니므로 필드 인자 필요 없음
 * bindingResult.addError()로 에러 객체 저장
 * 검증 대상 객체(target) 바로 뒤에 선언되어야 함
-* 필드 오류 : new FieldError(object, field, defaultmessage)
-* 글로벌 오류 : new ObjectError(object, defaultmessage) -> 특정 필드에서 발생한 오류가 아니므로 필드 정보 인자 필요 없음
-  
+
+## bindingResult 2
+> 오류 발생 후 입력한 내용을 화면에 유지하기 위해서는 입력한 내용을 저장할 필요가 있음 -> rejectValue
+```
+    bindingResult.addError(new FieldError("item", "itemName", item.getItemName(), false, null, null, "상품 이름은 필수입니다."));
+    bindingResult.addError(new ObjectError("item", null, null, "가격 * 수량의 합은 10,000원 이상이어야 합니다. 현재 값 = " + resultPrice));
+```
+* new FieldError(object, field, rejectValud : 입력했지만 거절된 값, bindingType : 바인딩 성공 여부 : 타입 에러 체크용도, 메시지 코드, 메시지 인자, default message)
+* new ObjectError(object, 메시지 코드, 메시지 인자, default message) 
