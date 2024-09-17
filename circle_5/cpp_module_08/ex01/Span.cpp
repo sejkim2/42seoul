@@ -19,6 +19,9 @@ Span& Span::operator=(const Span& obj)
 {
     if (&obj != this)
     {
+        this->_size = obj.getSize();
+        this->_countNumber = obj.getCountNumber();
+        this->set = obj.getSet();
     }
     return (*this);
 }
@@ -64,4 +67,19 @@ unsigned int Span::longestSpan(void)
         throw (std::logic_error("Not enough numbers to calculate a span!"));
     
     return (*(this->set.rbegin()) - *(this->set.begin()));
+}
+
+unsigned int Span::getSize(void) const
+{
+    return (this->_size);
+}
+
+unsigned int Span::getCountNumber(void) const
+{
+    return (this->_countNumber);
+}
+
+const std::set<int> Span::getSet(void) const
+{
+    return (this->set);
 }

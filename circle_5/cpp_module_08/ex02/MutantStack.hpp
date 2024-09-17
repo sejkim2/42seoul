@@ -17,18 +17,64 @@ class MutantStack : public std::stack<T, C>
         MutantStack<T, C>& operator=(const MutantStack& obj);
 
         typedef typename C::iterator iterator;
-        // typedef typename C::const_iterator const_iterator;
-        typedef typename C::reverse_iterator reverse_iterator;
-        // typedef typename C::const_reverse_iterator const_reverse_iterator;
+        typedef typename C::const_iterator const_iterator;
 
         iterator begin(void);
         iterator end(void);
-        reverse_iterator rbegin(void);
-        reverse_iterator rend(void);
-        // const_iterator begin(void) const;
-        // const_iterator end(void) const;
+        const_iterator begin(void) const;
+        const_iterator end(void) const;
 };
 
-# include "MutantStack.tpp"
+template<typename T, typename C>
+MutantStack<T, C>::MutantStack(void)
+{
+    // std::cout << "MutantStack Default Constructor Called" << '\n';
+}
+
+template<typename T, typename C>
+MutantStack<T, C>::~MutantStack(void)
+{
+    // std::cout << "MutantStack Default Destructor Called" << '\n';
+}
+
+template<typename T, typename C>
+MutantStack<T, C>::MutantStack(const MutantStack& copy)
+{
+    *this = copy;
+}
+
+template<typename T, typename C>
+MutantStack<T, C>& MutantStack<T, C>::operator=(const MutantStack& obj)
+{
+    if (&obj != this)
+    {
+        std::stack<T, C>::operator=(obj);
+    }
+    return (*this);
+}
+
+template<typename T, typename C>
+typename MutantStack<T, C>::iterator MutantStack<T, C>::begin(void)
+{
+    return (this->c.begin());
+}
+
+template<typename T, typename C>
+typename MutantStack<T, C>::const_iterator MutantStack<T, C>::begin(void) const
+{
+    return (this->c.begin());
+}
+
+template<typename T, typename C>
+typename MutantStack<T, C>::iterator MutantStack<T, C>::end(void)
+{
+    return (this->c.end());
+}
+
+template<typename T, typename C>
+typename MutantStack<T, C>::const_iterator MutantStack<T, C>::end(void) const
+{
+    return (this->c.end());
+}
 
 #endif

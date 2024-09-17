@@ -21,12 +21,22 @@ class Span
         unsigned int shortestSpan(void);
         unsigned int longestSpan(void);
 
+        unsigned int getSize(void) const;
+        unsigned int getCountNumber(void) const;
+        const std::set<int> getSet(void) const;
+
     private:
         unsigned int _size;
         unsigned int _countNumber;
         std::set<int> set;
 };
 
-# include "Span.tpp"
+template <typename T>
+void Span::addNumbers(T iter1, T iter2, unsigned int _size)
+{
+    if (this->_countNumber + _size > this->_size)
+        throw (std::overflow_error("set has reached its maximum size!"));
+    this->set.insert(iter1, iter2);
+}
 
 #endif
