@@ -256,8 +256,13 @@ Range={0}, {2} ~ {1} 허용 좋아요
 Max={0}, 최대 {1}
 ```
 * 스프링 부트가 자동으로 Validator 등록
-* 검증 시 @Validated, @Valid 중 하나를 검증 객체 선언 앞에 추가
+* 검증 시 @Validated, @Valid 중 하나를 검증 객체 선언 앞에 추가, 에러 발생 시 bindingResult에 담긴다.
 * 검증 순서는 @ModelAttribute -> 각각의 field 타입 변환 시도 -> 변환 실패 시 typeMismatch로 FieldError 추가 -> 성공한 field만 BeanValidation으로 검증
 * 생성 메시지 코드 로직은 이전과 같다. (NotBlank.item.itemName ...... NotBlank  순서의 우선순위)
 * errors.properties에서 {0}은 필드명(생략 가능), {1} ~ {n}은 인수
 * 필드 오류가 아닌 글로벌 오류는 스프링에서 지원하는 기능이 약하므로 직접 자바 코드로 작성하는 것을 추천
+
+### DTO
+> Item 도메인에 대하여, addItem 로직에서 필요한 정보와 editItem 로직에서 필요한 정보가 각각 다르다. (실제로는 정보 간 차이가 더욱 크다.)
+> 따라서 Item 도메인과 그것을 add, edit 하는 로직에서 각각 사용하는 DTO (Data Transfer Object, 혹은 폼 데이터 전달)를 따로 분리하는 것이 좋다.
+> 상속이나 스프링에서 지원하는 groups는 편리하지만 간단한 경우에만 사용 가능하다. (각 객체 간 정보 차이가 다를 수 있기 때문)
