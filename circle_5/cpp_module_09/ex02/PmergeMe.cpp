@@ -22,3 +22,16 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& obj)
     }
     return (*this);
 }
+
+void PmergeMe::ford_johnson_by_vector(std::vector<int>& vector)
+{
+    std::vector<int> main_chain;
+    std::vector<int> pendingElements;
+
+    
+}
+
+void PmergeMe::ford_johnson_by_list(std::list<int>& list)
+{
+
+}

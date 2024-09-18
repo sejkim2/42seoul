@@ -1,14 +1,10 @@
-#include <iostream>
-#include <vector>
-#include <set>
-#include <sstream> // std::stringstream
-#include <cstdlib> // std::atoi
+# include "PmergeMe.hpp"
 
 bool allUnique(const std::vector<int>& numbers, std::set<int>& sortedNumbers) 
 {
     for (std::vector<int>::const_iterator it = numbers.begin(); it != numbers.end(); ++it) {
         if (sortedNumbers.find(*it) != sortedNumbers.end()) {
-            return false;
+            return true;
         }
         sortedNumbers.insert(*it);
     }
@@ -60,7 +56,9 @@ int main(int argc, char* argv[])
     }
 
     std::vector<int> numbers;
+    std::list<int> list;
     std::set<int> sortedNumbers;
+    
 
     for (int i = 1; i < argc; ++i)
     {
@@ -68,10 +66,11 @@ int main(int argc, char* argv[])
 
         if (!stringToPositiveInt(argv[i], number)) 
         {
-            std::cout << "There are not positive integer" << '\n';
+            std::cout << "There are not invalid integer" << '\n';
             return 1;
         }
         numbers.push_back(number);
+        list.push_back(number);
     }
 
     if (!allUnique(numbers, sortedNumbers))
@@ -85,6 +84,7 @@ int main(int argc, char* argv[])
         }
         printNumbersBeforeSort(numbers);
         //vector sort
+        //list sort
         printNumbersAfterSort(numbers);
     }
 
