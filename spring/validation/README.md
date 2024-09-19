@@ -2,6 +2,7 @@
 
 ## Map<String, String> errors
 > Model에 직접 넣어서 뷰 템플릿으로 전달하는 방식
+
 > 타입 에러 발생 시 mvc 호출 전에 400 에러 발생하는 문제가 있음 (뷰 템플릿으로 에러 메시지 전달 불가능)
 ```
 @PostMapping("/add")
@@ -42,8 +43,11 @@
 
 ## bindingResult 1
 > 스프링이 제공하는 오류 검증 보관 객체
+
 > 타입 에러 발생 시 bindingResult에 오류 객체 (특정 필드에서 발생하기 때문에 필드 에러)를 저장하고 mvc 컨트롤러 정상 호출
+
 > Model에 넣지 않아도 뷰 템플릿에서 bindingResult 접근 지원해줌
+
 > 에러 발생 시 사용자가 입력했던 내용이 전부 사라지는 문제가 있음
 ```
 public String addItemV2(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -126,6 +130,7 @@ typeMismatch=타입 오류입니다.
 
 ## Validator 분리 1
 > 검증 로직이 길어지므로 따로 클래스로 분리
+
 > 스프링에서 검증을 위해 사용되는 인터페이스인 Validator 사용
 ### Validator 구현체
 ```
@@ -187,6 +192,7 @@ public class ItemValidator implements Validator {
 
 ## Bean Validation
 > 실제로 사용하는 검증 로직
+
 > 검증 로직을 쉽게 사용 가능
 ### build.gradle
 ```
@@ -264,5 +270,7 @@ Max={0}, 최대 {1}
 
 ### DTO
 > Item 도메인에 대하여, addItem 로직에서 필요한 정보와 editItem 로직에서 필요한 정보가 각각 다르다. (실제로는 정보 간 차이가 더욱 크다.)
+
 > 따라서 Item 도메인과 그것을 add, edit 하는 로직에서 각각 사용하는 DTO (Data Transfer Object, 혹은 폼 데이터 전달)를 따로 분리하는 것이 좋다.
+
 > 상속이나 스프링에서 지원하는 groups는 편리하지만 간단한 경우에만 사용 가능하다. (각 객체 간 정보 차이가 다를 수 있기 때문)
