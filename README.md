@@ -69,3 +69,15 @@ public class MappingController {
     * HTTP API에서 사용
     * 데이터 타입은 보통 JSON
 
+## servlet객체를 사용한 요청 파라미터 조회
+```
+@RequestMapping("/sejkim2")
+    //반환형이 void 이고 response에 직접 데이터를 저장하므로 view 호출 x
+    public void requestParam(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = request.getParameter("username");
+        int age = Integer.parseInt(request.getParameter("age"));
+        log.info("username ={}, age ={}", username, age);
+
+        response.getWriter().write("ok");
+    }
+```
