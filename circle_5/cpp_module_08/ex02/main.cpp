@@ -113,4 +113,22 @@ int main()
         std::cout << "_____________________________" << '\n';
         std::cout << "top : " << s.top() << '\n';
     }
+
+    {
+        std::cout << "___________const____________" << '\n';
+        MutantStack<int> mstack;
+        mstack.push(5);
+        mstack.push(17);
+        mstack.pop();
+        mstack.push(3);
+        mstack.push(5);
+        mstack.push(737);
+        //[...]
+        mstack.push(0);
+
+        const MutantStack<int> const_mstack(mstack);
+        MutantStack<int>::const_iterator it = mstack.cbegin();
+        // *it = 4;
+        std::cout << *it;
+    }
 }

@@ -14,7 +14,8 @@ int main(void)
 
         try
         {
-            easyfind(v, 20);
+            std::vector<int>::iterator it = easyfind(v, 20);
+            std::cout << *it << " is find" << '\n';
         }
         catch (std::exception &e)
         {
@@ -34,7 +35,8 @@ int main(void)
 
         try
         {
-            easyfind(v, 20);
+            std::vector<float>::iterator it = easyfind(v, 20);
+            std::cout << *it << " is find" << '\n';
         }
         catch (std::exception &e)
         {
@@ -54,7 +56,8 @@ int main(void)
 
         try
         {
-            easyfind(v, 20);
+            std::list<int>::iterator it = easyfind(v, 20);
+            std::cout << *it << " is find" << '\n';
         }
         catch (std::exception &e)
         {
@@ -74,7 +77,8 @@ int main(void)
 
         try
         {
-            easyfind(v, 20);
+            std::deque<int>::iterator it = easyfind(v, 20);
+            std::cout << *it << " is find" << '\n';
         }
         catch (std::exception &e)
         {
@@ -96,7 +100,8 @@ int main(void)
 
         try
         {
-            easyfind(const_v, 20);
+            std::vector<int>::iterator it = easyfind(v, 20);
+            std::cout << *it << " is find" << '\n';
         }
         catch (std::exception &e)
         {

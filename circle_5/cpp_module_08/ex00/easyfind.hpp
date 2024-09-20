@@ -8,14 +8,25 @@
 # include <deque>
 
 template <typename T>
-void easyfind(T container, int n)
+typename T::iterator easyfind(T& container, const int& n)
+{
+    typename T::iterator iter = std::find(container.begin(), container.end(), n);
+    
+    if (iter == container.end())
+        throw std::out_of_range("Value not found");
+    else
+        return (iter);
+}
+
+template <typename T>
+typename T::const_iterator easyfind(const T& container, const int& n)
 {
     typename T::const_iterator iter = std::find(container.begin(), container.end(), n);
     
     if (iter == container.end())
-        throw std::runtime_error("Value not found");
+        throw std::out_of_range("Value not found");
     else
-        std::cout << *iter << " is exist" << '\n';
+        return (iter);
 }
 
 # endif

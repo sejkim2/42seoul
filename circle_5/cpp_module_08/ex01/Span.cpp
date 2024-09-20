@@ -1,6 +1,7 @@
 #include "Span.hpp"
 
 Span::Span(void)
+: _size(0), _countNumber(0)
 {
     // std::cout << "Span Default Constructor Called" << '\n';
 }
@@ -50,7 +51,7 @@ unsigned int Span::shortestSpan(void)
    std::set<unsigned int> diff;
    std::set<int>::iterator it = this->set.begin();
 
-   for(unsigned int i = 0; i < this->_countNumber; i++)
+   for(unsigned int i = 0; i < this->_countNumber - 1; i++)
    {
         int tmp1 = *it;
         it++;

@@ -21,8 +21,9 @@ class MutantStack : public std::stack<T, C>
 
         iterator begin(void);
         iterator end(void);
-        const_iterator begin(void) const;
-        const_iterator end(void) const;
+        const_iterator cbegin(void) const;
+        const_iterator cend(void) const;
+
 };
 
 template<typename T, typename C>
@@ -60,7 +61,7 @@ typename MutantStack<T, C>::iterator MutantStack<T, C>::begin(void)
 }
 
 template<typename T, typename C>
-typename MutantStack<T, C>::const_iterator MutantStack<T, C>::begin(void) const
+typename MutantStack<T, C>::const_iterator MutantStack<T, C>::cbegin(void) const
 {
     return (this->c.begin());
 }
@@ -72,7 +73,7 @@ typename MutantStack<T, C>::iterator MutantStack<T, C>::end(void)
 }
 
 template<typename T, typename C>
-typename MutantStack<T, C>::const_iterator MutantStack<T, C>::end(void) const
+typename MutantStack<T, C>::const_iterator MutantStack<T, C>::cend(void) const
 {
     return (this->c.end());
 }
