@@ -39,3 +39,33 @@ public class MappingController {
 * @RequestMapping("url") -> url로 호출하면 아래 함수가 실행되도록 매핑해줌
 * @RequestMapping(value = "url", method = http method (get, head, post, put ....) -> http method 지정하지 않으면 모두 허용됨
 
+## Http method mapping 축약
+* @GetMapping
+* @PostMapping
+* @PutMapping
+* @DeleteMapping
+* @PatchMapping
+> 내부적으로 @RequestMapping(method = http method)를 지정하고 있음
+
+## pathVariable (경로 변수) 사용
+```
+@GetMapping("/sejkim2/{hello_world}")
+    public String mappingPath(@PathVariable("hello_world") String pathVariable) {
+        log.info("pathVariable : {}", pathVariable);
+        return "ok";
+    }
+```
+* url에서 {} 안에 사용된 변수는 @@PathVariable(변수명)을 통해 가져올 수 있으며 다양한 타입으로 바인딩 가능하다
+
+## http 요청 데이터 조회 - http request parameter
+> 클라이언트에서 서버로 요청 데이터를 전달할 때 사용하는 방법 3가지
+1. GET - 쿼리 파라미터
+   * /url?username=hello&age=20
+   * 메시지 바디 없이, url의 쿼리 파라미터에 데이터를 포함해서 전달
+2. POST - HTML Form
+    * 메시지 바디에 쿼리 파라미터 형식으로 전달됨 (GET에서의 쿼리 파라미터 방식과 동일)
+3. POST, PUT, PATCH - HTTP message body
+   * 메시지 바디에 직접 데이터를 저장하여 전달
+    * HTTP API에서 사용
+    * 데이터 타입은 보통 JSON
+
