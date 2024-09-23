@@ -28,7 +28,7 @@ public class MappingController {
 ```
 * @Controller와 다르게, 반환 값으로 뷰를 찾는 것이 아니라 http 메시지 바디로 직접 입력됨
 
-## ⭐️ @RequestMapping("url")
+## @RequestMapping("url")
 > url이 들어오면 함수를 매핑
 ```
 @RequestMapping("/sejkim2")
@@ -39,7 +39,7 @@ public class MappingController {
 * @RequestMapping("url") -> url로 호출하면 아래 함수가 실행되도록 매핑해줌
 * @RequestMapping(value = "url", method = http method (get, head, post, put ....) -> http method 지정하지 않으면 모두 허용됨
 
-## Http method mapping 축약
+## ⭐️ Http method mapping 축약
 * @GetMapping
 * @PostMapping
 * @PutMapping
