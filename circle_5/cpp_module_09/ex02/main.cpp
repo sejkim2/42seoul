@@ -77,15 +77,17 @@ int main(int argc, char* argv[])
         std::cout << "There are duplicate numbers" << '\n';
     else
     {
-        if (!isSorted(numbers, sortedNumbers))
-        {
-            std::cout << "Not sorted" << '\n';
-            return 1;
-        }
+        // if (!isSorted(numbers, sortedNumbers))
+        // {
+        //     std::cout << "Not sorted" << '\n';
+        //     return 1;
+        // }
         printNumbersBeforeSort(numbers);
+        PmergeMe pm;
+        std::vector<int> sorted = pm.ford_johnson_by_vector(numbers);
         //vector sort
         //list sort
-        printNumbersAfterSort(numbers);
+        printNumbersAfterSort(sorted);
     }
 
     return 0;

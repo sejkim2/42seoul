@@ -32,10 +32,10 @@ std::vector<int> PmergeMe::ford_johnson_by_vector(std::vector<int>& vector)
     return (sorted_arr);
 }
 
-void PmergeMe::ford_johnson_by_list(std::list<int>& list)
-{
+// void PmergeMe::ford_johnson_by_list(std::list<int>& list)
+// {
 
-}
+// }
 
 std::vector<int> PmergeMe::generateJacobsthal(int n)
 {
@@ -70,13 +70,13 @@ std::vector<int> PmergeMe::mergeInsertion(std::vector<int>& d, const std::vector
     std::vector<int> sorted_arr;
     sorted_arr.insert(sorted_arr.end(), mainChain.begin(), mainChain.end());
 
-    int previousJacobsthal = jacobsthal[0];
+    size_t previousJacobsthal = jacobsthal[0];
     binaryInsertion(sorted_arr, pendingChain[previousJacobsthal]);
 
-    for(int i = 1; i < jacobsthal.size(); i++)
+    for(size_t i = 1; i < jacobsthal.size(); i++)
     {
-        int curentJacobsthal = jacobsthal[i];
-        for(int j = curentJacobsthal; j > previousJacobsthal; j--)
+        size_t curentJacobsthal = jacobsthal[i];
+        for(size_t j = curentJacobsthal; j > previousJacobsthal; j--)
         {
             if (j < pendingChain.size())
                 binaryInsertion(sorted_arr, pendingChain[j]);
