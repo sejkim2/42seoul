@@ -75,7 +75,7 @@ public String addItemV2(@ModelAttribute Item item, BindingResult bindingResult, 
 * new FieldError(object, field, rejectValud : 입력했지만 거절된 값, bindingType : 바인딩 성공 여부 : 타입 에러 체크용도, 메시지 코드, 메시지 인자, default message)
 * new ObjectError(object, 메시지 코드, 메시지 인자, default message) 
 
-## bindingResult 3
+## ⭐️ bindingResult 3
 > bindingResult는 오류 발생 시 이미 오류 발생 객체를 알고 있으므로 만들어줄 필요 없음 -> rejectValue(), reject() 함수 사용
 ```
     bindingResult.rejectValue("itemName", "required", null, null);
@@ -87,7 +87,7 @@ public String addItemV2(@ModelAttribute Item item, BindingResult bindingResult, 
 * errorCode는 errors.properties에서 맨 처음 단어와 일치해야 메시지 리졸버가 찾을 수 있음
 * rejectValue, reject 함수를 사용하면 내부적으로 MessageCodesResolver를 사용하며 이때 errorCode 기준으로 오류 메시지 객체를 생성
 
-## errors.properties
+## ⭐️ errors.properties
 > 구체적인 메시지 (errorcode.object.field)를 먼저 만들고 범용적인 메시지(errorcode)를 가장 나중에 만든다.
 ```
 #==ObjectError==
@@ -190,7 +190,7 @@ public class ItemValidator implements Validator {
 * supports() : 해당 검증기를 지원하는 여부 확인
 * validate(object, errors) : 검증 대상 객체와 bindingResult (errors의 자식 클래스)
 
-## Bean Validation
+## ⭐️Bean Validation
 > 실제로 사용하는 검증 로직
 
 > 검증 로직을 쉽게 사용 가능
@@ -227,7 +227,7 @@ public class Item {
     }
 }
 ```
-### 수정된 컨트롤러
+### ⭐️수정된 컨트롤러
 ```
     @PostMapping("/add")
     public String addItemV7(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -250,7 +250,7 @@ public class Item {
         return "redirect:/validation/v2/items/{itemId}";
     }
 ```
-### errors.properties
+### ⭐️errors.properties
 ```
 #type error
 typeMismatch.java.lang.Integer=숫자를 입력해주세요.!!
