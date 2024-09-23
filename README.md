@@ -81,3 +81,70 @@ public class MappingController {
         response.getWriter().write("ok");
     }
 ```
+* servlet의 request, response 객체를 직접 사용하여 파싱하고 응답 메시지 작성하기
+* servlet에 의존적인 코드
+
+## @RequestParam
+```
+@ResponseBody
+    @RequestMapping("/sejkim2")
+    public String requestParam(@RequestParam("username") String memberName,
+                               @RequestParam("age") int memberAge) {
+        log.info("username={}, age={}", memberName, memberAge);
+        return "ok";
+    }
+```
+* @RequestParam : 파라미터 이름으로 바인딩
+* @ResponseBody : View 조회를 무시하고, http message body에 직접 내용을 입력
+
+## @RequesetParam Map
+```
+@ResponseBody
+    @RequestMapping("/sejkim2")
+    public String requestParamMap(@RequestParam Map<String, Object> paramMap) {
+        log.info("username={}, age={}", paramMap.get("username"), paramMap.get("age"));
+        return "ok";
+    }
+```
+* 파라미터가 여러개이면 Map으로 사용 가능하다. ( Map<String, Object>)
+
+## 요청 파라미터로부터 객체를 생성하는 방법 - 1. 직접 생성
+> @RequestParam으로 직접 가져와서 객체를 생성하는 방식
+```
+    @Data
+    class HelloData {
+        private String username;
+        private int age;
+    }
+
+    @ResponseBody
+    @RequestMapping("/sejkim2")
+    public String modelAttributeTest(@RequestParam("username") String username,
+                                     @RequestParam("age") int age) {
+        HelloData data = new HelloData();  //요청 파라미터로부터 받은 정보로 객체 생성
+        data.setUsername(username);
+        data.setAge(age);
+        log.info("data.username={}, data.age={}", data.getUsername(), data.getAge());
+        return "ok";
+    }
+```
+
+## 2. ModelAttribute 사용
+```
+    @Data
+    class HelloData {
+        private String username;
+        private int age;
+    }
+
+    @ResponseBody
+    @RequestMapping("/sejkim2")
+    public String modelAttributeTest(@ModelAttribute("data") HelloData data) {
+        log.info("data.username={}, data.age={}", data.getUsername(), data.getAge());
+        return "ok";
+    }
+```
+* 스프링 mvc가 @ModelAttribute를 실행하는 흐름
+  1. 객체를 생성
+  2. 요청 파라미터의 이름으로 객체의 프로퍼티를 찾고, setter를 호출하여 바인딩 (key1=value1&key2=value2 에서 key1, key2가 객체의 프로퍼티와 다르면 바인딩 되지 않음)
+
