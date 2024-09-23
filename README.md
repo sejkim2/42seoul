@@ -1,6 +1,6 @@
 # spring mvc 기본 기능
 
-## @Controller
+## ⭐️ @Controller
 ```
 @Controller
 public class MappingController {
@@ -15,7 +15,7 @@ public class MappingController {
 * 반환 값이 String이면 뷰 이름으로 인식하여 뷰를 찾고 뷰가 랜더링
 * 반환값은 뷰 파일 (템플릿)의 경로를 적어주면 되며 templates 디렉토리 하위의 파일들을 찾음
 
-## @RestController
+## ⭐️ @RestController
 ```
 @RestController
 public class MappingController {
@@ -28,7 +28,7 @@ public class MappingController {
 ```
 * @Controller와 다르게, 반환 값으로 뷰를 찾는 것이 아니라 http 메시지 바디로 직접 입력됨
 
-## @RequestMapping("url")
+## ⭐️ @RequestMapping("url")
 > url이 들어오면 함수를 매핑
 ```
 @RequestMapping("/sejkim2")
@@ -47,7 +47,7 @@ public class MappingController {
 * @PatchMapping
 > 내부적으로 @RequestMapping(method = http method)를 지정하고 있음
 
-## pathVariable (경로 변수) 사용
+## ⭐️ pathVariable (경로 변수) 사용
 ```
 @GetMapping("/sejkim2/{hello_world}")
     public String mappingPath(@PathVariable("hello_world") String pathVariable) {
@@ -84,7 +84,7 @@ public class MappingController {
 * servlet의 request, response 객체를 직접 사용하여 파싱하고 응답 메시지 작성하기
 * servlet에 의존적인 코드
 
-## @RequestParam
+## ⭐️ @RequestParam
 ```
 @ResponseBody
     @RequestMapping("/sejkim2")
@@ -129,7 +129,7 @@ public class MappingController {
     }
 ```
 
-## 2. ModelAttribute 사용
+## 2. ⭐️ ModelAttribute 사용
 ```
     @Data
     class HelloData {
@@ -148,3 +148,77 @@ public class MappingController {
   1. 객체를 생성
   2. 요청 파라미터의 이름으로 객체의 프로퍼티를 찾고, setter를 호출하여 바인딩 (key1=value1&key2=value2 에서 key1, key2가 객체의 프로퍼티와 다르면 바인딩 되지 않음)
 
+## http request message - 메시지 바디를 통해 메시지가 직접 넘어오는 경우 (text)
+> 요청 파라미터로 데이터가 넘어오는 것이 아니고, http message body를 통해 직접 메시지가 넘어오기 때문에 @RequestParam, @ModelAttribute 사용 안됨 -> 이 둘은 모두 요청 파라미터를 다를 때 사용
+> 테스트를 위해 Postman으로 messageBody에 데이터를 넣고 request를 보내보자 (body -> raw -> text)
+```
+//HttpEntity<> 사용
+    @PostMapping("sejkim2")
+    public HttpEntity<String> requestBodyStringTest(HttpEntity<String> httpEntity) {
+        String messageBody = httpEntity.getBody();
+        HttpHeaders headers = httpEntity.getHeaders();
+
+        log.info("messageBody={}", messageBody);
+        log.info("header={}", headers);
+        
+        return new HttpEntity<>("ok");
+    }
+```
+* HttpEntity<> 객체로 http message, header의 정보를 직접 조회 가능
+* 요청에 사용될 때는 메시지 바디 정보 직접 조회
+* 응답에 사용될 때는 메시지 바디 정보 직접 반환, view 조회 x
+
+## ⭐️ @RequestBody를 사용한 간편한 방법
+```
+    @ResponseBody
+    @PostMapping("/sejkim2")
+    public String requestBodyStringTest(@RequestBody String messageBody,
+                                        @RequestHeader HttpHeaders header) {
+        log.info("messageBody={}", messageBody);
+        log.info("header={}", header);
+        return "ok";
+    }
+```
+* @RequestBody : request 메시지 바디를 직접 조회
+* @ResponseBody : response 메시지 바디를 직접 반환 (view 조회 x)
+* 요청 파라미터를 조회 : @RequestParam, @ModelAttribute    vs    http message body를 직접 조회 : @RequestBody
+
+## http request message - 메시지 바디를 통해 메시지가 직접 넘어오는 경우 (JSON) - http api 에서 주로 사용
+> Postman으로 request body를 만들어서 요청을 보내보자 (raw -> json -> {"username":"sejkim2", "age":20} -> header의 content-type : json)
+```
+    @Data
+    static class HelloData {
+        private String username;
+        private int age;
+    }
+
+    private ObjectMapper objectMapper = new ObjectMapper();    //json -> 객체로 변환
+
+    @ResponseBody
+    @PostMapping("/sejkim2")
+    public String requestBodyJsonTest(@RequestBody String messageBody) throws IOException {
+        HelloData data = objectMapper.readValue(messageBody, HelloData.class);
+        log.info("username={}, age={}", data.getUsername(), data.getAge());
+        return "ok";
+    }
+```
+* @RequestBody로 메시지 바디(json 형태)를 조회 -> json을 자바 객체로 변환 (jackson 라이브러리의 objectMapper)
+
+## ⭐️바로 바인딩
+```
+    @Data
+    static class HelloData {
+        private String username;
+        private int age;
+    }
+
+    private ObjectMapper objectMapper = new ObjectMapper();    //json -> 객체로 변환
+
+    @ResponseBody
+    @PostMapping("/sejkim2")
+    public String requestBodyJsonTest(@RequestBody HelloData data) {
+        log.info("data.username={}, data.age={}", data.getUsername(), data.getAge());
+        return "ok";
+    }
+```
+* @RequsetBody object objectName 으로 json을 객체로 변환하는 과정이 자동으로 일어난다.
