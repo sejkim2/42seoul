@@ -1,17 +1,19 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <utility>
 
 // 야곱 수열을 미리 계산하는 함수
 std::vector<int> generateJacobsthalSequence(int n) {
-    std::vector<int> jacobsthal(n);
-    if (n > 0) jacobsthal[0] = 0;
-    if (n > 1) jacobsthal[1] = 1;
+    std::vector<int> jacobsthal(n + 1);
+    if (n > 0) jacobsthal[0] = 1;
+    if (n > 1) jacobsthal[1] = 3;
 
-    for (int i = 2; i < n; ++i) {
+    for (int i = 2; i <= n; i++) {
         jacobsthal[i] = jacobsthal[i - 1] + 2 * jacobsthal[i - 2]; // 점화식
     }
+    for(int i = 0; i <= n; i++)
+        jacobsthal[i] -= 1;
+
     return jacobsthal;
 }
 
@@ -26,33 +28,50 @@ std::vector<int> mergeInsertion(std::vector<int>& d, const std::vector<int>& jac
     int n = d.size();
     if (n <= 1) return d; // 기저 사례: 배열에 원소가 하나면 그대로 반환
 
-    // mainchain과 pendingchain으로 나누기
-    std::vector<int> mainchain((n + 1) / 2), pendingchain(n / 2);
-    for (int i = 0; i < n / 2; ++i) {
-        mainchain[i] = std::max(d[i], d[i + n / 2]); // 큰 값
-        pendingchain[i] = std::min(d[i], d[i + n / 2]); // 작은 값
-    }
-    if (n % 2 == 1) {
-        mainchain[n / 2] = d[n - 1]; // 홀수인 경우 마지막 원소
+    std::vector<int> mainchain, pending;
+
+    // 쌍으로 비교하여 mainchain과 pending에 저장
+    for (size_t i = 0; i < d.size(); i += 2) {
+        if (i + 1 < d.size()) {
+            if (d[i] > d[i + 1]) {
+                mainchain.push_back(d[i]);
+                pending.push_back(d[i + 1]);
+            } else {
+                mainchain.push_back(d[i + 1]);
+                pending.push_back(d[i]);
+            }
+        } else {
+            pending.push_back(d[i]);
+        }
     }
 
     // 재귀적 정렬
     mainchain = mergeInsertion(mainchain, jacobsthal);
 
-    // Step 3: pair-wise 정렬
+    // 결과 배열 생성
     std::vector<int> sorted_array;
     sorted_array.insert(sorted_array.end(), mainchain.begin(), mainchain.end());
 
-    // pendingchain의 원소를 정렬된 위치에 삽입
-    for (size_t i = 0; i < pendingchain.size(); ++i) {
-        binaryInsertion(sorted_array, pendingchain[i]);
+    int previousJacobsthal = jacobsthal[0];
+    binaryInsertion(sorted_array, pending[previousJacobsthal]);
+
+    for(int i = 1; i < jacobsthal.size(); i++)
+    {
+        int curentJacobsthal = jacobsthal[i];
+        for(int j = curentJacobsthal; j > previousJacobsthal; j--)
+        {
+            if (j < pending.size())
+                binaryInsertion(sorted_array, pending[j]);
+        }
+        previousJacobsthal = curentJacobsthal;
     }
 
     return sorted_array; // 최종 정렬된 배열 반환
 }
 
-int main() {
-    int d_array[] = {34, 7, 23, 32, 5, 62, 45, 8, 9};
+int main(int argc, char**argv) {
+    // int d_array[] = {34, 7, 32, 5, 62, 45}; // 테스트 데이터
+    int d_array[] = {3}; // 테스트 데이터
     int n = sizeof(d_array) / sizeof(d_array[0]);
     std::vector<int> d(d_array, d_array + n);
 
