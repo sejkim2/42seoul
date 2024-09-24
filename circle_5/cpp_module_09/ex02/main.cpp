@@ -24,16 +24,24 @@ bool stringToPositiveInt(const std::string& str, int& number)
 
 void printNumbersBeforeSort(const std::vector<int>& numbers)
 {
-    std::cout << "Before: ";
+    std::cout << "Before:       ";
     for(std::vector<int>::const_iterator it = numbers.begin(); it != numbers.end(); it++)
         std::cout << *it << ' ';
     std::cout << '\n';
 }
 
-void printNumbersAfterSort(const std::vector<int>& numbers)
+void printNumbersAfterSortVector(const std::vector<int>& numbers)
 {
-    std::cout << "After: ";
+    std::cout << "Vector After: ";
     for(std::vector<int>::const_iterator it = numbers.begin(); it != numbers.end(); it++)
+        std::cout << *it << ' ';
+    std::cout << '\n';
+}
+
+void printNumbersAfterSortList(const std::list<int>& numbers)
+{
+    std::cout << "List After:   ";
+    for(std::list<int>::const_iterator it = numbers.begin(); it != numbers.end(); it++)
         std::cout << *it << ' ';
     std::cout << '\n';
 }
@@ -77,17 +85,12 @@ int main(int argc, char* argv[])
         std::cout << "There are duplicate numbers" << '\n';
     else
     {
-        // if (!isSorted(numbers, sortedNumbers))
-        // {
-        //     std::cout << "Not sorted" << '\n';
-        //     return 1;
-        // }
         printNumbersBeforeSort(numbers);
         PmergeMe pm;
-        std::vector<int> sorted = pm.ford_johnson_by_vector(numbers);
-        //vector sort
-        //list sort
-        printNumbersAfterSort(sorted);
+        std::vector<int> sorted_vector = pm.ford_johnson_by_vector(numbers);
+        std::list<int> sorted_list = pm.ford_johnson_by_list(list);
+        printNumbersAfterSortVector(sorted_vector);
+        printNumbersAfterSortList(sorted_list);
     }
 
     return 0;
