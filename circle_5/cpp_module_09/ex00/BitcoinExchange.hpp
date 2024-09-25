@@ -39,14 +39,14 @@ class BitcoinExchange
             const char* what() const throw();
     };
 
-        void fileOpen(void);
+        void calculateBitcoin(void);
     private:
         BitcoinExchange(void);
         bool isLeapYear(int year);
         int daysInMonth(int month, int year);
         bool isValidDate(const std::string &dateStr);
         std::map<std::string, std::string> parseDataFile(void);
-        void parseInput(std::map<std::string, std::string>& btcPrice);
+        void parseInputFile(std::map<std::string, std::string>& btcPrice);
         bool string2double(std::string value, double& price);
         std::string trim(const std::string& str);
 

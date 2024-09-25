@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     }
     try {
         BitcoinExchange btc(argv[1]);
-        btc.fileOpen();
+        btc.calculateBitcoin();
     } catch (std::exception& e) {
         std::cout << e.what();
     }
