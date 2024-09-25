@@ -71,9 +71,6 @@ std::vector<int> PmergeMe::mergeInsertion_vector(std::vector<int>& d, const std:
     initChain_vector(mainChain, pendingChain, d, n);
     mainChain = mergeInsertion_vector(mainChain, jacobsthal);
     
-    // std::vector<int> sorted_arr;
-    // sorted_arr.insert(sorted_arr.end(), mainChain.begin(), mainChain.end());
-
     size_t previousJacobsthal = jacobsthal[0];
     binaryInsertion_vector(mainChain, pendingChain[previousJacobsthal]);
 
@@ -146,13 +143,10 @@ std::list<int> PmergeMe::mergeInsertion_list(std::list<int>& d, const std::vecto
 
     mainChain = mergeInsertion_list(mainChain, jacobsthal);
 
-    std::list<int> sorted_array;
-    sorted_array.insert(sorted_array.end(), mainChain.begin(), mainChain.end());
-
     int previousJacobsthal = jacobsthal[0];
     std::list<int>::iterator it = pendingChain.begin();
     std::list<int>::iterator tmp;
-    binaryInsertion_list(sorted_array, *it);
+    binaryInsertion_list(mainChain, *it);
     int i = 1;
 
     while (1)
@@ -174,18 +168,18 @@ std::list<int> PmergeMe::mergeInsertion_list(std::list<int>& d, const std::vecto
         std::list<int>::iterator tmp2 = tmp;
         while (tmp != it)
         {
-            binaryInsertion_list(sorted_array, *tmp);
+            binaryInsertion_list(mainChain, *tmp);
             tmp--;
         }
         it = tmp2;
     }
     while (tmp != it)
     {
-        binaryInsertion_list(sorted_array, *tmp);
+        binaryInsertion_list(mainChain, *tmp);
         tmp--;
     }
 
-    return sorted_array;
+    return mainChain;
 }
 
 void PmergeMe::initChain_list(std::list<int>& mainChain, std::list<int>& pendingChain, const std::list<int>& d, int _size)

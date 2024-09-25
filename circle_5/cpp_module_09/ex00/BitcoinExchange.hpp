@@ -50,7 +50,7 @@ class BitcoinExchange
         bool string2double(std::string value, double& price);
         std::string trim(const std::string& str);
 
-        const std::string filename;
+        std::string filename;
 };
 
 #endif

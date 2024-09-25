@@ -1,6 +1,7 @@
 #include "BitcoinExchange.hpp"
 
 BitcoinExchange::BitcoinExchange(void)
+: filename("")
 {
     // std::cout << "BitcoinExchange Default Constructor Called" << '\n';
 }
@@ -19,6 +20,7 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& obj)
 {
     if (&obj != this)
     {
+        this->filename = obj.filename;
     }
     return (*this);
 }
