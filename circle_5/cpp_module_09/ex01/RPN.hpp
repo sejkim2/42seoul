@@ -18,6 +18,7 @@ class Rpn
     private:
         Rpn(void);
         std::string expression;
+
 };
 
 #endif

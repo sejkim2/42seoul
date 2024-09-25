@@ -1,6 +1,7 @@
 #include "RPN.hpp"
 
 Rpn::Rpn(void)
+: expression("default")
 {
     // std::cout << "Rpn Default Constructor Called" << '\n';
 }
@@ -30,25 +31,25 @@ Rpn::Rpn(std::string str)
 
 void Rpn::calculation(void)
 {
-    std::stack<int> stack;
+    std::stack<long> stack;
     std::stringstream ss(this->expression);
     std::string readStr;
 
     while (ss >> readStr)
     {
         if (readStr.length() != 1)
-            throw std::runtime_error("Error");
+            throw std::runtime_error("Error\n");
         
         if (std::isdigit(readStr[0]))
             stack.push(std::stoi(readStr));
         else
         {
             if (!(readStr == "+" || readStr == "-" || readStr == "*" || readStr == "/"))
-                throw std::runtime_error("Error");
+                throw std::runtime_error("Error\n");
             
-            int op1 = stack.top();
+            long op1 = stack.top();
             stack.pop();
-            int op2 = stack.top();
+            long op2 = stack.top();
             stack.pop();
 
             if (readStr == "+")
@@ -60,15 +61,18 @@ void Rpn::calculation(void)
             else if (readStr == "/")
             {
                 if (op1 == 0)
-                    throw std::runtime_error("Error");
+                    throw std::runtime_error("Error\n");
                 else
                     stack.push(op2 / op1);
             }
             else
-                throw std::runtime_error("Error");
+                throw std::runtime_error("Error\n");
+
+            if (stack.top() > std::numeric_limits<int>::max() || stack.top() < std::numeric_limits<int>::min())
+                throw std::overflow_error("Error\n");
         }
     }
     if (stack.size() != 1)
-        throw std::runtime_error("Error");
+        throw std::runtime_error("Error\n");
     std::cout << stack.top();
 }
