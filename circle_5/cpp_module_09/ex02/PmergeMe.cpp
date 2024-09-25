@@ -71,24 +71,29 @@ std::vector<int> PmergeMe::mergeInsertion_vector(std::vector<int>& d, const std:
     initChain_vector(mainChain, pendingChain, d, n);
     mainChain = mergeInsertion_vector(mainChain, jacobsthal);
     
-    std::vector<int> sorted_arr;
-    sorted_arr.insert(sorted_arr.end(), mainChain.begin(), mainChain.end());
+    // std::vector<int> sorted_arr;
+    // sorted_arr.insert(sorted_arr.end(), mainChain.begin(), mainChain.end());
 
     size_t previousJacobsthal = jacobsthal[0];
-    binaryInsertion_vector(sorted_arr, pendingChain[previousJacobsthal]);
+    binaryInsertion_vector(mainChain, pendingChain[previousJacobsthal]);
 
     for(size_t i = 1; i < jacobsthal.size(); i++)
     {
+        int flag = true;
         size_t curentJacobsthal = jacobsthal[i];
         for(size_t j = curentJacobsthal; j > previousJacobsthal; j--)
         {
             if (j < pendingChain.size())
-                binaryInsertion_vector(sorted_arr, pendingChain[j]);
+                binaryInsertion_vector(mainChain, pendingChain[j]);
+            else
+                flag = false;
         }
+        if (!flag)
+            break ;
         previousJacobsthal = curentJacobsthal;
     }
 
-    return (sorted_arr);
+    return (mainChain);
 }
 
 void PmergeMe::initChain_vector(std::vector<int>& mainChain, std::vector<int>& pendingChain, const std::vector<int>& d, int _size)
