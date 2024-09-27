@@ -15,6 +15,9 @@ class Rpn
         Rpn(std::string str);
         void calculation();
 
+        static const int MAX_INT = 2147483647;
+        static const int MIN_INT = -2147483648;
+
     private:
         Rpn(void);
         std::string expression;

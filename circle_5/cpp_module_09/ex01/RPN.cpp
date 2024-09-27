@@ -41,12 +41,20 @@ void Rpn::calculation(void)
             throw std::runtime_error("Error\n");
         
         if (std::isdigit(readStr[0]))
-            stack.push(std::stoi(readStr));
+        {
+            std::istringstream iss(readStr);
+            int number;
+            iss >> number;
+            stack.push(number);
+        }
         else
         {
             if (!(readStr == "+" || readStr == "-" || readStr == "*" || readStr == "/"))
                 throw std::runtime_error("Error\n");
             
+            if (stack.size() < 2)
+                throw std::runtime_error("Error\n");
+
             long op1 = stack.top();
             stack.pop();
             long op2 = stack.top();
@@ -68,7 +76,7 @@ void Rpn::calculation(void)
             else
                 throw std::runtime_error("Error\n");
 
-            if (stack.top() > std::numeric_limits<int>::max() || stack.top() < std::numeric_limits<int>::min())
+            if (stack.top() > Rpn::MAX_INT || stack.top() < Rpn::MIN_INT)
                 throw std::overflow_error("Error\n");
         }
     }

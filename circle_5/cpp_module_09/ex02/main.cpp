@@ -83,22 +83,22 @@ int main(int argc, char* argv[])
         PmergeMe pm;
         std::clock_t start;
         std::clock_t end;
-        double elapsed_time;
+        double elapsed_time1;
+        double elapsed_time2;
         
         start = std::clock();
         std::vector<int> sorted_vector = pm.ford_johnson_by_vector(numbers);
         end = std::clock();
-        elapsed_time = double(end - start) / CLOCKS_PER_SEC * 1e6;
-        std::cout << "Time to process a range of " << sorted_vector.size() << " elements with std::vector: " << elapsed_time << " us" << '\n';
+        elapsed_time1 = double(end - start) / CLOCKS_PER_SEC * 1e6;
 
         start = std::clock();
         std::list<int> sorted_list = pm.ford_johnson_by_list(list);
         end = std::clock();
-        elapsed_time = double(end - start) / CLOCKS_PER_SEC * 1e6;
-        std::cout << "Time to process a range of " << sorted_list.size() << " elements with std::list: " << elapsed_time << " us" << '\n';
+        elapsed_time2 = double(end - start) / CLOCKS_PER_SEC * 1e6;
 
-        // printNumbersAfterSort(sorted_vector);
-        // printNumbersAfterSort(sorted_list);
+        printNumbersAfterSort(sorted_vector);
+        std::cout << "Time to process a range of " << sorted_vector.size() << " elements with std::vector: " << elapsed_time1 << " us" << '\n';
+        std::cout << "Time to process a range of " << sorted_list.size() << " elements with std::list: " << elapsed_time2 << " us" << '\n';
     }
 
     return 0;

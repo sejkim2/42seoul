@@ -53,10 +53,23 @@ std::map<std::string, std::string> BitcoinExchange::parseDataFile(void)
 
 bool BitcoinExchange::string2double(std::string value, double& price)
 {
+    if (value.size() == 0)
+    {
+        std::cout << "Error: number is empty." << '\n';
+        return (false);
+    }
+
     std::stringstream ss(value);
     ss >> price;
+    std::ostringstream ss2;
+    ss2 << price;
+    if (ss2.str() != value)
+    {
+        std::cout << "Error: bad input => " << value << '\n';
+        return (false);
+    }
 
-    if (price < -2147483648 || price > 2147483647)
+    if (price < std::numeric_limits<int>::min() || price > std::numeric_limits<int>::max())
     {
         std::cout << "Error: too large a number." << '\n';
         return (false);
@@ -72,7 +85,7 @@ bool BitcoinExchange::string2double(std::string value, double& price)
 void BitcoinExchange::parseInputFile(std::map<std::string, std::string>& btcPrice)
 {
     std::string line;
-    std::ifstream input(this->filename);
+    std::ifstream input(this->filename.c_str());
 
     if (!input.is_open())
         throw BitcoinExchange::FileOpenException();
@@ -88,10 +101,10 @@ void BitcoinExchange::parseInputFile(std::map<std::string, std::string>& btcPric
         std::string value = trim(line.substr(delimeter + 1));
         double price;
 
-        if (isValidDate(date) == false)
+        if (string2double(value, price) == false)
             continue;
 
-        if (string2double(value, price) == false)
+        if (isValidDate(date) == false)
             continue;
 
         std::map<std::string, std::string>::iterator it = btcPrice.upper_bound(date);
@@ -154,6 +167,12 @@ int BitcoinExchange::daysInMonth(int month, int year)
 
 bool BitcoinExchange::isValidDate(const std::string &dateStr) 
 {
+    if (dateStr.size() == 0)
+    {
+        std::cout << "Error: bad input => " << dateStr << '\n';
+        return (false);
+    }
+
     int year, month, day;
     char delimiter1, delimiter2;
 
