@@ -112,22 +112,31 @@ operators:
 
 * KICK - Eject a client from the channel
   > KICK - 채널에서 클라이언트를 퇴출합니다.
+
 ∗ INVITE - Invite a client to a channel
   > INVITE - 클라이언트를 채널에 초대합니다.
+
 ∗ TOPIC - Change or view the channel topic
   > TOPIC - 채널 주제를 변경하거나 조회합니다.
+
 ∗ MODE - Change the channel’s mode:
   > MODE - 채널의 모드를 변경합니다:
+  
   * i: Set/remove Invite-only channel
     > i: 초대 전용 채널 설정/제거
+  
   * t: Set/remove the restrictions of the TOPIC command to channel operators
     > t: TOPIC 명령어의 제한을 채널 운영자에게 설정/제거
+  
   * k: Set/remove the channel key (password)
     > k: 채널 키(비밀번호)를 설정/제거합니다.
+  
   * o: Give/take channel operator privilege
     > o: 채널 운영자 권한을 부여/회수합니다.
+  
   * l: Set/remove the user limit to channel
     > l: 채널의 사용자 제한을 설정/제거합니다.
+
 * Of course, you are expected to write a clean code.
   > 물론, 깔끔한 코드를 작성하는 것이 기대됩니다.
 
