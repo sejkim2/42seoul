@@ -2,6 +2,7 @@
 
 Internet Relay Chat or IRC is a text-based communication protocol on the Internet.
 > 인터넷 릴레이 챗(IRC)은 인터넷에서 텍스트 기반의 통신 프로토콜입니다.
+
 It offers real-time messaging that can be either public or private. Users can exchange
 direct messages and join group channels.
 > 실시간 메시징을 제공하며, 이는 공개적일 수도 있고 비공개적일 수도 있습니다. 사용자는 직접 메시지를 교환하고 그룹 채널에 참여할 수 있습니다.
