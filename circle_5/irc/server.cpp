@@ -15,42 +15,34 @@ int main(void)
     serv_addr.sin_port = htons(6667);
 
     //bind : ip, port binding
-    if (bind(serv_fd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1)
-    {
-        std::cout << "binding error!" << '\n';
-        exit(1);
-    }
+    bind(serv_fd, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
 
     // listen : clinet 대기 요청
-    if (listen(serv_fd, 5) == -1)
-    {
-        std::cout << "listen error!" << '\n';
-        exit(1);
-    }
+    listen(serv_fd, 5);
 
     std::cout << "Server is listening on port 6667 ...." << '\n';
+    
+    struct sockaddr_in client_addr;
+    socklen_t len = sizeof(client_addr);
+    
+    int client_fd = accept(serv_fd, (struct sockaddr *)&client_addr, &len);
+    std::cout << "client connected!" << '\n';
 
     while (true)
     {
-        struct sockaddr_in client_addr;
-        socklen_t len = sizeof(client_addr);
-
-        // accept : client 연결
-        int client_fd = accept(serv_fd, (struct sockaddr *)&client_addr, &len);
-        if (client_fd < 0)
-        {
-            std::cout << "accept error!" << '\n';
-            continue;
-        }
-
-        std::cout << "client connected!" << '\n';
-
         char buffer[1024] = {0};
         int bytes_received = recv(client_fd, buffer, sizeof(buffer), 0);
-
-        //close : 소켓 닫기
-        close(client_fd);
+        if (bytes_received <= 0)
+        {
+            std::cout << "disconnect : " << buffer << '\n';
+            break ;
+        }
+        if (strcmp(buffer, "exit") == 0)
+            break ;
+    
+        std::cout << "Received: " << buffer << '\n';
     }
 
+    close(client_fd);
     close(serv_fd);
 }
